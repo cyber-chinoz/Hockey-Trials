@@ -15,7 +15,6 @@
 <style>
 :root{--bg:#f2f4ee;--card:#fff;--ink:#10231b;--mut:#5d7367;--line:#d5e0d8;--turf:#0f3d2e;--ball:#e8540f;--ok:#1d7a4d;--ga:.55;--glass:rgba(255,255,255,var(--ga));--glass-b:rgba(255,255,255,.7);--spring:cubic-bezier(.32,.72,0,1);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px)}
 @media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0a1b14;--card:#10291d;--ink:#eaf2ec;--mut:#8fa99a;--line:#1f3d2d;--turf:#0a1b14;--ball:#ff7a3d;--ok:#5fd08e;--glass:rgba(24,48,36,var(--ga));--glass-b:rgba(255,255,255,.18)}}
-:root[data-theme=dark]{--bg:#0a1b14;--card:#10291d;--ink:#eaf2ec;--mut:#8fa99a;--line:#1f3d2d;--turf:#0a1b14;--ball:#ff7a3d;--ok:#5fd08e;--glass:rgba(24,48,36,var(--ga));--glass-b:rgba(255,255,255,.18)}
 *{box-sizing:border-box}html,body{margin:0}html{scroll-padding-top:env(safe-area-inset-top,0px)}
 body{background:var(--bg);color:var(--ink);font:16px/1.45 -apple-system,system-ui,sans-serif;padding-bottom:calc(100px + env(safe-area-inset-bottom,0px));-webkit-tap-highlight-color:transparent;-webkit-font-smoothing:antialiased}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--turf);z-index:9}
@@ -70,24 +69,16 @@ ul.tp{padding-left:18px;margin:6px 0}.tp li{margin-bottom:8px}
 .li b{flex:1}.li span{color:var(--mut);font-size:20px}
 .empty{text-align:center;color:var(--mut);padding:24px 0}
 /* Liquid glass tab bar */
-nav{-webkit-touch-callout:none;position:fixed;left:14px;right:14px;bottom:max(calc(env(safe-area-inset-bottom,0px) - 12px),8px);touch-action:none;-webkit-user-select:none;user-select:none;max-width:520px;margin:0 auto;display:flex;padding:6px;border-radius:34px;z-index:20;
-background:var(--glass);-webkit-backdrop-filter:blur(var(--blur,26px)) saturate(190%) brightness(1.05);backdrop-filter:blur(var(--blur,26px)) saturate(190%) brightness(1.05);
+nav{position:fixed;left:14px;right:14px;bottom:max(calc(env(safe-area-inset-bottom,0px) - 12px),8px);touch-action:none;-webkit-user-select:none;user-select:none;max-width:520px;margin:0 auto;display:flex;padding:6px;border-radius:34px;z-index:20;
+background:var(--glass);-webkit-backdrop-filter:blur(26px) saturate(190%) brightness(1.05);backdrop-filter:blur(26px) saturate(190%) brightness(1.05);
 border:1px solid var(--glass-b);box-shadow:0 10px 34px rgba(0,0,0,.18),0 2px 6px rgba(0,0,0,.08),inset 0 1.5px 0 rgba(255,255,255,.65),inset 0 -1px 0 rgba(255,255,255,.12)}
 nav::before{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(180deg,rgba(255,255,255,.35),rgba(255,255,255,0) 45%);pointer-events:none}
-nav .pill{position:absolute;top:6px;bottom:6px;left:6px;width:calc((100% - 12px)/6);border-radius:28px;background:linear-gradient(180deg,rgba(255,255,255,.42),rgba(255,255,255,.12)),color-mix(in srgb,var(--ball) 14%,transparent);-webkit-backdrop-filter:blur(3px) saturate(220%) brightness(1.12);backdrop-filter:blur(3px) saturate(220%) brightness(1.12);box-shadow:inset 0 1.5px 0 rgba(255,255,255,.8),inset 0 -1px 0 rgba(255,255,255,.25),inset 0 0 0 1px rgba(255,255,255,.18),0 2px 10px rgba(0,0,0,.12);transition:translate .5s var(--spring),scale .35s var(--spring),box-shadow .3s;will-change:translate,scale}
-nav.drag .pill{transition:scale .35s var(--spring),box-shadow .3s;box-shadow:inset 0 2px 0 rgba(255,255,255,.9),inset 0 0 0 1px rgba(255,255,255,.3),0 10px 26px rgba(0,0,0,.28)}
+nav .pill{position:absolute;top:6px;bottom:6px;left:6px;width:calc((100% - 12px)/5);border-radius:28px;transform-origin:center;background:linear-gradient(180deg,rgba(255,255,255,.42),rgba(255,255,255,.12)),color-mix(in srgb,var(--ball) 14%,transparent);-webkit-backdrop-filter:blur(3px) saturate(220%) brightness(1.12);backdrop-filter:blur(3px) saturate(220%) brightness(1.12);box-shadow:inset 0 1.5px 0 rgba(255,255,255,.8),inset 0 -1px 0 rgba(255,255,255,.25),inset 0 0 0 1px rgba(255,255,255,.18),0 2px 10px rgba(0,0,0,.12);transition:transform .6s var(--spring),box-shadow .3s}
+nav.drag .pill{transition:transform .09s linear,box-shadow .3s;box-shadow:inset 0 2px 0 rgba(255,255,255,.9),inset 0 0 0 1px rgba(255,255,255,.3),0 10px 26px rgba(0,0,0,.28)}
 nav.drag button.on:not(.pv){color:var(--mut)}nav button.pv{color:var(--ball)}nav button.pv svg{transform:scale(1.14)}nav button svg{transition:transform .3s var(--spring)}
 body::after{content:"";position:fixed;left:0;right:0;bottom:0;height:calc(max(env(safe-area-inset-bottom,0px),8px) + 84px);background:linear-gradient(transparent,color-mix(in srgb,var(--bg) 92%,transparent));pointer-events:none;z-index:15}
-nav button{position:relative;flex:1;border:0;background:none;padding:8px 0 7px;color:var(--mut);font-size:10px;font-weight:600;transition:color .3s,transform .3s var(--spring)}
+nav button{position:relative;flex:1;border:0;background:none;padding:8px 0 7px;color:var(--mut);font-size:11px;font-weight:600;transition:color .3s,transform .3s var(--spring)}
 nav button.on{color:var(--ball)}nav button svg{display:block;margin:0 auto 2px;width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-@media(prefers-reduced-motion:reduce){nav .pill{transition-duration:.01s!important}}
-.tg{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0;border-top:1px solid var(--line);cursor:pointer}.tg small{display:block;color:var(--mut);font-size:13px}
-.swt{width:51px;height:31px;border-radius:99px;background:var(--line);position:relative;flex:none;transition:background .25s}.swt::after{content:"";position:absolute;top:2px;left:2px;width:27px;height:27px;border-radius:50%;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,.25);transition:transform .3s var(--spring)}.swt.on{background:var(--ok)}.swt.on::after{transform:translateX(20px)}
-.sws{display:flex;gap:12px;flex-wrap:wrap;padding:4px 0}.sws button{width:38px;height:38px;border-radius:50%;border:3px solid transparent;padding:0;box-shadow:inset 0 0 0 2px rgba(255,255,255,.35)}.sws button.on{border-color:var(--ink)}
-input[type=range]{accent-color:var(--ball);padding:0}
-main{zoom:var(--zm,1)}
-@media(prefers-reduced-transparency:reduce),(prefers-contrast:more){nav{background:var(--card)!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}}
-body.rm *,body.rm *::before{animation:none!important;transition-duration:.01ms!important}
 /* Bottom sheet */
 #bd{position:fixed;inset:0;background:rgba(0,0,0,.35);opacity:0;pointer-events:none;transition:opacity .35s;z-index:30}
 #sh{position:fixed;left:0;right:0;bottom:0;max-height:86vh;overflow:auto;z-index:31;transform:translateY(105%);transition:transform .5s var(--spring);margin:0 auto;max-width:640px;
@@ -116,11 +107,13 @@ body.so #bd{opacity:1;pointer-events:auto}body.so #sh{transform:none}
 <script>
 const $=s=>document.querySelector(s),pd=s=>{const[a,b,c]=s.split('-').map(Number);return new Date(a,b-1,c)},
 fd=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'),
-add=(d,n)=>{const x=new Date(d);x.setDate(x.getDate()+n);return x},esc=s=>String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+add=(d,n)=>{const x=new Date(d);x.setDate(x.getDate()+n);return x},esc=s=>String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let S={};try{S=JSON.parse(localStorage.getItem('ht1')||'{}')}catch(e){}
-S.log=S.log||{};S.bm=S.bm||{};S.trial=S.trial||'2027-02-02';
-let st;const save=()=>{clearTimeout(st);st=setTimeout(()=>{try{localStorage.setItem('ht1',JSON.stringify(S))}catch(e){}},150)};
-addEventListener('pagehide',()=>{try{localStorage.setItem('ht1',JSON.stringify(S))}catch(e){}});
+if(!S||typeof S!='object'||Array.isArray(S))S={};
+const norm=()=>{S.log=S.log||{};S.bm=S.bm||{};S.runs=S.runs||[];S.tm=S.tm||{a:0,t:0};S.trial=S.trial||'2027-02-02'};norm();
+let st;const persist=()=>{clearTimeout(st);try{localStorage.setItem('ht1',JSON.stringify(S))}catch(e){}};
+const save=()=>{S.ts=Date.now();clearTimeout(st);st=setTimeout(persist,150);qp()};
+addEventListener('pagehide',persist);
 const START=pd('2026-10-15'),DN=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 const P=[
 {n:'Foundation',s:'Oct 15',e:'2026-11-04',g:'Learn the movements and build consistency. Easy walking only: no hard running or sprints. Keep 3 good reps in reserve.'},
@@ -162,34 +155,34 @@ const TIPS=[
 const PO='Chin tucks 2×8|Prone Y raises 2×8, hold 2 s|Wall angels 2×8|Hip-flexor stretch 30 s per side';
 /* Exercise library: [name, matcher, how-to steps, watch-out, YouTube search] */
 const L=[
-['Bodyweight squat',/squat/,'Stand with feet shoulder-width, toes slightly out.|Push hips back and bend knees, lowering until thighs are about parallel (or as low as is comfortable).|Keep chest up and knees tracking over your toes.|Drive through the whole foot to stand tall.','Knees caving in, or heels lifting. Hold an 8 kg weight at your chest for a goblet squat.','H9GIaOK2vBc'],
-['Wall push-up',/wall push|push-up|push up/,'Stand an arm’s length from a wall, hands at chest height, a bit wider than shoulders.|Bend elbows to bring your chest toward the wall, body in one straight line.|Push back to straight arms.|Progress: incline (hands on a bench), then knees, then full.','Sagging hips or flaring elbows straight out. Keep elbows about 45° from your body.','ZUuYbRgcHmg'],
-['Glute bridge',/glute bridge/,'Lie on your back, knees bent, feet flat and hip-width.|Tuck your ribs down, squeeze your glutes and lift hips until shoulders to knees form a line.|Pause 1 second, then lower slowly.','Arching your lower back. Stop when glutes (not back) are doing the work.','R1OXPHRqehw'],
-['Calf raise',/calf raise/,'Stand tall, feet hip-width (hold a wall for balance).|Rise onto the balls of your feet as high as you can.|Pause, then lower slowly over 2–3 seconds.','Rolling to the outside of your feet. Push through the big toe.','hzugds_d2Hk'],
-['Dead bug',/dead bug/,'Lie on your back, arms straight up, hips and knees bent at 90°.|Press your lower back gently into the floor.|Slowly lower the opposite arm and leg toward the floor, then return.|Alternate sides.','Lower back lifting off the floor. Go smaller if it does.','rLwILN9NTlY'],
-['Hip hinge / Romanian deadlift',/hinge|romanian/,'Stand with feet hip-width, soft knees, weights in front of thighs.|Push hips straight back, sliding the weights down your thighs with a flat back.|Stop when you feel a hamstring stretch (about mid-shin).|Squeeze glutes to stand tall.','Rounding your back or squatting down instead of hinging back.','wqMYwk_-P14'],
-['Reverse lunge',/lunge/,'Stand tall (hold a wall or chair if “supported”).|Step one foot back and lower until both knees are about 90°.|Push through the front heel to return.|Finish all reps on one leg, then switch.','Front knee drifting past your toes or leaning forward. Take a longer step back.','ufjvjxrGyFM'],
-['Bent-over row',/row/,'Hinge forward with a flat back, a weight in each hand, arms hanging.|Pull elbows back toward your hips, squeezing shoulder blades.|Lower under control.','Using momentum or rounding your back.','PFTMBwL3GV0'],
-['Bird dog',/bird dog/,'Start on hands and knees, back flat.|Reach one arm forward and the opposite leg back, level with your body.|Hold 1–2 seconds, return, switch sides.','Hips rotating or back arching. Move slowly.','_1j_HWknGLg'],
-['Side plank',/side plank/,'Lie on your side, forearm under shoulder, knees bent (easier) or legs straight.|Lift hips so your body forms a line.|Hold for the time, breathing steadily. Repeat other side.','Hips dropping. Squeeze your side and glutes.','vYb54dQL-xU'],
-['Cat–cow',/cat/,'On hands and knees, inhale and drop your belly, lifting chest and tailbone (cow).|Exhale and round your back toward the ceiling, tucking chin and tailbone (cat).|Move slowly with your breath.','Rushing. Aim for smooth, full range.','WHUevrqeKIg'],
-['Hip-flexor stretch',/hip-flexor|hip flexor/,'Kneel on one knee (pad under it), other foot forward.|Tuck your tailbone under and gently shift forward until you feel the front of the back hip stretch.|Hold for the time, then switch.','Arching your lower back. Squeeze the glute of the kneeling leg.','CE9wm9nDe_w'],
-['Open-book rotation',/open-book|open book/,'Lie on your side, knees bent in front, arms together straight out.|Lift the top arm up and over, rotating your chest open, following your hand with your eyes.|Return slowly. Do all reps, then switch sides.','Knees drifting apart. Keep them stacked.','85YPQ4tdJds'],
-['Wall angels',/wall angel/,'Stand with back, head and hips against a wall, feet slightly forward.|Put arms in a “goalpost” shape against the wall.|Slide arms up and down, keeping elbows and wrists touching the wall.','Ribs flaring or lower back arching. Only go as high as you can keep contact.','6PY_CS0aXh0'],
-['Side steps',/side step/,'Athletic stance: knees bent, hips back, chest up.|Step sideways, keeping toes forward and feet never crossing.|Take quick, light steps for the time, then reverse direction.','Standing upright. Stay low like a hockey stance.','6ka8KVoURY8'],
-['Forward and back steps',/forward and back|forward-to-backward|forward\/back/,'Athletic stance, weight on the balls of your feet.|Take small quick steps forward, then backpedal back to start.|Stay low and keep eyes up.','Taking big steps. Short and quick is the goal.','2PId3EXU7Uk'],
-['Single-leg balance',/balance/,'Stand on one leg, slight knee bend, hands on hips.|Hold steady for the time, then switch.|Progress by closing your eyes or standing on a pillow.','Locking your knee. Keep it soft.','HwJUXz6jnkg'],
-['Lateral shuffle',/shuffle/,'Athletic stance, then push off the trailing leg to slide sideways.|Keep feet from crossing and hips low.|Stop in control after 5 m and shuffle back.','Hopping upright. Stay low and quiet.','6ka8KVoURY8'],
-['Accelerations',/accelerations|fast efforts/,'Start in a split or athletic stance.|Lean forward slightly and drive with powerful, quick steps.|Run at the stated effort, then slow down smoothly and walk back to recover fully.','Going all out before you’re ready. Keep it smooth at the stated effort.','jqUGtINzxHU'],
-['Chin tucks',/chin tuck/,'Sit or stand tall, looking forward.|Glide your head straight back, making a “double chin”, without tilting.|Hold 1 second, release.','Looking down. Keep eyes level.','oO9Zernkbxg'],
-['Prone Y raise',/prone y/,'Lie face down, arms overhead in a “Y”, thumbs up.|Lift arms a few inches by squeezing between your shoulder blades.|Hold 2 seconds, lower slowly.','Shrugging shoulders. Keep neck long.','dkPt_8o5qX0'],
-['Walking & easy cardio',/walk|march|cardio|jog|run/,'Keep a pace where you can talk in full sentences.|Walk tall, shoulders relaxed, arms swinging.|For walk-jog intervals, jog gently and walk to recover before the next round.','Going too hard on easy days.',null],
-['Warm-up',/warm/,'Start with easy movement: marching, arm circles, leg swings.|Add bodyweight squats and gentle lunges.|Before fast running, add a few gradual build-up accelerations.','Skipping it. It protects you from injuries.','WQpA4tYAUnQ'],
-['Mobility',/mobility|cool down/,'Take it slow with easy stretching and joint circles.|Breathe deeply and never force a stretch into pain.','Bouncing in stretches.',null],
-['Hockey stance hold',/stance/,'Stand with feet slightly wider than shoulders, hips back and chest forward in a half-squat.|Hold for the time, keeping knees over toes.','Letting your back round.',null]
+['Bodyweight squat',/squat/,'Stand with feet shoulder-width, toes slightly out.|Push hips back and bend knees, lowering until thighs are about parallel (or as low as is comfortable).|Keep chest up and knees tracking over your toes.|Drive through the whole foot to stand tall.','Knees caving in, or heels lifting. Hold an 8 kg weight at your chest for a goblet squat.','bodyweight squat form'],
+['Wall push-up',/wall push|push-up|push up/,'Stand an arm’s length from a wall, hands at chest height, a bit wider than shoulders.|Bend elbows to bring your chest toward the wall, body in one straight line.|Push back to straight arms.|Progress: incline (hands on a bench), then knees, then full.','Sagging hips or flaring elbows straight out. Keep elbows about 45° from your body.','wall push up form'],
+['Glute bridge',/glute bridge/,'Lie on your back, knees bent, feet flat and hip-width.|Tuck your ribs down, squeeze your glutes and lift hips until shoulders to knees form a line.|Pause 1 second, then lower slowly.','Arching your lower back. Stop when glutes (not back) are doing the work.','glute bridge form'],
+['Calf raise',/calf raise/,'Stand tall, feet hip-width (hold a wall for balance).|Rise onto the balls of your feet as high as you can.|Pause, then lower slowly over 2–3 seconds.','Rolling to the outside of your feet. Push through the big toe.','calf raise form'],
+['Dead bug',/dead bug/,'Lie on your back, arms straight up, hips and knees bent at 90°.|Press your lower back gently into the floor.|Slowly lower the opposite arm and leg toward the floor, then return.|Alternate sides.','Lower back lifting off the floor. Go smaller if it does.','dead bug exercise'],
+['Hip hinge / Romanian deadlift',/hinge|romanian/,'Stand with feet hip-width, soft knees, weights in front of thighs.|Push hips straight back, sliding the weights down your thighs with a flat back.|Stop when you feel a hamstring stretch (about mid-shin).|Squeeze glutes to stand tall.','Rounding your back or squatting down instead of hinging back.','romanian deadlift dumbbell form'],
+['Reverse lunge',/lunge/,'Stand tall (hold a wall or chair if “supported”).|Step one foot back and lower until both knees are about 90°.|Push through the front heel to return.|Finish all reps on one leg, then switch.','Front knee drifting past your toes or leaning forward. Take a longer step back.','reverse lunge form'],
+['Bent-over row',/row/,'Hinge forward with a flat back, a weight in each hand, arms hanging.|Pull elbows back toward your hips, squeezing shoulder blades.|Lower under control.','Using momentum or rounding your back.','dumbbell bent over row form'],
+['Bird dog',/bird dog/,'Start on hands and knees, back flat.|Reach one arm forward and the opposite leg back, level with your body.|Hold 1–2 seconds, return, switch sides.','Hips rotating or back arching. Move slowly.','bird dog exercise form'],
+['Side plank',/side plank/,'Lie on your side, forearm under shoulder, knees bent (easier) or legs straight.|Lift hips so your body forms a line.|Hold for the time, breathing steadily. Repeat other side.','Hips dropping. Squeeze your side and glutes.','side plank form'],
+['Cat–cow',/cat/,'On hands and knees, inhale and drop your belly, lifting chest and tailbone (cow).|Exhale and round your back toward the ceiling, tucking chin and tailbone (cat).|Move slowly with your breath.','Rushing. Aim for smooth, full range.','cat cow stretch'],
+['Hip-flexor stretch',/hip-flexor|hip flexor/,'Kneel on one knee (pad under it), other foot forward.|Tuck your tailbone under and gently shift forward until you feel the front of the back hip stretch.|Hold for the time, then switch.','Arching your lower back. Squeeze the glute of the kneeling leg.','kneeling hip flexor stretch'],
+['Open-book rotation',/open-book|open book/,'Lie on your side, knees bent in front, arms together straight out.|Lift the top arm up and over, rotating your chest open, following your hand with your eyes.|Return slowly. Do all reps, then switch sides.','Knees drifting apart. Keep them stacked.','open book thoracic rotation'],
+['Wall angels',/wall angel/,'Stand with back, head and hips against a wall, feet slightly forward.|Put arms in a “goalpost” shape against the wall.|Slide arms up and down, keeping elbows and wrists touching the wall.','Ribs flaring or lower back arching. Only go as high as you can keep contact.','wall angels exercise'],
+['Side steps',/side step/,'Athletic stance: knees bent, hips back, chest up.|Step sideways, keeping toes forward and feet never crossing.|Take quick, light steps for the time, then reverse direction.','Standing upright. Stay low like a hockey stance.','side step agility drill'],
+['Forward and back steps',/forward and back|forward-to-backward|forward\/back/,'Athletic stance, weight on the balls of your feet.|Take small quick steps forward, then backpedal back to start.|Stay low and keep eyes up.','Taking big steps. Short and quick is the goal.','forward backward footwork drill'],
+['Single-leg balance',/balance/,'Stand on one leg, slight knee bend, hands on hips.|Hold steady for the time, then switch.|Progress by closing your eyes or standing on a pillow.','Locking your knee. Keep it soft.','single leg balance exercise'],
+['Lateral shuffle',/shuffle/,'Athletic stance, then push off the trailing leg to slide sideways.|Keep feet from crossing and hips low.|Stop in control after 5 m and shuffle back.','Hopping upright. Stay low and quiet.','lateral shuffle drill'],
+['Accelerations',/accelerations|fast efforts/,'Start in a split or athletic stance.|Lean forward slightly and drive with powerful, quick steps.|Run at the stated effort, then slow down smoothly and walk back to recover fully.','Going all out before you’re ready. Keep it smooth at the stated effort.','acceleration sprint drill form'],
+['Chin tucks',/chin tuck/,'Sit or stand tall, looking forward.|Glide your head straight back, making a “double chin”, without tilting.|Hold 1 second, release.','Looking down. Keep eyes level.','chin tuck exercise'],
+['Prone Y raise',/prone y/,'Lie face down, arms overhead in a “Y”, thumbs up.|Lift arms a few inches by squeezing between your shoulder blades.|Hold 2 seconds, lower slowly.','Shrugging shoulders. Keep neck long.','prone Y raise exercise'],
+['Walking & easy cardio',/walk|march|cardio|jog|run/,'Keep a pace where you can talk in full sentences.|Walk tall, shoulders relaxed, arms swinging.|For walk-jog intervals, jog gently and walk to recover before the next round.','Going too hard on easy days.','walk jog intervals for beginners'],
+['Warm-up',/warm/,'Start with easy movement: marching, arm circles, leg swings.|Add bodyweight squats and gentle lunges.|Before fast running, add a few gradual build-up accelerations.','Skipping it. It protects you from injuries.','dynamic warm up before workout'],
+['Mobility',/mobility|cool down/,'Take it slow with easy stretching and joint circles.|Breathe deeply and never force a stretch into pain.','Bouncing in stretches.','mobility routine beginners'],
+['Hockey stance hold',/stance/,'Stand with feet slightly wider than shoulders, hips back and chest forward in a half-squat.|Hold for the time, keeping knees over toes.','Letting your back round.','hockey stance exercise']
 ];
 const lib=n=>{n=n.toLowerCase();return L.findIndex(e=>e[1].test(n))};
-const yt=e=>'https://www.youtube.com/shorts/'+L[e][4];
+const yt=e=>'https://www.youtube.com/results?search_query='+encodeURIComponent(L[e][4]+' #shorts');
 function parse(t){let m;const c=x=>(x||'').replace(/^(reps\b)?[\s,:]*/,'');
 if(m=t.match(/^(.*?)\s+([\d–]+)×([\d–]+)(\s+(?:min|s|m)\b)?\s*(.*)$/))return{n:m[1],s:m[2],a:m[3]+(m[4]?' '+m[4].trim():' reps'),x:c(m[5])};
 if(m=t.match(/^([^()]*?)\s+([\d–]+)\s*(min|s)\b[:,]?\s*(.*)$/))return{n:m[1],s:m[3]=='s'?'1':'',a:m[2]+' '+m[3],x:c(m[4])};
@@ -206,7 +199,7 @@ const sess=d=>{const w=d.getDay();if(w==0||w==4)return null;const r=X[Math.min(p
 const mon=d=>add(d,-((d.getDay()+6)%7));
 function weekDone(d){const m=mon(d);let c=0;for(let i=0;i<7;i++){const k=fd(add(m,i));if(S.log[k]&&S.log[k].c&&sess(add(m,i)))c++}return c}
 function head(){const d=pd(sel),ph=phase(d),tr=Math.round((pd(S.trial)-new Date(fd(new Date())+'T00:00'))/864e5),w=weekDone(d);
-$('#h1').textContent=tab=='today'?DN[d.getDay()]+' '+d.toLocaleDateString(undefined,{day:'numeric',month:'short'}):tab=='ex'?'Exercises':tab=='set'?'Settings':'Trials Tracker';
+$('#h1').textContent=tab=='today'?DN[d.getDay()]+' '+d.toLocaleDateString(undefined,{day:'numeric',month:'short'}):tab=='ex'?'Exercises':'Trials Tracker';
 $('#hp').textContent=`Phase ${ph}: ${P[ph-1].n} · ${tr>0?tr+' days to trials':tr==0?'Trial day':'Trials passed'}`;
 $('#rp').setAttribute('stroke-dasharray',`${226.2*Math.min(w,5)/5} 226.2`);$('#rn').innerHTML=`${w}/5<small>this week</small>`}
 function today(){const d=pd(sel),s=sess(d),e=S.log[sel]||{},x=e.x||[],ph=phase(d);let h='';
@@ -224,26 +217,11 @@ function week(){const m=mon(pd(sel)),n=fd(new Date());let h=`<div class="nav"><b
 for(let i=0;i<7;i++){const d=add(m,i),k=fd(d),s=sess(d),e=S.log[k]||{};h+=`<div class="wk ${k==n?'today':''}" onclick="sel='${k}';go('today')"><span class="d">${DN[d.getDay()].slice(0,3)} ${d.getDate()}</span><span class="s">${s?s.t+' · '+s.m:'Rest'}</span><span>${e.c?'✅':s?'○':'💤'}</span></div>`}
 return h+'</div>'}
 function plan(){const cur=phase(pd(sel));let h='<div class="card">'+P.map((p,i)=>`<div class="ph ${i+1==cur?'cur':''}"><b>${i+1}. ${p.n}</b> <span class="sub">from ${p.s}</span><div>${p.g}</div></div>`).join('')+'</div>';
-h+=`<div class="card"><label>Hold phase (stay here until you are ready)</label><select onchange="S.hold=+this.value||0;save();go('plan')"><option value="0">Follow the calendar</option>${P.map((p,i)=>`<option value="${i+1}" ${S.hold==i+1?'selected':''}>Stay on Phase ${i+1}: ${p.n}</option>`).join('')}</select></div>`;return h}
-function settingsTab(){const A=[['Orange',null],['Blue','#1f7ae0'],['Teal','#0e9aa7'],['Green','#2e9e5b'],['Purple','#7b4fd6'],['Pink','#e0447a'],['Red','#d63030']],
-H=[['Turf',null],['Navy','#14284b'],['Slate','#26323d'],['Maroon','#5a1a2b'],['Plum','#3d2160'],['Black','#111111']],
-seg=(k,opts)=>`<div class="mood">${opts.map(([v,n])=>`<button class="${(S[k]||opts[0][0])==v?'on':''}" onclick="S.${k}='${v}';save();applyS();go('set',1)">${n}</button>`).join('')}</div>`,
-sw=(k,L,list)=>`<label>${L}</label><div class="sws">${list.map(([n,c])=>`<button aria-label="${n}" class="${(S[k]||null)==c?'on':''}" style="background:${c||(k=='acc'?'#e8540f':'#0f3d2e')}" onclick="S.${k}=${c?`'${c}'`:'null'};save();applyS();go('set',1)"></button>`).join('')}</div>`,
-tg=(k,t,d)=>`<div class="tg" onclick="S.${k}=!S.${k};save();applyS();go('set',1)"><div>${t}<small>${d}</small></div><div class="swt ${S[k]?'on':''}"></div></div>`,
-solid=S.nb=='solid';
-return `<div class="card"><h2>Appearance</h2><label>Theme</label>${seg('theme',[['system','System'],['light','Light'],['dark','Dark']])}${sw('acc','Accent colour',A)}${sw('hc','Header colour',H)}</div>
-<div class="card"><h2>Tab bar</h2><p class="sub">If you can see through the bar too much, raise the opacity or blur, or choose Solid.</p><label>Style</label>${seg('nb',[['glass','Glass'],['solid','Solid']])}
-<label>Glass opacity</label><input type="range" min="30" max="95" ${solid?'disabled':''} value="${Math.round(Math.max(.3,S.ga||.55)*100)}" oninput="S.ga=this.value/100;applyS();save()">
-<label>Blur</label><input type="range" min="0" max="40" ${solid?'disabled':''} value="${S.bl==null?26:S.bl}" oninput="S.bl=+this.value;applyS();save()">
-<button class="btn ghost" onclick="S.theme=S.acc=S.hc=S.ga=S.bl=S.nb=S.ts=null;save();applyS();go('set',1)">Reset appearance</button></div>
-<div class="card"><h2>Comfort</h2><label>Text size</label>${seg('ts',[['m','Default'],['l','Large'],['x','Largest']])}${tg('rm','Reduce motion','Turns off animations and the tab bar spring.')}${tg('wl','Keep screen on','Stops your phone locking while the app is open, handy mid-workout.')}</div>
-<div class="card"><h2>Trials</h2><label>Trial date</label><input type="date" value="${S.trial}" onchange="S.trial=this.value||'2027-02-02';save();head()"></div>
-${!navigator.standalone&&/iPhone|iPad/.test(navigator.userAgent)?`<div class="card"><h2>Install on your iPhone</h2><p class="sub">In Safari tap Share, then Add to Home Screen, and open the app from its icon. You get full screen, and notifications only work from the installed app.</p></div>`:''}
-${notifCard()}
-<div class="card"><h2>Your data</h2><p class="sub">Everything is stored on this phone only. Copy a backup somewhere safe, or paste one here and tap Restore.</p><textarea id="bk">${esc(JSON.stringify(S))}</textarea>
-<div class="row"><button class="btn ghost" onclick="navigator.clipboard&&navigator.clipboard.writeText($('#bk').value).then(()=>alert('Backup copied.')).catch(()=>{$('#bk').select()})">Copy backup</button><button class="btn ghost" onclick="try{JSON.parse($('#bk').value);localStorage.setItem('ht1',$('#bk').value);location.reload()}catch(e){alert('That backup text is not valid.')}">Restore</button></div>
-<button class="btn ghost" onclick="(navigator.serviceWorker?navigator.serviceWorker.getRegistrations().then(r=>Promise.all(r.map(x=>x.unregister()))):Promise.resolve()).then(()=>window.caches?caches.keys().then(k=>Promise.all(k.map(c=>caches.delete(c)))):0).then(()=>location.reload())">Refresh app (get the latest version)</button>
-<button class="btn ghost" style="color:#d63030" onclick="if(confirm('Erase all logged sessions and settings? This cannot be undone.')&&confirm('Really erase everything?')){localStorage.removeItem('ht1');location.reload()}">Erase all data</button></div>`}
+h+=`<div class="card"><label>Hold phase (stay here until you are ready)</label><select onchange="S.hold=+this.value||0;save();go('plan')"><option value="0">Follow the calendar</option>${P.map((p,i)=>`<option value="${i+1}" ${S.hold==i+1?'selected':''}>Stay on Phase ${i+1}: ${p.n}</option>`).join('')}</select>
+<label>Glass opacity (like iOS 27’s Liquid Glass slider)</label><input type="range" style="padding:0" min="15" max="95" value="${Math.round((S.ga||.55)*100)}" oninput="S.ga=this.value/100;ag();save()">
+<label>Trial date</label><input type="date" value="${S.trial}" onchange="S.trial=this.value||'2027-02-02';save();head()">
+<label>Backup: copy this text somewhere safe, or paste a backup here and tap Restore</label><textarea id="bk">${esc(JSON.stringify(S))}</textarea>
+<div class="row"><button class="btn ghost" onclick="rs()">Restore</button></div></div>`;return h+cloud()}
 const fm=t=>{t=Math.round(t);const h=t/3600|0,m=(t%3600)/60|0,x=t%60;return(h?h+':'+String(m).padStart(2,'0'):m)+':'+String(x).padStart(2,'0')};
 const sd0=d=>d.toLocaleDateString(undefined,{day:'numeric',month:'short'});
 let rm='r';
@@ -290,7 +268,7 @@ function exs(){return`<div class="srch"><input id="q" type="search" placeholder=
 function exl(q){q=q.trim().toLowerCase();const r=L.map((e,i)=>[e,i]).filter(([e])=>!q||(e[0]+' '+e[2]).toLowerCase().includes(q));
 return r.length?r.map(([e,i])=>`<div class="li" onclick="op(${i})"><b>${e[0]}</b><span>›</span></div>`).join(''):'<div class="empty">No match. Try “squat” or “stretch”.</div>'}
 function fx(v){$('#el').innerHTML=exl(v)}
-function op(i){const e=L[i];$('#sh').innerHTML=`<div class="gr"></div><h2>${e[0]}</h2><ol>${e[2].split('|').map(s=>`<li>${s}</li>`).join('')}</ol><div class="w"><b>Watch out:</b> ${e[3]}</div>${e[4]?`<a class="btn yt" href="${yt(i)}" target="_blank" rel="noopener">▶ Watch the YouTube Short</a>`:''}<button class="btn ghost" onclick="cl()">Done</button>`;$('#sh').scrollTop=0;document.body.classList.add('so');mini()}
+function op(i){const e=L[i];$('#sh').innerHTML=`<div class="gr"></div><h2>${e[0]}</h2><ol>${e[2].split('|').map(s=>`<li>${s}</li>`).join('')}</ol><div class="w"><b>Watch out:</b> ${e[3]}</div><a class="btn yt" href="${yt(i)}" target="_blank" rel="noopener">▶ Watch a YouTube Short</a><button class="btn ghost" onclick="cl()">Done</button>`;$('#sh').scrollTop=0;document.body.classList.add('so');mini()}
 function cl(){document.body.classList.remove('so');mini()}
 function lg(){return S.log[sel]=S.log[sel]||{}}
 function rr(i){const s=sess(pd(sel)),e=lg(),el=document.querySelector(`.ex[data-i="${i}"]`);if(el)el.outerHTML=exRow(s.i[i],i,(e.x||[]).includes(i),(e.sd||{})[i]||0);e.c=!!s&&(e.x||[]).length==s.i.length;cs();save();head()}
@@ -301,42 +279,68 @@ function cs(){const b=$('#cb'),c=lg().c;if(b){b.classList.toggle('done',!!c);b.t
 function tc(){const e=lg(),s=sess(pd(sel));e.c=!e.c;if(s){if(e.c){e.x=s.i.map((_,i)=>i);e.sd={};s.i.forEach((t,i)=>e.sd[i]=tot(t))}else{e.x=[];e.sd={}}}save();go('today',1)}
 function se(n,b){const e=lg();e.e=e.e==n?0:n;document.querySelectorAll('.mood button').forEach((x,i)=>x.classList.toggle('on',e.e==i+1));save()}
 function sv(k,v){lg()[k]=v;save()}
-const TABS=[['today','Today','<path d="M12 3l2.6 5.6 6 .8-4.4 4.2 1.1 6L12 16.8 6.7 19.6l1.1-6L3.4 9.4l6-.8z"/>'],['week','Week','<rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M9 3v4M15 3v4"/>'],['plan','Plan','<path d="M4 6h16M4 12h16M4 18h10"/>'],['tips','Progress','<path d="M4 19V5M4 19h16M8 15l4-4 3 3 5-6"/>'],['ex','Exercises','<circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/>'],['set','Settings','<path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/>']];
+const TABS=[['today','Today','<path d="M12 3l2.6 5.6 6 .8-4.4 4.2 1.1 6L12 16.8 6.7 19.6l1.1-6L3.4 9.4l6-.8z"/>'],['week','Week','<rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M9 3v4M15 3v4"/>'],['plan','Plan','<path d="M4 6h16M4 12h16M4 18h10"/>'],['tips','Progress','<path d="M4 19V5M4 19h16M8 15l4-4 3 3 5-6"/>'],['ex','Exercises','<circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/>']];
 $('#nav').innerHTML='<i class="pill"></i>'+TABS.map(b=>`<button><svg viewBox="0 0 24 24">${b[2]}</svg>${b[1]}</button>`).join('');
 const NB=[...$('#nav').querySelectorAll('button')],NV=$('#nav');let cw=0,dg=0,ci=0,sx=0;
-const cellW=()=>(NV.clientWidth-12)/TABS.length,Z_PL=$('#nav .pill'),Z_cur=()=>TABS.findIndex(b=>b[0]==tab),Z_cl5=(v,m)=>Math.max(0,Math.min(m,v));
-let Z_px=0,Z_tx=0,Z_vx=0,Z_lx=0,Z_lt=0,Z_sX=0,Z_nl=0,Z_ps=0;
-const pp=(x,sc)=>{Z_px=x;Z_PL.style.translate=x+'px 0';Z_PL.style.scale=sc||1},Z_pvs=i=>NB.forEach((b,j)=>b.classList.toggle('pv',j==i));
-function Z_loop(){if(Z_ps!=2)return;Z_px+=(Z_tx-Z_px)*.4;Z_PL.style.translate=Z_px.toFixed(2)+'px 0';const i=Z_cl5(Math.round(Z_px/cw),TABS.length-1);if(i!=ci){ci=i;Z_pvs(i)}requestAnimationFrame(Z_loop)}
-function Z_fin(i,go1){Z_ps=0;NV.classList.remove('drag');Z_pvs(-1);pp(i*cw,1);if(go1)requestAnimationFrame(()=>go(TABS[i][0]))}
-NV.addEventListener('pointerdown',e=>{cw=cellW();Z_nl=NV.getBoundingClientRect().left+6;Z_sX=Z_lx=e.clientX;Z_lt=e.timeStamp;Z_vx=0;Z_ps=1;ci=Z_cl5(Math.floor((e.clientX-Z_nl)/cw),TABS.length-1);NV.setPointerCapture(e.pointerId);Z_PL.style.translate=ci*cw+'px 0';Z_PL.style.scale=1.1;Z_px=ci*cw;Z_pvs(ci)});
-NV.addEventListener('pointermove',e=>{if(!Z_ps)return;if(Z_ps==1&&Math.abs(e.clientX-Z_sX)>4){Z_ps=2;NV.classList.add('drag');Z_px=parseFloat(getComputedStyle(Z_PL).translate)||Z_px;requestAnimationFrame(Z_loop)}
-if(Z_ps==2){Z_tx=Z_cl5(e.clientX-Z_nl-cw/2,(TABS.length-1)*cw);const dt=e.timeStamp-Z_lt;if(dt>0)Z_vx=Z_vx*.6+((e.clientX-Z_lx)/dt)*.4;Z_lx=e.clientX;Z_lt=e.timeStamp}});
-NV.addEventListener('pointerup',()=>{if(!Z_ps)return;const i=Z_ps==2?Z_cl5(Math.round((Z_px+Z_vx*140)/cw),TABS.length-1):ci;Z_fin(i,1)});
-NV.addEventListener('pointercancel',()=>{if(Z_ps)Z_fin(Z_cur(),0)});
-NV.addEventListener('contextmenu',e=>e.preventDefault());
-addEventListener('resize',()=>pp(Z_cur()*cellW(),1));
-let WLk=null;async function wakeScr(){try{if(S.wl&&!document.hidden&&navigator.wakeLock&&!WLk){WLk=await navigator.wakeLock.request('screen');WLk.addEventListener('release',()=>WLk=null)}else if(!S.wl&&WLk){WLk.release();WLk=null}}catch(e){}}
-function applyS(){const r=document.documentElement,o=r.style,t=S.theme||'system';t=='system'?r.removeAttribute('data-theme'):r.setAttribute('data-theme',t);
-S.acc?o.setProperty('--ball',S.acc):o.removeProperty('--ball');S.hc?o.setProperty('--turf',S.hc):o.removeProperty('--turf');
-o.setProperty('--ga',S.nb=='solid'?1:Math.max(.3,S.ga||.55));o.setProperty('--blur',(S.bl==null?26:S.bl)+'px');o.setProperty('--zm',{m:1,l:1.1,x:1.22}[S.ts]||1);
-document.body.classList.toggle('rm',!!S.rm);const m=document.querySelector('meta[name=theme-color]');if(m)m.content=S.hc||'#0f3d2e';wakeScr()}
-const ag=applyS;applyS();document.addEventListener('visibilitychange',wakeScr);
-function go(t,keep){const y=scrollY,same=t==tab;tab=t;cl();const m=$('#m');m.className='';m.innerHTML={today,week,plan,tips,ex:exs,set:settingsTab}[t]();
+const cellW=()=>(NV.clientWidth-12)/5,pp=(x,sc)=>{$('#nav .pill').style.transform=`translateX(${x}px) scale(${sc||1})`};
+function mv(e){const x=e.clientX-NV.getBoundingClientRect().left-6;ci=Math.max(0,Math.min(4,Math.floor(x/cw)));pp(Math.max(0,Math.min(4*cw,x-cw/2)),1.16);NB.forEach((b,j)=>b.classList.toggle('pv',j==ci))}
+function dn(c){dg=0;NV.classList.remove('drag');NB.forEach(b=>b.classList.remove('pv'));if(c)go(TABS[ci][0]);else pp(TABS.findIndex(b=>b[0]==tab)*cellW(),1)}
+NV.addEventListener('pointerdown',e=>{cw=cellW();dg=1;NV.setPointerCapture(e.pointerId);NV.classList.add('drag');mv(e)});
+NV.addEventListener('pointermove',e=>{if(dg)mv(e)});
+NV.addEventListener('pointerup',()=>dg&&dn(1));NV.addEventListener('pointercancel',()=>dg&&dn(0));
+addEventListener('resize',()=>pp(TABS.findIndex(b=>b[0]==tab)*cellW(),1));
+const ag=()=>document.documentElement.style.setProperty('--ga',S.ga||.55);ag();
+function go(t,keep){const y=scrollY,same=t==tab;tab=t;cl();const m=$('#m');m.className='';m.innerHTML={today,week,plan,tips,ex:exs}[t]();
 if(!keep||!same){void m.offsetWidth;m.className='in'}
-const i=TABS.findIndex(b=>b[0]==t);NB.forEach((b,j)=>b.classList.toggle('on',i==j));pp(i*cellW(),1);head();updBadge();scrollTo(0,keep&&same?y:0)}
+const i=TABS.findIndex(b=>b[0]==t);NB.forEach((b,j)=>b.classList.toggle('on',i==j));pp(i*cellW(),1);head();scrollTo(0,keep&&same?y:0)}
 document.addEventListener('keydown',e=>{if(e.key=='Escape')cl()});
-
-function notify(t,b,tag){try{if(!('Notification'in window)||Notification.permission!=='granted')return;navigator.serviceWorker.ready.then(r=>r.showNotification(t,{body:b,tag,icon:'icon-192.png',badge:'icon-192.png'}))}catch(e){}}
-async function enableNotif(){if(!('Notification'in window)){alert('Notifications need the app on your Home Screen (iOS 16.4 or later). Tap Share, then Add to Home Screen, then open it from the icon.');return}
-const p=await Notification.requestPermission();S.rem=S.rem||{on:false,time:'18:00'};S.rem.on=p==='granted';save();go('set',1);
-if(p==='granted')notify('Notifications on','Daily reminders are ready.','hello');else alert('Notifications are blocked. Turn them on in Settings, Notifications, Trials.')}
-function notifCard(){const ok='Notification'in window&&Notification.permission==='granted',on=ok&&S.rem&&S.rem.on;
-return `<div class="card"><h2>Notifications</h2><p class="sub">A daily session reminder and a badge on the app icon. Add the app to your Home Screen first (iOS 16.4 or later).</p>${ok?`<button class="btn ${on?'done':'ghost'}" onclick="S.rem=S.rem||{time:'18:00'};S.rem.on=!S.rem.on;save();go('set',1)">Daily reminder: ${on?'On':'Off'}</button><label>Remind me after</label><input type="time" value="${(S.rem&&S.rem.time)||'18:00'}" onchange="S.rem=S.rem||{on:false};S.rem.time=this.value||'18:00';S.remSent='';save()"><button class="btn ghost" onclick="notify('Test','Notifications are working.','test')">Send a test</button>`:`<button class="btn" onclick="enableNotif()">Turn on notifications</button>`}<p class="sub" style="margin-top:10px">The reminder appears when you open the app after that time. Alerts while the app is fully closed would need a push server, which this app does not have.</p></div>`}
-function remCheck(){const r=S.rem;if(!r||!r.on||!('Notification'in window)||Notification.permission!=='granted')return;const n=new Date(),k=fd(n),hm=String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0');
-if(S.remSent===k||hm<r.time)return;const x=sess(n);if(!x||(S.log[k]&&S.log[k].c))return;S.remSent=k;save();notify('Today: '+x.t,x.m+'. Ready when you are.','daily')}
-function updBadge(){try{if(!navigator.setAppBadge)return;const m=mon(new Date()),t=fd(new Date());let n=0;for(let i=0;i<7;i++){const d=add(m,i),k=fd(d);if(k>=t&&sess(d)&&!(S.log[k]&&S.log[k].c))n++}(n?navigator.setAppBadge(n):navigator.clearAppBadge()).catch(()=>{})}catch(e){}}
-document.addEventListener('visibilitychange',()=>{if(!document.hidden)remCheck()});setInterval(remCheck,60000);
-go('today');mini();remCheck();
+/* Backup restore (updates the timestamp so the restored copy wins when syncing) */
+function rs(){try{const o=JSON.parse($('#bk').value);if(!o||typeof o!='object'||Array.isArray(o))throw 0;S=o;norm();S.ts=Date.now();persist();location.reload()}catch(e){alert('That backup text is not valid.')}}
+/* Cloud sync (Supabase). Plain REST, no library, so it fails softly when offline.
+   Last write wins on the whole tracker; the running stopwatch stays on each device. */
+const SB_URL='https://ttdiasiwavlnavirxysi.supabase.co',SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR0ZGlhc2l3YXZsbmF2aXJ4eXNpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIwMjA2NTQsImV4cCI6MjEwNzU5NjY1NH0.JWBvqVzDLBKR5of2C4zXFQBa8ZvAoU2wNSB17RTW_4I';/* optional: paste your project URL and anon/publishable key here instead of typing them in the app */
+const SBK='ht_sb';let SB={};try{SB=JSON.parse(localStorage.getItem(SBK)||'{}')||{}}catch(e){}
+SB.url=SB.url||SB_URL;SB.key=SB.key||SB_KEY;
+const sbs=()=>{try{localStorage.setItem(SBK,JSON.stringify(SB))}catch(e){}};
+let sbm='',sbBusy=0,sbDirty=0,sbPt,rfp=null;
+const sbMsg=m=>{sbm=m;const el=$('#sbm');if(el)el.textContent=m};
+async function sbf(path,o={},t){const h={apikey:SB.key,'Content-Type':'application/json',...(o.h||{})};if(t)h.Authorization='Bearer '+t;
+const r=await fetch(SB.url.trim().replace(/\/+$/,'')+path,{method:o.m||'GET',headers:h,body:o.b?JSON.stringify(o.b):undefined});let j=null;try{j=await r.json()}catch(e){}
+if(!r.ok){const er=new Error((j&&(j.error_description||j.msg||j.message||j.error))||'Error '+r.status);er.st=r.status;throw er}return j}
+function setSes(j){const o=SB.ses||{};SB.ses={at:j.access_token,rt:j.refresh_token,exp:j.expires_at||Math.floor(Date.now()/1e3)+(j.expires_in||3600),uid:(j.user&&j.user.id)||o.uid,em:(j.user&&j.user.email)||o.em};sbs()}
+async function tok(){const s=SB.ses;if(!s)throw new Error('Not signed in');if(s.exp-60>Date.now()/1e3)return s.at;
+if(!rfp)rfp=sbf('/auth/v1/token?grant_type=refresh_token',{m:'POST',b:{refresh_token:s.rt}}).then(j=>{setSes(j);return j.access_token}).catch(e=>{if(e.st>=400&&e.st<500){SB.ses=null;sbs()}throw e}).finally(()=>{rfp=null});
+return rfp}
+async function sbAuth(up){const em=$('#sbe').value.trim(),pw=$('#sbp').value,u=$('#sbu'),k=$('#sbk');if(u){SB.url=u.value.trim();SB.key=k.value.trim()}
+if(!/^https:\/\/.+/.test(SB.url||'')||!SB.key){sbMsg('Enter your Supabase project URL and anon key first.');return}
+if(!em||pw.length<6){sbMsg('Enter your email and a password of at least 6 characters.');return}
+sbs();sbMsg(up?'Creating account…':'Signing in…');
+try{const j=await sbf(up?'/auth/v1/signup':'/auth/v1/token?grant_type=password',{m:'POST',b:{email:em,password:pw}});
+if(!j.access_token){sbMsg('Check your email to confirm your account, then tap Sign in.');return}
+setSes(j);SB.syn=0;sbs();sbm='Signed in.';go('plan',1);sync(1)}catch(e){sbMsg(e.message)}}
+function sbOut(){if(!confirm('Sign out? Your data stays on this device.'))return;SB.ses=null;SB.syn=0;sbs();sbm='';go('plan',1)}
+const hasData=()=>Object.keys(S.log).length||S.runs.length||Object.keys(S.bm).length;
+async function sbRow(){const t=await tok(),r=await sbf('/rest/v1/tracker_state?select=data,updated_at&user_id=eq.'+SB.ses.uid,{},t);return r&&r[0]||null}
+async function sbPush(){const t=await tok(),d={...S};delete d.tm;await sbf('/rest/v1/tracker_state?on_conflict=user_id',{m:'POST',h:{Prefer:'resolution=merge-duplicates,return=minimal'},b:{user_id:SB.ses.uid,data:d,updated_at:new Date().toISOString()}},t)}
+function adopt(d){const tm=S.tm;S=d;S.tm=tm;norm();persist();ag();go(tab,1)}
+function qp(){if(!SB.ses)return;clearTimeout(sbPt);sbPt=setTimeout(()=>sync(),2500)}
+async function sync(){if(!SB.ses||!SB.url)return;if(sbBusy){sbDirty=1;return}sbBusy=1;persist();sbMsg('Syncing…');
+try{const r=await sbRow(),rt=(r&&r.data&&r.data.ts)||0,lt=S.ts||0;let a;
+if(!r)a='push';
+else if(!SB.syn&&hasData()&&rt)a=confirm('Found data in your cloud account (saved '+new Date(rt).toLocaleString()+').\n\nOK = use the cloud data on this device.\nCancel = replace the cloud data with this device’s data.')?'pull':'push';
+else a=rt>lt?'pull':(lt>rt||!rt)?'push':'none';
+if(a=='pull')adopt(r.data);else if(a=='push'){S.ts=S.ts||Date.now();persist();await sbPush()}
+SB.syn=Date.now();sbs();sbMsg('Synced '+new Date().toLocaleTimeString([],{hour:'numeric',minute:'2-digit'}))}
+catch(e){sbMsg('Sync failed: '+(navigator.onLine===false?'you are offline. It will retry.':e.message+(e.st==404?' (did you run the SQL setup?)':e.st==401||!SB.ses?' Please sign in again.':'')));if(!SB.ses)go(tab,1)}
+sbBusy=0;if(sbDirty){sbDirty=0;qp()}}
+function cloud(){const s=SB.ses;let h=`<div class="card"><h2>Cloud sync</h2><p class="sub">Back up your progress and keep your devices in sync with Supabase.</p>`;
+if(s)h+=`<p class="sub">Signed in as <b>${esc(s.em)}</b></p><div class="row"><button class="btn" onclick="sync()">Sync now</button><button class="btn ghost" onclick="sbOut()">Sign out</button></div>`;
+else h+=`<label>Project URL</label><input id="sbu" type="url" placeholder="https://xxxx.supabase.co" autocapitalize="none" autocorrect="off" value="${esc(SB.url)}"><label>Anon / publishable key</label><input id="sbk" autocapitalize="none" autocorrect="off" value="${esc(SB.key)}"><label>Email</label><input id="sbe" type="email" autocomplete="email" autocapitalize="none"><label>Password</label><input id="sbp" type="password" autocomplete="current-password"><div class="row"><button class="btn" onclick="sbAuth(0)">Sign in</button><button class="btn ghost" onclick="sbAuth(1)">Create account</button></div>`;
+return h+`<p class="sub" id="sbm" style="margin-top:10px">${esc(sbm)}</p></div>`}
+go('today');mini();
+if(navigator.storage&&navigator.storage.persist)navigator.storage.persist().catch(()=>{});
+let td=fd(new Date());
+document.addEventListener('visibilitychange',()=>{if(document.hidden){persist();return}const n=fd(new Date());if(n!=td){if(sel==td)sel=n;td=n;go(tab,1)}sync()});
+addEventListener('online',()=>sync());sync();
 if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
 </script></body></html>
