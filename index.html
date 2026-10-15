@@ -18,9 +18,9 @@
 :root[data-theme=dark]{--bg:#0a1b14;--card:#10291d;--ink:#eaf2ec;--mut:#8fa99a;--line:#1f3d2d;--turf:#0a1b14;--ball:#ff7a3d;--ok:#5fd08e;--glass:rgba(24,48,36,var(--ga));--glass-b:rgba(255,255,255,.18)}
 *{box-sizing:border-box}html,body{margin:0}html{scroll-padding-top:env(safe-area-inset-top,0px)}
 body{background:var(--bg);color:var(--ink);font:16px/1.45 -apple-system,system-ui,sans-serif;padding-bottom:calc(100px + env(safe-area-inset-bottom,0px));-webkit-tap-highlight-color:transparent;-webkit-font-smoothing:antialiased}
-body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--turf);z-index:9}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:9}
 h1,h2,.big{font-family:"Avenir Next Condensed","Arial Narrow",Impact,sans-serif;font-weight:700;letter-spacing:.01em;margin:0}
-header{background:var(--turf);color:#f2f4ee;padding:14px 18px 22px;display:flex;gap:16px;align-items:center;border-radius:0 0 28px 28px}
+header{color:var(--ink);padding:18px 18px 8px;display:flex;gap:16px;align-items:center}
 header .t{flex:1;min-width:0}header h1{font-size:32px;line-height:1.05}
 header p{margin:4px 0 0;color:#b9d2c3;font-size:14px}
 .ring{width:84px;height:84px;flex:none;position:relative}
@@ -123,6 +123,37 @@ body.lkd #lk{display:flex}body.lkd{overflow:hidden}
 #lk input{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.25);color:#f2f4ee;text-align:center}
 #lk .btn.ghost{color:#f2f4ee;border-color:rgba(255,255,255,.3)}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ===== Apple Music-style Home ===== */
+header h1{font:800 38px/1.05 -apple-system,system-ui,sans-serif;letter-spacing:-.02em}
+header p{color:var(--mut)}
+.ring{width:60px;height:60px}.ring svg{width:100%;height:100%}
+.ring circle:first-child{stroke:var(--line)}.ring circle.p{stroke:var(--ball)}
+.ring b{font-size:15px}.ring small{font-size:8px;color:var(--mut);margin-top:1px}
+.st{font:700 22px/1.2 -apple-system,system-ui,sans-serif;margin:8px 2px 10px;display:flex;align-items:center;gap:4px}
+.st svg{width:18px;height:18px;fill:none;stroke:var(--mut);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.car{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -14px 18px;padding:2px 14px 14px;scroll-padding:0 14px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.car::-webkit-scrollbar{display:none}
+.pc{flex:none;width:min(76vw,300px);scroll-snap-align:start;border-radius:26px;padding:14px;color:#fff;cursor:pointer;transition:transform .35s var(--spring)}.pc:active{transform:scale(.97)}
+.pc small{display:block;font-size:17px;opacity:.9}.pc b{display:block;font-size:20px;line-height:1.2;margin:1px 0}.pc span{display:block;font-size:17px;opacity:.9;line-height:1.3}
+.hero{background:#9c9ca1;box-shadow:0 12px 30px rgba(0,0,0,.14)}
+.hero .hi{aspect-ratio:1;background:#ededf0;border-radius:18px;display:grid;place-items:center;margin-bottom:14px}
+.hero .hi svg{width:52%;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round}
+.art,.up,.ma{background:linear-gradient(160deg,color-mix(in srgb,var(--ball) 65%,#ffb347),var(--ball) 45%,color-mix(in srgb,var(--ball) 60%,#ff2d78));position:relative;overflow:hidden}
+.art.d{background:linear-gradient(160deg,color-mix(in srgb,var(--turf) 55%,#2fbf86),color-mix(in srgb,var(--turf) 75%,#1d7a4d))}
+.art::before,.up::before,.ma::before{content:"";position:absolute;inset:0;background:rgba(255,255,255,.15);clip-path:polygon(0 0,100% 50%,0 100%)}
+.art::after,.up::after,.ma::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.09);clip-path:polygon(0 16%,70% 50%,0 84%)}
+.up{display:flex;flex-direction:column;justify-content:flex-end;box-shadow:0 12px 30px rgba(0,0,0,.14)}.up>*{position:relative;z-index:1}
+.rc{flex:none;width:150px;scroll-snap-align:start;cursor:pointer;transition:transform .3s var(--spring)}.rc:active{transform:scale(.96)}
+.rc .art{aspect-ratio:1;border-radius:12px}
+.rc .art svg{position:absolute;inset:0;margin:auto;width:42%;height:42%;fill:none;stroke:#fff;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;z-index:1}
+.rc b{display:block;margin-top:8px;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.rc small{color:var(--mut);font-size:14px}
+/* Now Playing-style timer bar */
+#mt{display:none;align-items:center;gap:12px;padding:8px 10px 8px 8px;left:14px;right:14px;transform:none;max-width:520px;margin:0 auto;width:auto;border-radius:32px;text-align:left;white-space:normal}
+#mt .ma{width:44px;height:44px;border-radius:10px;flex:none}
+#mt .mi{flex:1;min-width:0}#mt .mi b{display:block;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#mt .mi small{display:block;color:var(--mut);font-size:14px;font-weight:500;font-variant-numeric:tabular-nums}
+#mt .mp{width:44px;height:44px;display:grid;place-items:center;flex:none}#mt .mp svg{width:26px;height:26px;fill:var(--ink)}
 </style></head><body>
 <header><div class="t"><h1 id="h1"></h1><p id="hp"></p></div><div class="ring"><svg viewBox="0 0 84 84" width="84" height="84"><circle cx="42" cy="42" r="36" fill="none" stroke="#ffffff33" stroke-width="7"/><circle class="p" id="rp" cx="42" cy="42" r="36" fill="none" stroke="#ff7a3d" stroke-width="7" stroke-linecap="round" stroke-dasharray="0 226" transform="rotate(-90 42 42)"/></svg><b><span id="rn"></span></b></div></header>
 <main id="m"></main>
@@ -134,10 +165,17 @@ fd=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.ge
 add=(d,n)=>{const x=new Date(d);x.setDate(x.getDate()+n);return x},esc=s=>String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let S={};try{S=JSON.parse(localStorage.getItem('ht1')||'{}')}catch(e){}
 if(!S||typeof S!='object'||Array.isArray(S))S={};
-const norm=()=>{S.log=S.log||{};S.bm=S.bm||{};S.runs=S.runs||[];S.tm=S.tm||{a:0,t:0};S.trial=S.trial||'2027-02-02'};norm();
+const norm=()=>{S.log=S.log||{};S.bm=S.bm||{};S.runs=S.runs||[];S.tm=S.tm||{a:0,t:0};S.trial=S.trial||'2027-02-02';if(S.hp==null)S.hp=true};norm();
 let st;const persist=()=>{clearTimeout(st);try{localStorage.setItem('ht1',JSON.stringify(S))}catch(e){}};
 const save=()=>{S.mod=Date.now();clearTimeout(st);st=setTimeout(persist,150);qp()};
 addEventListener('pagehide',persist);
+/* Haptics: Android uses navigator.vibrate. iPhone Safari has no vibrate API, so we toggle a hidden
+   <input switch> (iOS 17.4+), which makes the system play its light tick. */
+const HP=(()=>{let l,last=0;const mk=()=>{if(l)return l;const i=document.createElement('input');i.type='checkbox';i.id='hpi';i.setAttribute('switch','');l=document.createElement('label');l.htmlFor='hpi';l.style.cssText='position:fixed;left:-99px;top:0;opacity:0;pointer-events:none';l.append(i);document.body.appendChild(l);return l};
+const tick=()=>{try{mk().click()}catch(e){}},P={t:[6],s:[12],w:[10,50,16],e:[30,60,30,60,40]},N={t:1,s:1,w:2,e:3};
+return k=>{k=k||'t';if(S.hp===false)return;const n=Date.now(),f=k=='w'||k=='e';if(!f&&n-last<70)return;last=n;
+if(navigator.vibrate){navigator.vibrate(P[k]);return}tick();for(let i=1;i<N[k];i++)setTimeout(tick,i*85)}})();
+document.addEventListener('click',e=>{if(e.target.closest&&e.target.closest('button,.ex,.li,.wk,.tg,.pc,.rc'))HP('t')});
 const START=pd('2026-10-15'),DN=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 const P=[
 {n:'Foundation',s:'Oct 15',e:'2026-11-04',g:'Learn the movements and build consistency. Easy walking only: no hard running or sprints. Keep 3 good reps in reserve.'},
@@ -223,18 +261,26 @@ const sess=d=>{const w=d.getDay();if(w==0||w==4)return null;const r=X[Math.min(p
 const mon=d=>add(d,-((d.getDay()+6)%7));
 function weekDone(d){const m=mon(d);let c=0;for(let i=0;i<7;i++){const k=fd(add(m,i));if(S.log[k]&&S.log[k].c&&sess(add(m,i)))c++}return c}
 function head(){const d=pd(sel),ph=phase(d),tr=Math.round((pd(S.trial)-new Date(fd(new Date())+'T00:00'))/864e5),w=weekDone(d);
-$('#h1').textContent=tab=='today'?DN[d.getDay()]+' '+d.toLocaleDateString(undefined,{day:'numeric',month:'short'}):tab=='ex'?'Exercises':tab=='set'?'Settings':'Trials Tracker';
-$('#hp').textContent=`Phase ${ph}: ${P[ph-1].n} · ${tr>0?tr+' days to trials':tr==0?'Trial day':'Trials passed'}`;
+$('#h1').textContent=tab=='today'?DN[d.getDay()]:tab=='ex'?'Exercises':tab=='set'?'Settings':'Trials Tracker';
+$('#hp').textContent=`${tab=='today'?d.toLocaleDateString(undefined,{day:'numeric',month:'short'})+' · ':''}Phase ${ph}: ${P[ph-1].n} · ${tr>0?tr+' days to trials':tr==0?'Trial day':'Trials passed'}`;
 $('#rp').setAttribute('stroke-dasharray',`${226.2*Math.min(w,5)/5} 226.2`);$('#rn').innerHTML=`${w}/5<small>this week</small>`}
-function today(){const d=pd(sel),s=sess(d),e=S.log[sel]||{},x=e.x||[],ph=phase(d);let h='';
+const STAR='<path d="M12 3l2.6 5.6 6 .8-4.4 4.2 1.1 6L12 16.8 6.7 19.6l1.1-6L3.4 9.4l6-.8z"/>',MOON='<path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/>',CHK='<path d="M5 12.5l4.5 4.5L19 7.5"/>',CHV='<svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>';
+const sd2=d=>DN[d.getDay()].slice(0,3)+' '+d.getDate();
+function hero(d,s,e){const isT=sel==fd(new Date()),done=!!e.c,col=done?'var(--ok)':'var(--ball)',ico=!s?MOON:done?CHK:STAR;
+let h=`<h3 class="st">Top Picks for You</h3><div class="car"><div class="pc hero" onclick="document.getElementById('sess').scrollIntoView({behavior:'smooth',block:'start'})"><div class="hi"><svg viewBox="0 0 24 24" style="fill:${s&&!done||!s?col:'none'};stroke:${col}">${ico}</svg></div><small>${isT?'Made for You':DN[d.getDay()]}</small><b>${s?esc(s.t):'Rest day'}</b><span>${s?s.i.length+' exercises · '+s.m:'Recovery is when you adapt.'}</span></div>`;
+for(let i=1,c=0;i<=14&&c<4;i++){const q=add(d,i),z=sess(q);if(!z)continue;c++;h+=`<div class="pc up" onclick="sel='${fd(q)}';go('today')"><small>${sd2(q)}</small><b>${esc(z.t)}</b><span>${z.m}</span></div>`}
+return h+'</div>'}
+function recent(){const t=fd(new Date()),ks=Object.keys(S.log).filter(k=>S.log[k].c&&k<=t&&sess(pd(k))).sort().reverse().slice(0,8);if(!ks.length)return'';
+return`<h3 class="st">Recently Done ${CHV}</h3><div class="car">${ks.map(k=>{const d=pd(k),z=sess(d),e=S.log[k];return`<div class="rc" onclick="sel='${k}';go('today')"><div class="art d"><svg viewBox="0 0 24 24">${CHK}</svg></div><b>${esc(z.t)}</b><small>${sd2(d)}${e.e?' · Effort '+e.e:''}</small></div>`}).join('')}</div>`}
+function today(){const d=pd(sel),s=sess(d),e=S.log[sel]||{},x=e.x||[],ph=phase(d);let h=hero(d,s,e);
 if(ph==5){const t=sel;h+=`<div class="note">${t<='2027-01-20'?'Sharpen: keep the normal pattern, add nothing new.':t<='2027-01-27'?'Reduce volume by 20–30%: fewer reps, no exhausting leg work.':'Taper: short and comfortable. No hard conditioning in the last 48 hours.'}</div>`}
-if(!s){h+=`<div class="card"><h2>Rest day</h2><p class="sub">Recovery is when you adapt. Gentle walking is optional.</p><div class="ex ${e.c?'on':''}" onclick="tc()"><div class="bx">${e.c?'✓':''}</div><div class="tx"><div class="nm">Gentle walk done</div></div></div></div>`}
-else{h+=`<div class="card"><h2>${s.t}</h2><p class="sub">${P[ph-1].n}</p><div class="sum"><span class="c">${s.i.length} exercises</span><span class="c">⏱ ${s.m}</span></div>${s.i.map((t,i)=>exRow(t,i,x.includes(i),(e.sd||{})[i]||0)).join('')}
+if(!s){h+=`<div class="card" id="sess"><h2>Rest day</h2><p class="sub">Recovery is when you adapt. Gentle walking is optional.</p><div class="ex ${e.c?'on':''}" onclick="tc()"><div class="bx">${e.c?'✓':''}</div><div class="tx"><div class="nm">Gentle walk done</div></div></div></div>`}
+else{h+=`<div class="card" id="sess"><h2>${s.t}</h2><p class="sub">${P[ph-1].n}</p><div class="sum"><span class="c">${s.i.length} exercises</span><span class="c">⏱ ${s.m}</span></div>${s.i.map((t,i)=>exRow(t,i,x.includes(i),(e.sd||{})[i]||0)).join('')}
 <label>How hard was it? (1 easy · 5 maxed)</label><div class="mood">${[1,2,3,4,5].map(n=>`<button class="${e.e==n?'on':''}" onclick="se(${n},this)">${n}</button>`).join('')}</div>
 <div class="row"><div><label>Minutes</label><input type="number" inputmode="numeric" value="${e.m||''}" oninput="sv('m',this.value)"></div></div>
 <label>Notes: energy, soreness, running</label><textarea oninput="sv('n',this.value)">${esc(e.n)}</textarea>
 <button class="btn ${e.c?'done':''}" id="cb" onclick="tc()">${e.c?'Session complete ✓':'Mark session complete'}</button></div>`}
-h+=`<div class="card"><b>This phase</b><p class="sub" style="margin:4px 0 0">${P[ph-1].g}</p></div>`;
+h+=recent();h+=`<div class="card"><b>This phase</b><p class="sub" style="margin:4px 0 0">${P[ph-1].g}</p></div>`;
 if(sel!=fd(new Date()))h+=`<button class="btn ghost" onclick="sel=fd(new Date());go('today')">Back to today</button>`;
 return h}
 function week(){const m=mon(pd(sel)),n=fd(new Date());let h=`<div class="nav"><button onclick="sel=fd(add(pd(sel),-7));go('week')">‹ Prev</button><b>${m.toLocaleDateString(undefined,{day:'numeric',month:'short'})} – ${add(m,6).toLocaleDateString(undefined,{day:'numeric',month:'short'})}</b><button onclick="sel=fd(add(pd(sel),7));go('week')">Next ›</button></div><div class="card">`;
@@ -248,12 +294,12 @@ seg=(k,opts)=>`<div class="mood">${opts.map(([v,n])=>`<button class="${(S[k]||op
 sw=(k,L,list)=>`<label>${L}</label><div class="sws">${list.map(([n,c])=>`<button aria-label="${n}" class="${(S[k]||null)==c?'on':''}" style="background:${c||(k=='acc'?'#e8540f':'#0f3d2e')}" onclick="S.${k}=${c?`'${c}'`:'null'};save();applyS();go('set',1)"></button>`).join('')}</div>`,
 tg=(k,t,d)=>`<div class="tg" onclick="S.${k}=!S.${k};save();applyS();go('set',1)"><div>${t}<small>${d}</small></div><div class="swt ${S[k]?'on':''}"></div></div>`,
 solid=S.nb=='solid';
-return `<div class="card"><h2>Appearance</h2><label>Theme</label>${seg('theme',[['system','System'],['light','Light'],['dark','Dark']])}${sw('acc','Accent colour',A)}${sw('hc','Header colour',H)}</div>
+return `<div class="card"><h2>Appearance</h2><label>Theme</label>${seg('theme',[['system','System'],['light','Light'],['dark','Dark']])}${sw('acc','Accent colour',A)}${sw('hc','Card colour',H)}</div>
 <div class="card"><h2>Tab bar</h2><p class="sub">If you can see through the bar too much, raise the opacity or blur, or choose Solid.</p><label>Style</label>${seg('nb',[['glass','Glass'],['solid','Solid']])}
 <label>Glass opacity</label><input type="range" min="30" max="95" ${solid?'disabled':''} value="${Math.round(Math.max(.3,S.ga||.55)*100)}" oninput="S.ga=this.value/100;applyS();save()">
 <label>Blur</label><input type="range" min="0" max="40" ${solid?'disabled':''} value="${S.bl==null?26:S.bl}" oninput="S.bl=+this.value;applyS();save()">
 <button class="btn ghost" onclick="S.theme=S.acc=S.hc=S.ga=S.bl=S.nb=S.ts=null;save();applyS();go('set',1)">Reset appearance</button></div>
-<div class="card"><h2>Comfort</h2><label>Text size</label>${seg('ts',[['m','Default'],['l','Large'],['x','Largest']])}${tg('rm','Reduce motion','Turns off animations and the tab bar spring.')}${tg('wl','Keep screen on','Stops your phone locking while the app is open, handy mid-workout.')}</div>
+<div class="card"><h2>Comfort</h2><label>Text size</label>${seg('ts',[['m','Default'],['l','Large'],['x','Largest']])}${tg('rm','Reduce motion','Turns off animations and the tab bar spring.')}${tg('wl','Keep screen on','Stops your phone locking while the app is open, handy mid-workout.')}${tg('hp','Haptics','Light taps when you tick things off, switch tabs and finish a session. On iPhone this needs iOS 17.4 or later.')}</div>
 <div class="card"><h2>Trials</h2><label>Trial date</label><input type="date" value="${S.trial}" onchange="S.trial=this.value||'2027-02-02';save();head()"></div>
 ${!navigator.standalone&&/iPhone|iPad/.test(navigator.userAgent)?`<div class="card"><h2>Install on your iPhone</h2><p class="sub">In Safari tap Share, then Add to Home Screen, and open the app from its icon. You get full screen, and notifications only work from the installed app.</p></div>`:''}
 ${notifCard()}
@@ -294,13 +340,18 @@ const tms=()=>S.tm.a+(S.tm.t?Date.now()-S.tm.t:0);
 function ot(i,k){const T=S.tm;if(!T.a&&!T.t){Object.assign(T,{a:0,t:0,k,i,km:k=='t'?'1.6':'',n:k=='t'?'1.6 km time trial':i>=0?parse(sess(pd(sel)).i[i]).n:'Run',d:fd(new Date()),sl:sel});save()}tsh();document.body.classList.add('so')}
 function tsh(){const T=S.tm;$('#sh').innerHTML=`<div class="gr"></div><h2>${esc(T.n)}</h2><div class="tmr" id="tt">${fm(tms()/1e3)}</div><div class="row"><button class="btn ghost" onclick="tmR()">Reset</button><button class="btn" id="tgb" onclick="tmT()">${T.t?'Pause':tms()?'Resume':'Start'}</button></div>
 <label>Distance in km (optional, gives you pace)</label><input type="number" step="0.01" inputmode="decimal" value="${T.km||''}" oninput="S.tm.km=this.value;save()"><button class="btn" style="background:var(--ok)" onclick="tmS()">Save this run</button><button class="btn ghost" onclick="cl()">Hide (timer keeps running)</button>`}
-function tmT(){const T=S.tm;if(T.t){T.a+=Date.now()-T.t;T.t=0}else T.t=Date.now();save();$('#tgb').textContent=T.t?'Pause':'Resume';mini()}
+function tmT(){const T=S.tm;if(T.t){T.a+=Date.now()-T.t;T.t=0}else T.t=Date.now();save();const g=$('#tgb');if(g)g.textContent=T.t?'Pause':'Resume';mini()}
 function tmR(){if(tms()&&!confirm('Reset the timer?'))return;S.tm={a:0,t:0};save();cl();mini()}
 function tmS(){const T=S.tm;if(T.t){T.a+=Date.now()-T.t;T.t=0}const sec=Math.round(T.a/1e3);if(sec<5){alert('Start the timer first.');return}
-const k=+T.km||(T.k=='t'?1.6:0);S.runs.push({d:T.d,n:T.n,s:sec,k:k||0,t:T.k});
+const k=+T.km||(T.k=='t'?1.6:0);HP('w');S.runs.push({d:T.d,n:T.n,s:sec,k:k||0,t:T.k});
 if(T.i>=0&&tab=='today'&&T.sl==sel){const s=sess(pd(sel));if(s){const e=lg();e.m=e.m||Math.round(sec/60);sd1(T.i,tot(s.i[T.i]),true);e.c=(e.x||[]).length==s.i.length}}
 S.tm={a:0,t:0};save();cl();mini();go(tab,1)}
-function mini(){const T=S.tm,on=(T.a||T.t)&&!document.body.classList.contains('so');let b=$('#mt');if(!b){b=document.createElement('button');b.id='mt';b.onclick=()=>{tsh();document.body.classList.add('so')};document.body.appendChild(b)}b.style.display=on?'block':'none';b.textContent=(T.t?'⏱ ':'⏸ ')+fm(tms()/1e3)+' · '+(T.n||'')}
+const PAU='<svg viewBox="0 0 24 24"><rect x="6" y="5" width="4" height="14" rx="1.3"/><rect x="14" y="5" width="4" height="14" rx="1.3"/></svg>',PLY='<svg viewBox="0 0 24 24"><path d="M7.5 4.8v14.4a.8.8 0 001.2.7l11-7.2a.8.8 0 000-1.4L8.7 4.1a.8.8 0 00-1.2.7z"/></svg>';
+function mini(){const T=S.tm,on=(T.a||T.t)&&!document.body.classList.contains('so');let b=$('#mt');
+if(!b){b=document.createElement('div');b.id='mt';b.setAttribute('role','button');b.innerHTML='<i class="ma"></i><span class="mi"><b></b><small></small></span><span class="mp" role="button" aria-label="Pause or resume"></span>';
+b.onclick=()=>{tsh();document.body.classList.add('so')};b.querySelector('.mp').onclick=e=>{e.stopPropagation();tmT()};document.body.appendChild(b)}
+b.style.display=on?'flex':'none';if(!on)return;const q=b.querySelector('.mi');q.firstChild.textContent=T.n||'Run';q.lastChild.textContent=fm(tms()/1e3)+(T.t?' · running':' · paused');
+const k=T.t?'1':'0';if(b.dataset.s!==k){b.dataset.s=k;b.querySelector('.mp').innerHTML=T.t?PAU:PLY}}
 setInterval(()=>{const t=$('#tt');if(t)t.textContent=fm(tms()/1e3);if(S.tm.a||S.tm.t)mini()},500);
 function exs(){return`<div class="srch"><input id="q" type="search" placeholder="Search exercises…" autocomplete="off" oninput="fx(this.value)"></div><div class="card" id="el">${exl('')}</div>`}
 function exl(q){q=q.trim().toLowerCase();const r=L.map((e,i)=>[e,i]).filter(([e])=>!q||(e[0]+' '+e[2]).toLowerCase().includes(q));
@@ -309,12 +360,12 @@ function fx(v){$('#el').innerHTML=exl(v)}
 function op(i){const e=L[i];$('#sh').innerHTML=`<div class="gr"></div><h2>${e[0]}</h2><ol>${e[2].split('|').map(s=>`<li>${s}</li>`).join('')}</ol><div class="w"><b>Watch out:</b> ${e[3]}</div>${e[4]?`<a class="btn yt" href="${yt(i)}" target="_blank" rel="noopener">▶ Watch the YouTube Short</a>`:''}<button class="btn ghost" onclick="cl()">Done</button>`;$('#sh').scrollTop=0;document.body.classList.add('so');mini()}
 function cl(){document.body.classList.remove('so');mini()}
 function lg(){return S.log[sel]=S.log[sel]||{}}
-function rr(i){const s=sess(pd(sel)),e=lg(),el=document.querySelector(`.ex[data-i="${i}"]`);if(el)el.outerHTML=exRow(s.i[i],i,(e.x||[]).includes(i),(e.sd||{})[i]||0);e.c=!!s&&(e.x||[]).length==s.i.length;cs();save();head()}
+function rr(i){const s=sess(pd(sel)),e=lg(),was=e.c,el=document.querySelector(`.ex[data-i="${i}"]`);if(el)el.outerHTML=exRow(s.i[i],i,(e.x||[]).includes(i),(e.sd||{})[i]||0);e.c=!!s&&(e.x||[]).length==s.i.length;if(e.c&&!was)HP('w');cs();save();head()}
 function sd1(i,n,on){const e=lg(),x=e.x=e.x||[],sd=e.sd=e.sd||{},k=x.indexOf(i);if(n!=null)sd[i]=n;if(on&&k<0)x.push(i);if(!on&&k>=0)x.splice(k,1)}
-function tg(i){const s=sess(pd(sel)),e=lg(),on=!(e.x||[]).includes(i),n=tot(s.i[i]);sd1(i,on?n:0,on);rr(i)}
+function tg(i){const s=sess(pd(sel)),e=lg(),on=!(e.x||[]).includes(i),n=tot(s.i[i]);HP(on?'s':'t');sd1(i,on?n:0,on);rr(i)}
 function ps(i,n){const s=sess(pd(sel)),e=lg(),t=tot(s.i[i]),c=(e.sd||{})[i]||0,v=c==n?n-1:n;sd1(i,v,v>=t);rr(i)}
 function cs(){const b=$('#cb'),c=lg().c;if(b){b.classList.toggle('done',!!c);b.textContent=c?'Session complete ✓':'Mark session complete'}}
-function tc(){const e=lg(),s=sess(pd(sel));e.c=!e.c;if(s){if(e.c){e.x=s.i.map((_,i)=>i);e.sd={};s.i.forEach((t,i)=>e.sd[i]=tot(t))}else{e.x=[];e.sd={}}}save();go('today',1)}
+function tc(){const e=lg(),s=sess(pd(sel));e.c=!e.c;HP(e.c?'w':'t');if(s){if(e.c){e.x=s.i.map((_,i)=>i);e.sd={};s.i.forEach((t,i)=>e.sd[i]=tot(t))}else{e.x=[];e.sd={}}}save();go('today',1)}
 function se(n,b){const e=lg();e.e=e.e==n?0:n;document.querySelectorAll('.mood button').forEach((x,i)=>x.classList.toggle('on',e.e==i+1));save()}
 function sv(k,v){lg()[k]=v;save()}
 const TABS=[['today','Today','<path d="M12 3l2.6 5.6 6 .8-4.4 4.2 1.1 6L12 16.8 6.7 19.6l1.1-6L3.4 9.4l6-.8z"/>'],['week','Week','<rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M9 3v4M15 3v4"/>'],['plan','Plan','<path d="M4 6h16M4 12h16M4 18h10"/>'],['tips','Progress','<path d="M4 19V5M4 19h16M8 15l4-4 3 3 5-6"/>'],['ex','Exercises','<circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/>'],['set','Settings','<path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/>']];
@@ -323,12 +374,12 @@ const NB=[...$('#nav').querySelectorAll('button')],NV=$('#nav');let cw=0,dg=0,ci
 const cellW=()=>(NV.clientWidth-12)/TABS.length,Z_PL=$('#nav .pill'),Z_cur=()=>TABS.findIndex(b=>b[0]==tab),Z_cl5=(v,m)=>Math.max(0,Math.min(m,v));
 let Z_px=0,Z_tx=0,Z_vx=0,Z_lx=0,Z_lt=0,Z_sX=0,Z_nl=0,Z_ps=0;
 const pp=(x,sc)=>{Z_px=x;Z_PL.style.translate=x+'px 0';Z_PL.style.scale=sc||1},Z_pvs=i=>NB.forEach((b,j)=>b.classList.toggle('pv',j==i));
-function Z_loop(){if(Z_ps!=2)return;Z_px+=(Z_tx-Z_px)*.4;Z_PL.style.translate=Z_px.toFixed(2)+'px 0';const i=Z_cl5(Math.round(Z_px/cw),TABS.length-1);if(i!=ci){ci=i;Z_pvs(i)}requestAnimationFrame(Z_loop)}
+function Z_loop(){if(Z_ps!=2)return;Z_px+=(Z_tx-Z_px)*.4;Z_PL.style.translate=Z_px.toFixed(2)+'px 0';const i=Z_cl5(Math.round(Z_px/cw),TABS.length-1);if(i!=ci){ci=i;Z_pvs(i);HP('t')}requestAnimationFrame(Z_loop)}
 function Z_fin(i,go1){Z_ps=0;NV.classList.remove('drag');Z_pvs(-1);pp(i*cw,1);if(go1)requestAnimationFrame(()=>go(TABS[i][0]))}
 NV.addEventListener('pointerdown',e=>{cw=cellW();Z_nl=NV.getBoundingClientRect().left+6;Z_sX=Z_lx=e.clientX;Z_lt=e.timeStamp;Z_vx=0;Z_ps=1;ci=Z_cl5(Math.floor((e.clientX-Z_nl)/cw),TABS.length-1);NV.setPointerCapture(e.pointerId);Z_PL.style.translate=ci*cw+'px 0';Z_PL.style.scale=1.1;Z_px=ci*cw;Z_pvs(ci)});
 NV.addEventListener('pointermove',e=>{if(!Z_ps)return;if(Z_ps==1&&Math.abs(e.clientX-Z_sX)>4){Z_ps=2;NV.classList.add('drag');Z_px=parseFloat(getComputedStyle(Z_PL).translate)||Z_px;requestAnimationFrame(Z_loop)}
 if(Z_ps==2){Z_tx=Z_cl5(e.clientX-Z_nl-cw/2,(TABS.length-1)*cw);const dt=e.timeStamp-Z_lt;if(dt>0)Z_vx=Z_vx*.6+((e.clientX-Z_lx)/dt)*.4;Z_lx=e.clientX;Z_lt=e.timeStamp}});
-NV.addEventListener('pointerup',()=>{if(!Z_ps)return;const i=Z_ps==2?Z_cl5(Math.round((Z_px+Z_vx*140)/cw),TABS.length-1):ci;Z_fin(i,1)});
+NV.addEventListener('pointerup',()=>{if(!Z_ps)return;HP('s');const i=Z_ps==2?Z_cl5(Math.round((Z_px+Z_vx*140)/cw),TABS.length-1):ci;Z_fin(i,1)});
 NV.addEventListener('pointercancel',()=>{if(Z_ps)Z_fin(Z_cur(),0)});
 NV.addEventListener('contextmenu',e=>e.preventDefault());
 addEventListener('resize',()=>pp(Z_cur()*cellW(),1));
@@ -355,8 +406,9 @@ function updBadge(){try{if(!navigator.setAppBadge)return;const m=mon(new Date())
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)remCheck()});setInterval(remCheck,60000);
 /* ===== Passcode + cloud sync (Supabase). No accounts: the passcode is checked on the server by small
    database functions (see supabase-setup.sql). Offline, it is checked against a salted hash kept on this device. ===== */
+const APP_V='12';
 const SB_URL='https://ttdiasiwavlnavirxysi.supabase.co',SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR0ZGlhc2l3YXZsbmF2aXJ4eXNpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIwMjA2NTQsImV4cCI6MjEwNzU5NjY1NH0.JWBvqVzDLBKR5of2C4zXFQBa8ZvAoU2wNSB17RTW_4I';
-const LOC=['tm','wl','rem','remSent'];/* stopwatch, keep-awake and reminders stay per-device */
+const LOC=['tm','wl','rem','remSent','hp'];/* stopwatch, keep-awake and reminders stay per-device */
 const SBK='ht_sb';let SB={};try{SB=JSON.parse(localStorage.getItem(SBK)||'{}')||{}}catch(e){}
 const sbs=()=>{try{localStorage.setItem(SBK,JSON.stringify({syn:SB.syn||0}))}catch(e){}};
 let PIN='',sbm='',sbBusy=0,sbDirty=0,sbPt;
@@ -365,21 +417,39 @@ async function rpc(fn,args,to){const h={apikey:SB_KEY,'Content-Type':'applicatio
 const r=await fetch(SB_URL+'/rest/v1/rpc/'+fn,{method:'POST',headers:h,body:JSON.stringify(args||{}),signal:(to&&window.AbortSignal&&AbortSignal.timeout)?AbortSignal.timeout(to):undefined});let j=null;try{j=await r.json()}catch(e){}
 if(!r.ok){const er=new Error((j&&(j.message||j.msg||j.error))||'Error '+r.status);er.st=r.status;throw er}return j}
 const hasData=()=>Object.keys(S.log).length||S.runs.length||Object.keys(S.bm).length;
+const strip=o=>{const x={...o};LOC.forEach(k=>delete x[k]);delete x.mod;return x};
+const stab=o=>JSON.stringify(o,(k,v)=>v&&typeof v=='object'&&!Array.isArray(v)?Object.keys(v).sort().reduce((x,y)=>(x[y]=v[y],x),{}):v);
+function mergeS(a,b){/* a = newer copy, b = older copy: keep everything from both, newer wins when the same item differs */
+const o={...b,...a};o.log={...(b.log||{}),...(a.log||{})};o.bm={...(b.bm||{}),...(a.bm||{})};
+const k=r=>[r.d,r.n,r.s,r.k,r.t].join('|'),seen=new Set();o.runs=[...(a.runs||[]),...(b.runs||[])].filter(r=>{const x=k(r);if(seen.has(x))return 0;seen.add(x);return 1});return o}
 const remMod=d=>(d&&(d.mod||(d.ts>1e12?d.ts:0)))||0;
-function adopt(d){const o=S;if(d.ts>1e12)delete d.ts;S=d;LOC.forEach(k=>{if(o[k]!==undefined)S[k]=o[k];else delete S[k]});norm();persist();applyS();go(tab,1)}
-function qp(){if(!PIN)return;clearTimeout(sbPt);sbPt=setTimeout(()=>sync(),2500)}
-async function sync(){if(!PIN||sbBusy)return sbBusy?(sbDirty=1):0;sbBusy=1;persist();sbMsg('Syncing…');
-try{let r=await rpc('ht_load',{p:PIN},12000);
+let pend=0;
+const uiBusy=()=>document.body.classList.contains('so')||/^(INPUT|TEXTAREA|SELECT)$/.test((document.activeElement||{}).tagName||'');
+function adopt(d){const o=S;if(d.ts>1e12)delete d.ts;S=d;LOC.forEach(k=>{if(o[k]!==undefined)S[k]=o[k];else delete S[k]});norm();persist();applyS();if(uiBusy())pend=1;else go(tab,1)}
+function qp(){if(!PIN)return;clearTimeout(sbPt);sbPt=setTimeout(()=>sync(),350)}
+async function syncPass(){let r=await rpc('ht_load',{p:PIN},12000);
 if(!r.ok&&r.reason=='nopin'){await rpc('ht_set_pin',{new_pin:PIN,old_pin:null},10000);r=await rpc('ht_load',{p:PIN},12000)}
-if(!r.ok){if(r.reason=='bad'){PIN='';sbMsg('Passcode changed on another device.');lkShow('unlock')}else sbMsg(r.reason=='locked'?'Too many wrong tries. Waiting a few minutes.':'Sync failed.');sbBusy=0;return}
-const d=r.data&&Object.keys(r.data).length?r.data:null,rt=d?remMod(d):0,lt=S.mod||0;let a;
-if(!d)a='push';
-else if(!SB.syn&&hasData()&&rt)a=confirm('Found saved data in the cloud (saved '+new Date(rt).toLocaleString()+').\n\nOK = use the cloud data on this device.\nCancel = replace the cloud data with this device’s data.')?'pull':'push';
-else a=rt>lt?'pull':(lt>rt||!rt)?'push':'none';
-if(a=='pull')adopt(d);else if(a=='push'){S.mod=S.mod||Date.now();persist();const x={...S};LOC.forEach(k=>delete x[k]);const w=await rpc('ht_save',{p:PIN,d:x},15000);if(!w.ok)throw new Error('Save was refused ('+w.reason+')')}
-SB.syn=Date.now();sbs();sbMsg('Synced '+new Date().toLocaleTimeString([],{hour:'numeric',minute:'2-digit'}))}
+if(!r.ok){if(r.reason=='bad'){PIN='';sbMsg('Passcode changed on another device.');lkShow('unlock')}else sbMsg(r.reason=='locked'?'Too many wrong tries. Waiting a few minutes.':'Sync failed.');return 'stop'}
+const d=r.data&&Object.keys(r.data).length?r.data:null,lt=S.mod||0,sl0=strip(S);let n,w;
+if(!d){S.mod=S.mod||Date.now();persist();n=Object.keys(S.log).length;w=await rpc('ht_save',{p:PIN,d:{...sl0,mod:S.mod},ev:r.v},15000)}
+else{const rt=remMod(d),dr=strip(d),m=rt>lt?mergeS(dr,sl0):mergeS(sl0,dr),sm=stab(m),sl=stab(sl0),sr=stab(dr);
+m.mod=sm==sr?rt:Date.now();n=Object.keys(m.log).length;
+if(sm!=sl)adopt({...m});else if(lt!=m.mod){S.mod=m.mod;persist()}
+w=sm!=sr?await rpc('ht_save',{p:PIN,d:m,ev:r.v},15000):{ok:true,v:r.v}}
+if(!w.ok){if(w.reason=='stale')return 'stale';throw new Error('Save was refused ('+w.reason+')')}
+SB.rv=w.v||r.v;SB.syn=Date.now();sbs();return n}
+async function sync(){if(!PIN)return;if(sbBusy){sbDirty=1;return}sbBusy=1;persist();
+try{let n='stale';for(let i=0;i<3&&n=='stale';i++)n=await syncPass();
+if(typeof n=='number')sbMsg('Synced '+new Date().toLocaleTimeString([],{hour:'numeric',minute:'2-digit',second:'2-digit'})+' · '+n+' day'+(n==1?'':'s')+' logged')}
 catch(e){sbMsg(navigator.onLine===false||!e.st&&e.name!='Error'?'Offline. Your changes are saved here and will sync later.':'Sync failed: '+e.message)}
 sbBusy=0;if(sbDirty){sbDirty=0;qp()}}
+/* Near-instant sync: every 2 seconds, while the app is open and unlocked, ask the cloud (a tiny request) whether
+   anything changed, and only then do a full sync. If the tiny request is not installed yet, fall back to every 10 seconds. */
+let pollBusy=0,lastFull=0;
+async function poll(){if(!PIN||LS.m||document.hidden||sbBusy||pollBusy||navigator.onLine===false)return;
+if(pend&&!uiBusy()){pend=0;go(tab,1)}
+pollBusy=1;try{const v=await rpc('ht_version',{p:PIN},4000);if(v.ok&&v.v!==SB.rv)sync();else if(!v.ok&&v.reason=='bad')sync()}
+catch(e){if(e.st==404&&Date.now()-lastFull>10000){lastFull=Date.now();sync()}}pollBusy=0}
 async function erase(){if(!confirm('Erase all logged sessions and settings'+(PIN?', here and in the cloud':'')+'? This cannot be undone.')||!confirm('Really erase everything?'))return;
 if(PIN){try{const w=await rpc('ht_save',{p:PIN,d:{}},10000);if(!w.ok)throw new Error(w.reason)}catch(e){alert('Could not erase the cloud copy ('+e.message+'). Nothing was erased. Try again when you are online.');return}}
 S={};norm();persist();location.reload()}
@@ -390,7 +460,7 @@ let LK=null;try{LK=JSON.parse(localStorage.getItem('ht_lk')||'null')}catch(e){}
 async function mkLK(pin){const salt=lkHx(crypto.getRandomValues(new Uint8Array(16)));LK={s:salt,h:await lkH(pin,salt)};try{localStorage.setItem('ht_lk',JSON.stringify(LK))}catch(e){}}
 let LS={m:'',b:'',f:'',msg:'',busy:0,until:0,fail:0},lkAway=0;
 function lkShow(m){if(m=='unlock'&&!LK)return;LS={...LS,m,b:'',f:'',msg:'',busy:0};document.body.classList.add('lkd');lkR()}
-function lkOpen(){LS.m='';LS.b='';LS.fail=0;document.body.classList.remove('lkd');$('#lk').innerHTML='';go(tab,1);sync()}
+function lkOpen(){HP('w');LS.m='';LS.b='';LS.fail=0;document.body.classList.remove('lkd');$('#lk').innerHTML='';go(tab,1);sync()}
 function lkClose(){LS.m='';document.body.classList.remove('lkd');$('#lk').innerHTML=''}
 function lkDots(){const d=$('#lkdt');if(d)d.innerHTML=[0,1,2,3,4,5].map(i=>`<i class="${i<LS.b.length?'f':''}"></i>`).join('')}
 function lkX(){const x=$('#lkx');if(x)x.textContent=LS.b?'Delete':/^chg/.test(LS.m)?'Cancel':''}
@@ -404,7 +474,7 @@ function lkK(k){if(LS.busy)return;
 if(k=='x'){if(LS.b){LS.b=LS.b.slice(0,-1);lkDots();lkX();return}if(/^chg/.test(LS.m))lkClose();return}
 if(LS.until>Date.now()){lkMsg('Too many tries. Wait a moment.');return}
 if(LS.b.length>=6)return;LS.b+=k;lkDots();lkX();if(LS.b.length==6)setTimeout(lkDone,120)}
-function lkBad(msg,re){LS.fail++;if(LS.fail>=5){LS.until=Date.now()+30000;LS.fail=0;msg='Too many tries. Wait 30 seconds.'}LS.b='';if(re){LS.msg='';lkR()}lkDots();lkX();lkMsg(msg,1)}
+function lkBad(msg,re){HP('e');LS.fail++;if(LS.fail>=5){LS.until=Date.now()+30000;LS.fail=0;msg='Too many tries. Wait 30 seconds.'}LS.b='';if(re){LS.msg='';lkR()}lkDots();lkX();lkMsg(msg,1)}
 async function lkCheck(pin){
 if(navigator.onLine!==false){try{const r=await rpc('ht_verify',{p:pin},6000);
 if(r.ok){if(!LK||LK.h!==await lkH(pin,LK.s))await mkLK(pin);return 'ok'}
@@ -433,11 +503,11 @@ if(LK){lkShow('unlock');return}
 LS.msg='';lkShow('wait');
 try{const r=await rpc('ht_status',{},8000);lkShow(r.has_pin?'old':'new1')}catch(e){LS.m='off';LS.msg='Connect to the internet once to set up your passcode.';lkR()}}
 document.addEventListener('visibilitychange',()=>{if(document.hidden)lkAway=Date.now();else if(LK&&!LS.m&&lkAway&&Date.now()-lkAway>300000)lkShow('unlock')});
-function cloud(){return `<div class="card"><h2>Passcode</h2><p class="sub">Your progress syncs to the cloud automatically.</p><p class="sub" id="sbm">${esc(sbm)}</p><div class="row"><button class="btn ghost" onclick="lkShow('unlock')">Lock now</button><button class="btn ghost" onclick="lkShow('chg0')">Change passcode</button></div></div>`}
+function cloud(){return `<div class="card"><h2>Passcode</h2><p class="sub">Your progress syncs to the cloud automatically.</p><p class="sub" id="sbm">${esc(sbm)}</p><button class="btn" onclick="sync()">Sync now</button><div class="row"><button class="btn ghost" onclick="lkShow('unlock')">Lock now</button><button class="btn ghost" onclick="lkShow('chg0')">Change passcode</button></div><p class="sub" style="margin-top:10px">App version ${APP_V}</p></div>`}
 go('today');mini();remCheck();
 if(navigator.storage&&navigator.storage.persist)navigator.storage.persist().catch(()=>{});
 let td=fd(new Date());
 document.addEventListener('visibilitychange',()=>{if(document.hidden){persist();return}const n=fd(new Date());if(n!=td){if(sel==td)sel=n;td=n;go(tab,1)}sync()});
-addEventListener('online',()=>sync());sync();lkInit();
+addEventListener('online',()=>sync());addEventListener('focus',()=>{if(!LS.m)sync()});setInterval(poll,2000);sync();lkInit();
 if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
 </script></body></html>

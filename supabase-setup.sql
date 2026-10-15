@@ -1,4 +1,5 @@
--- Run this ONCE in Supabase: Dashboard > SQL Editor > New query > paste > Run.
+-- Run this in Supabase: Dashboard > SQL Editor > New query > paste > Run.
+-- Safe to run again at any time: it never resets your passcode or your data.
 -- No accounts, no emails. One private row holds your passcode (hashed) and your data.
 -- The table is closed to the public; the app can only reach it through the functions below,
 -- and every function checks your passcode on the server first.
@@ -25,7 +26,9 @@ begin
   if r.pin_hash is null then return 'nopin'; end if;
   if r.locked_until is not null and r.locked_until > now() then return 'locked'; end if;
   if r.pin_hash = crypt(coalesce(p, ''), r.pin_hash) then
-    update public.tracker set fails = 0, locked_until = null where id = 1;
+    if r.fails <> 0 or r.locked_until is not null then
+      update public.tracker set fails = 0, locked_until = null where id = 1;
+    end if;
     return 'ok';
   end if;
   if r.fails + 1 >= 8 then
@@ -70,22 +73,41 @@ declare c text := public.ht_check(p); d jsonb;
 begin
   if c <> 'ok' then return jsonb_build_object('ok', false, 'reason', c); end if;
   select data into d from public.tracker where id = 1;
-  return jsonb_build_object('ok', true, 'data', d);
+  return jsonb_build_object('ok', true, 'data', d, 'v', public.ht_ver());
 end $$;
 
-create or replace function public.ht_save(p text, d jsonb) returns jsonb
+create or replace function public.ht_ver() returns bigint
+language sql stable security definer set search_path = public as $$
+  select (extract(epoch from updated_at) * 1000)::bigint from public.tracker where id = 1;
+$$;
+
+drop function if exists public.ht_save(text, jsonb);   -- replaced by the versioned one below
+
+create or replace function public.ht_save(p text, d jsonb, ev bigint default null) returns jsonb
 language plpgsql security definer set search_path = public as $$
 declare c text := public.ht_check(p);
 begin
   if c <> 'ok' then return jsonb_build_object('ok', false, 'reason', c); end if;
+  if ev is not null and ev <> public.ht_ver() then
+    return jsonb_build_object('ok', false, 'reason', 'stale');
+  end if;
   update public.tracker set data = d, updated_at = now() where id = 1;
-  return jsonb_build_object('ok', true);
+  return jsonb_build_object('ok', true, 'v', public.ht_ver());
 end $$;
 
--- only the five app functions are callable from the app
-revoke all on function public.ht_check(text) from public, anon, authenticated;
-revoke all on function public.ht_status(), public.ht_verify(text), public.ht_set_pin(text, text), public.ht_load(text), public.ht_save(text, jsonb) from public;
-grant execute on function public.ht_status(), public.ht_verify(text), public.ht_set_pin(text, text), public.ht_load(text), public.ht_save(text, jsonb) to anon, authenticated;
+-- tiny check the app makes every 2 seconds: "has anything changed?"
+create or replace function public.ht_version(p text) returns jsonb
+language plpgsql security definer set search_path = public as $$
+declare c text := public.ht_check(p);
+begin
+  if c <> 'ok' then return jsonb_build_object('ok', false, 'reason', c); end if;
+  return jsonb_build_object('ok', true, 'v', public.ht_ver());
+end $$;
+
+-- only these functions are callable from the app
+revoke all on function public.ht_check(text), public.ht_ver() from public, anon, authenticated;
+revoke all on function public.ht_status(), public.ht_verify(text), public.ht_set_pin(text, text), public.ht_load(text), public.ht_save(text, jsonb, bigint), public.ht_version(text) from public;
+grant execute on function public.ht_status(), public.ht_verify(text), public.ht_set_pin(text, text), public.ht_load(text), public.ht_save(text, jsonb, bigint), public.ht_version(text) to anon, authenticated;
 
 -- Forgot your passcode? Run this, then set a new one in the app:
 --   update public.tracker set pin_hash = null, fails = 0, locked_until = null where id = 1;
