@@ -334,7 +334,7 @@ const dtt=()=>Math.round((pd(S.trial)-new Date(fd(new Date())+'T00:00'))/864e5);
 const stat=(n,l,oc,i)=>`<div class="pc stat" onclick="${oc||"go('tips')"}">${i?gi2(i):''}<em data-n="${n}">${n}</em><span>${l}</span></div>`;
 const sd2=d=>DN[d.getDay()].slice(0,3)+' '+d.getDate();
 function hero(d,s,e){const isT=sel==fd(new Date()),done=!!e.c,col=done?'var(--ok)':'var(--ball)';
-let h=`<h3 class="st">Top Picks for You</h3><div class="car"><div class="pc hero" onclick="document.getElementById('sess').scrollIntoView({behavior:'smooth',block:'start'})"><div class="hi"><svg viewBox="0 0 24 24" style="fill:none;stroke:${col};${done?'stroke-width:2.2':''}">${done?CHK:IC[s?sico(s.t):'moon']}</svg></div><small>${isT?'Made for You':DN[d.getDay()]}</small><b>${s?esc(s.t):'Rest day'}</b><span>${s?s.i.length+' exercises · '+s.m:'Recovery is when you adapt.'}</span></div>`;
+let h=`<h3 class="st">${isT?"Today's Training":DN[d.getDay()]+"'s Training"}</h3><div class="car"><div class="pc hero" onclick="document.getElementById('sess').scrollIntoView({behavior:'smooth',block:'start'})"><div class="hi"><svg viewBox="0 0 24 24" style="fill:none;stroke:${col};${done?'stroke-width:2.2':''}">${done?CHK:IC[s?sico(s.t):'moon']}</svg></div><small>${isT?'Up today':DN[d.getDay()]}</small><b>${s?esc(s.t):'Rest day'}</b><span>${s?s.i.length+' exercises · '+s.m:'Recovery is when you adapt.'}</span></div>`;
 if(isT)h+=stat(dtt()>0?dtt():'–','days to trials',0,'trophy')+stat(streak(),'session streak',0,'flame');
 for(let i=1,c=0;i<=14&&c<4;i++){const q=add(d,i),z=sess(q);if(!z)continue;c++;h+=`<div class="pc up" onclick="pv('${fd(q)}')">${gi(z.t)}<small>${sd2(q)}</small><b>${esc(z.t)}</b><span>${z.m}</span></div>`}
 return h+'</div>'}
@@ -478,7 +478,7 @@ function updBadge(){try{if(!navigator.setAppBadge)return;const m=mon(new Date())
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)remCheck()});setInterval(remCheck,60000);
 /* ===== Passcode + cloud sync (Supabase). No accounts: the passcode is checked on the server by small
    database functions (see supabase-setup.sql). Offline, it is checked against a salted hash kept on this device. ===== */
-const APP_V='16';
+const APP_V='17';
 const SB_URL='https://ttdiasiwavlnavirxysi.supabase.co',SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR0ZGlhc2l3YXZsbmF2aXJ4eXNpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIwMjA2NTQsImV4cCI6MjEwNzU5NjY1NH0.JWBvqVzDLBKR5of2C4zXFQBa8ZvAoU2wNSB17RTW_4I';
 const LOC=['tm','wl','rem','remSent','hp','sn','sv'];/* stopwatch, keep-awake and reminders stay per-device */
 const SBK='ht_sb';let SB={};try{SB=JSON.parse(localStorage.getItem(SBK)||'{}')||{}}catch(e){}
