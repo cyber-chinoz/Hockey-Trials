@@ -309,7 +309,7 @@ const dtt=()=>Math.round((pd(S.trial)-new Date(fd(new Date())+'T00:00'))/864e5);
 const stat=(n,l,oc)=>`<div class="pc stat" onclick="${oc||"go('tips')"}"><em>${n}</em><span>${l}</span></div>`;
 const sd2=d=>DN[d.getDay()].slice(0,3)+' '+d.getDate();
 function hero(d,s,e){const isT=sel==fd(new Date()),done=!!e.c,col=done?'var(--ok)':'var(--ball)',ico=!s?MOON:done?CHK:STAR;
-let h=`<h3 class="st">Top Picks for You</h3><div class="car"><div class="pc hero" onclick="document.getElementById('sess').scrollIntoView({behavior:'smooth',block:'start'})"><div class="hi"><svg viewBox="0 0 24 24" style="fill:${s&&!done||!s?col:'none'};stroke:${col}">${ico}</svg></div><small>${isT?'Made for You':DN[d.getDay()]}</small><b>${s?esc(s.t):'Rest day'}</b><span>${s?s.i.length+' exercises · '+s.m:'Recovery is when you adapt.'}</span></div>`;
+let h=`<h3 class="st">Coming Up</h3><div class="car"><div class="pc hero" onclick="document.getElementById('sess').scrollIntoView({behavior:'smooth',block:'start'})"><div class="hi"><svg viewBox="0 0 24 24" style="fill:${s&&!done||!s?col:'none'};stroke:${col}">${ico}</svg></div><small>${isT?'Made for You':DN[d.getDay()]}</small><b>${s?esc(s.t):'Rest day'}</b><span>${s?s.i.length+' exercises · '+s.m:'Recovery is when you adapt.'}</span></div>`;
 if(isT)h+=stat(dtt()>0?dtt():'–','days to trials')+stat(streak(),'session streak');
 for(let i=1,c=0;i<=14&&c<4;i++){const q=add(d,i),z=sess(q);if(!z)continue;c++;h+=`<div class="pc up" onclick="sel='${fd(q)}';go('today')"><small>${sd2(q)}</small><b>${esc(z.t)}</b><span>${z.m}</span></div>`}
 return h+'</div>'}
