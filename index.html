@@ -73,7 +73,7 @@ nav{position:fixed;left:14px;right:14px;bottom:max(calc(env(safe-area-inset-bott
 background:var(--glass);-webkit-backdrop-filter:blur(26px) saturate(190%) brightness(1.05);backdrop-filter:blur(26px) saturate(190%) brightness(1.05);
 border:1px solid var(--glass-b);box-shadow:0 10px 34px rgba(0,0,0,.18),0 2px 6px rgba(0,0,0,.08),inset 0 1.5px 0 rgba(255,255,255,.65),inset 0 -1px 0 rgba(255,255,255,.12)}
 nav::before{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(180deg,rgba(255,255,255,.35),rgba(255,255,255,0) 45%);pointer-events:none}
-nav .pill{position:absolute;top:6px;bottom:6px;left:6px;width:calc((100% - 12px)/5);border-radius:28px;transform-origin:center;background:linear-gradient(180deg,rgba(255,255,255,.42),rgba(255,255,255,.12)),color-mix(in srgb,var(--ball) 14%,transparent);-webkit-backdrop-filter:blur(3px) saturate(220%) brightness(1.12);backdrop-filter:blur(3px) saturate(220%) brightness(1.12);box-shadow:inset 0 1.5px 0 rgba(255,255,255,.8),inset 0 -1px 0 rgba(255,255,255,.25),inset 0 0 0 1px rgba(255,255,255,.18),0 2px 10px rgba(0,0,0,.12);transition:transform .6s var(--spring),box-shadow .3s}
+nav .pill{position:absolute;top:6px;bottom:6px;left:6px;width:calc((100% - 12px)/6);border-radius:28px;transform-origin:center;background:linear-gradient(180deg,rgba(255,255,255,.42),rgba(255,255,255,.12)),color-mix(in srgb,var(--ball) 14%,transparent);-webkit-backdrop-filter:blur(3px) saturate(220%) brightness(1.12);backdrop-filter:blur(3px) saturate(220%) brightness(1.12);box-shadow:inset 0 1.5px 0 rgba(255,255,255,.8),inset 0 -1px 0 rgba(255,255,255,.25),inset 0 0 0 1px rgba(255,255,255,.18),0 2px 10px rgba(0,0,0,.12);transition:transform .6s var(--spring),box-shadow .3s}
 nav.drag .pill{transition:transform .09s linear,box-shadow .3s;box-shadow:inset 0 2px 0 rgba(255,255,255,.9),inset 0 0 0 1px rgba(255,255,255,.3),0 10px 26px rgba(0,0,0,.28)}
 nav.drag button.on:not(.pv){color:var(--mut)}nav button.pv{color:var(--ball)}nav button.pv svg{transform:scale(1.14)}nav button svg{transition:transform .3s var(--spring)}
 body::after{content:"";position:fixed;left:0;right:0;bottom:0;height:calc(max(env(safe-area-inset-bottom,0px),8px) + 84px);background:linear-gradient(transparent,color-mix(in srgb,var(--bg) 92%,transparent));pointer-events:none;z-index:15}
@@ -199,7 +199,7 @@ const sess=d=>{const w=d.getDay();if(w==0||w==4)return null;const r=X[Math.min(p
 const mon=d=>add(d,-((d.getDay()+6)%7));
 function weekDone(d){const m=mon(d);let c=0;for(let i=0;i<7;i++){const k=fd(add(m,i));if(S.log[k]&&S.log[k].c&&sess(add(m,i)))c++}return c}
 function head(){const d=pd(sel),ph=phase(d),tr=Math.round((pd(S.trial)-new Date(fd(new Date())+'T00:00'))/864e5),w=weekDone(d);
-$('#h1').textContent=tab=='today'?DN[d.getDay()]+' '+d.toLocaleDateString(undefined,{day:'numeric',month:'short'}):tab=='ex'?'Exercises':'Trials Tracker';
+$('#h1').textContent=tab=='today'?DN[d.getDay()]+' '+d.toLocaleDateString(undefined,{day:'numeric',month:'short'}):tab=='ex'?'Exercises':tab=='set'?'Settings':'Trials Tracker';
 $('#hp').textContent=`Phase ${ph}: ${P[ph-1].n} · ${tr>0?tr+' days to trials':tr==0?'Trial day':'Trials passed'}`;
 $('#rp').setAttribute('stroke-dasharray',`${226.2*Math.min(w,5)/5} 226.2`);$('#rn').innerHTML=`${w}/5<small>this week</small>`}
 function today(){const d=pd(sel),s=sess(d),e=S.log[sel]||{},x=e.x||[],ph=phase(d);let h='';
@@ -216,8 +216,9 @@ return h}
 function week(){const m=mon(pd(sel)),n=fd(new Date());let h=`<div class="nav"><button onclick="sel=fd(add(pd(sel),-7));go('week')">‹ Prev</button><b>${m.toLocaleDateString(undefined,{day:'numeric',month:'short'})} – ${add(m,6).toLocaleDateString(undefined,{day:'numeric',month:'short'})}</b><button onclick="sel=fd(add(pd(sel),7));go('week')">Next ›</button></div><div class="card">`;
 for(let i=0;i<7;i++){const d=add(m,i),k=fd(d),s=sess(d),e=S.log[k]||{};h+=`<div class="wk ${k==n?'today':''}" onclick="sel='${k}';go('today')"><span class="d">${DN[d.getDay()].slice(0,3)} ${d.getDate()}</span><span class="s">${s?s.t+' · '+s.m:'Rest'}</span><span>${e.c?'✅':s?'○':'💤'}</span></div>`}
 return h+'</div>'}
-function plan(){const cur=phase(pd(sel));let h='<div class="card">'+P.map((p,i)=>`<div class="ph ${i+1==cur?'cur':''}"><b>${i+1}. ${p.n}</b> <span class="sub">from ${p.s}</span><div>${p.g}</div></div>`).join('')+'</div>';
-h+=`<div class="card"><label>Hold phase (stay here until you are ready)</label><select onchange="S.hold=+this.value||0;save();go('plan')"><option value="0">Follow the calendar</option>${P.map((p,i)=>`<option value="${i+1}" ${S.hold==i+1?'selected':''}>Stay on Phase ${i+1}: ${p.n}</option>`).join('')}</select>
+function plan(){const cur=phase(pd(sel));let h='<div class="card">'+P.map((p,i)=>`<div class="ph ${i+1==cur?'cur':''}"><b>${i+1}. ${p.n}</b> <span class="sub">from ${p.s}</span><div>${p.g}</div></div>`).join('')+'</div>';return h}
+function settings(){let h='';
+h+=`<div class="card"><h2>Settings</h2><label>Hold phase (stay here until you are ready)</label><select onchange="S.hold=+this.value||0;save();go('set')"><option value="0">Follow the calendar</option>${P.map((p,i)=>`<option value="${i+1}" ${S.hold==i+1?'selected':''}>Stay on Phase ${i+1}: ${p.n}</option>`).join('')}</select>
 <label>Glass opacity (like iOS 27’s Liquid Glass slider)</label><input type="range" style="padding:0" min="15" max="95" value="${Math.round((S.ga||.55)*100)}" oninput="S.ga=this.value/100;ag();save()">
 <label>Trial date</label><input type="date" value="${S.trial}" onchange="S.trial=this.value||'2027-02-02';save();head()">
 <label>Backup: copy this text somewhere safe, or paste a backup here and tap Restore</label><textarea id="bk">${esc(JSON.stringify(S))}</textarea>
@@ -279,18 +280,18 @@ function cs(){const b=$('#cb'),c=lg().c;if(b){b.classList.toggle('done',!!c);b.t
 function tc(){const e=lg(),s=sess(pd(sel));e.c=!e.c;if(s){if(e.c){e.x=s.i.map((_,i)=>i);e.sd={};s.i.forEach((t,i)=>e.sd[i]=tot(t))}else{e.x=[];e.sd={}}}save();go('today',1)}
 function se(n,b){const e=lg();e.e=e.e==n?0:n;document.querySelectorAll('.mood button').forEach((x,i)=>x.classList.toggle('on',e.e==i+1));save()}
 function sv(k,v){lg()[k]=v;save()}
-const TABS=[['today','Today','<path d="M12 3l2.6 5.6 6 .8-4.4 4.2 1.1 6L12 16.8 6.7 19.6l1.1-6L3.4 9.4l6-.8z"/>'],['week','Week','<rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M9 3v4M15 3v4"/>'],['plan','Plan','<path d="M4 6h16M4 12h16M4 18h10"/>'],['tips','Progress','<path d="M4 19V5M4 19h16M8 15l4-4 3 3 5-6"/>'],['ex','Exercises','<circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/>']];
+const TABS=[['today','Today','<path d="M12 3l2.6 5.6 6 .8-4.4 4.2 1.1 6L12 16.8 6.7 19.6l1.1-6L3.4 9.4l6-.8z"/>'],['week','Week','<rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M9 3v4M15 3v4"/>'],['plan','Plan','<path d="M4 6h16M4 12h16M4 18h10"/>'],['tips','Progress','<path d="M4 19V5M4 19h16M8 15l4-4 3 3 5-6"/>'],['ex','Exercises','<circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/>'],['set','Settings','<circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/>']];
 $('#nav').innerHTML='<i class="pill"></i>'+TABS.map(b=>`<button><svg viewBox="0 0 24 24">${b[2]}</svg>${b[1]}</button>`).join('');
 const NB=[...$('#nav').querySelectorAll('button')],NV=$('#nav');let cw=0,dg=0,ci=0,sx=0;
-const cellW=()=>(NV.clientWidth-12)/5,pp=(x,sc)=>{$('#nav .pill').style.transform=`translateX(${x}px) scale(${sc||1})`};
-function mv(e){const x=e.clientX-NV.getBoundingClientRect().left-6;ci=Math.max(0,Math.min(4,Math.floor(x/cw)));pp(Math.max(0,Math.min(4*cw,x-cw/2)),1.16);NB.forEach((b,j)=>b.classList.toggle('pv',j==ci))}
+const cellW=()=>(NV.clientWidth-12)/TABS.length,pp=(x,sc)=>{$('#nav .pill').style.transform=`translateX(${x}px) scale(${sc||1})`};
+function mv(e){const x=e.clientX-NV.getBoundingClientRect().left-6;ci=Math.max(0,Math.min(TABS.length-1,Math.floor(x/cw)));pp(Math.max(0,Math.min((TABS.length-1)*cw,x-cw/2)),1.16);NB.forEach((b,j)=>b.classList.toggle('pv',j==ci))}
 function dn(c){dg=0;NV.classList.remove('drag');NB.forEach(b=>b.classList.remove('pv'));if(c)go(TABS[ci][0]);else pp(TABS.findIndex(b=>b[0]==tab)*cellW(),1)}
 NV.addEventListener('pointerdown',e=>{cw=cellW();dg=1;NV.setPointerCapture(e.pointerId);NV.classList.add('drag');mv(e)});
 NV.addEventListener('pointermove',e=>{if(dg)mv(e)});
 NV.addEventListener('pointerup',()=>dg&&dn(1));NV.addEventListener('pointercancel',()=>dg&&dn(0));
 addEventListener('resize',()=>pp(TABS.findIndex(b=>b[0]==tab)*cellW(),1));
 const ag=()=>document.documentElement.style.setProperty('--ga',S.ga||.55);ag();
-function go(t,keep){const y=scrollY,same=t==tab;tab=t;cl();const m=$('#m');m.className='';m.innerHTML={today,week,plan,tips,ex:exs}[t]();
+function go(t,keep){const y=scrollY,same=t==tab;tab=t;cl();const m=$('#m');m.className='';m.innerHTML={today,week,plan,tips,ex:exs,set:settings}[t]();
 if(!keep||!same){void m.offsetWidth;m.className='in'}
 const i=TABS.findIndex(b=>b[0]==t);NB.forEach((b,j)=>b.classList.toggle('on',i==j));pp(i*cellW(),1);head();scrollTo(0,keep&&same?y:0)}
 document.addEventListener('keydown',e=>{if(e.key=='Escape')cl()});
@@ -317,8 +318,8 @@ if(!em||pw.length<6){sbMsg('Enter your email and a password of at least 6 charac
 sbs();sbMsg(up?'Creating account…':'Signing in…');
 try{const j=await sbf(up?'/auth/v1/signup':'/auth/v1/token?grant_type=password',{m:'POST',b:{email:em,password:pw}});
 if(!j.access_token){sbMsg('Check your email to confirm your account, then tap Sign in.');return}
-setSes(j);SB.syn=0;sbs();sbm='Signed in.';go('plan',1);sync(1)}catch(e){sbMsg(e.message)}}
-function sbOut(){if(!confirm('Sign out? Your data stays on this device.'))return;SB.ses=null;SB.syn=0;sbs();sbm='';go('plan',1)}
+setSes(j);SB.syn=0;sbs();sbm='Signed in.';go('set',1);sync(1)}catch(e){sbMsg(e.message)}}
+function sbOut(){if(!confirm('Sign out? Your data stays on this device.'))return;SB.ses=null;SB.syn=0;sbs();sbm='';go('set',1)}
 const hasData=()=>Object.keys(S.log).length||S.runs.length||Object.keys(S.bm).length;
 async function sbRow(){const t=await tok(),r=await sbf('/rest/v1/tracker_state?select=data,updated_at&user_id=eq.'+SB.ses.uid,{},t);return r&&r[0]||null}
 async function sbPush(){const t=await tok(),d={...S};delete d.tm;await sbf('/rest/v1/tracker_state?on_conflict=user_id',{m:'POST',h:{Prefer:'resolution=merge-duplicates,return=minimal'},b:{user_id:SB.ses.uid,data:d,updated_at:new Date().toISOString()}},t)}
