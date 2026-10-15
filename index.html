@@ -353,100 +353,87 @@ function remCheck(){const r=S.rem;if(!r||!r.on||!('Notification'in window)||Noti
 if(S.remSent===k||hm<r.time)return;const x=sess(n);if(!x||(S.log[k]&&S.log[k].c))return;S.remSent=k;save();notify('Today: '+x.t,x.m+'. Ready when you are.','daily')}
 function updBadge(){try{if(!navigator.setAppBadge)return;const m=mon(new Date()),t=fd(new Date());let n=0;for(let i=0;i<7;i++){const d=add(m,i),k=fd(d);if(k>=t&&sess(d)&&!(S.log[k]&&S.log[k].c))n++}(n?navigator.setAppBadge(n):navigator.clearAppBadge()).catch(()=>{})}catch(e){}}
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)remCheck()});setInterval(remCheck,60000);
-/* Erase (avoids the pagehide handler re-saving old data) */
-async function erase(){if(!confirm('Erase all logged sessions and settings'+(SB.ses?', here and in your cloud account':'')+'? This cannot be undone.')||!confirm('Really erase everything?'))return;
-if(SB.ses){try{const t=await tok();await sbf('/rest/v1/tracker_state?user_id=eq.'+SB.ses.uid,{m:'DELETE'},t)}catch(e){alert('Could not erase your cloud copy ('+e.message+'). Nothing was erased. Try again when you are online.');return}}
-S={};norm();persist();location.reload()}
-/* Cloud sync (Supabase). Plain REST, no library, so it fails softly when offline.
-   Last write wins on the whole tracker (timestamp in S.mod). Device-only items stay local. */
+/* ===== Passcode + cloud sync (Supabase). No accounts: the passcode is checked on the server by small
+   database functions (see supabase-setup.sql). Offline, it is checked against a salted hash kept on this device. ===== */
 const SB_URL='https://ttdiasiwavlnavirxysi.supabase.co',SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR0ZGlhc2l3YXZsbmF2aXJ4eXNpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIwMjA2NTQsImV4cCI6MjEwNzU5NjY1NH0.JWBvqVzDLBKR5of2C4zXFQBa8ZvAoU2wNSB17RTW_4I';
 const LOC=['tm','wl','rem','remSent'];/* stopwatch, keep-awake and reminders stay per-device */
 const SBK='ht_sb';let SB={};try{SB=JSON.parse(localStorage.getItem(SBK)||'{}')||{}}catch(e){}
-SB.url=SB.url||SB_URL;SB.key=SB.key||SB_KEY;
-const sbs=()=>{try{localStorage.setItem(SBK,JSON.stringify(SB))}catch(e){}};
-let sbm='',sbBusy=0,sbDirty=0,sbPt,rfp=null;
-const sbMsg=m=>{sbm=m;['#sbm','#sbm2'].forEach(q=>{const el=$(q);if(el)el.textContent=m})};
-async function sbf(path,o={},t){const h={apikey:SB.key,'Content-Type':'application/json',...(o.h||{})};if(t)h.Authorization='Bearer '+t;
-const r=await fetch(SB.url.trim().replace(/\/+$/,'')+path,{method:o.m||'GET',headers:h,body:o.b?JSON.stringify(o.b):undefined,signal:(o.to&&window.AbortSignal&&AbortSignal.timeout)?AbortSignal.timeout(o.to):undefined});let j=null;try{j=await r.json()}catch(e){}
-if(!r.ok){const er=new Error((j&&(j.error_description||j.msg||j.message||j.error))||'Error '+r.status);er.st=r.status;throw er}return j}
-function setSes(j){const o=SB.ses||{};SB.ses={at:j.access_token,rt:j.refresh_token,exp:j.expires_at||Math.floor(Date.now()/1e3)+(j.expires_in||3600),uid:(j.user&&j.user.id)||o.uid,em:(j.user&&j.user.email)||o.em};sbs()}
-async function tok(){const s=SB.ses;if(!s)throw new Error('Not signed in');if(s.exp-60>Date.now()/1e3)return s.at;
-if(!rfp)rfp=sbf('/auth/v1/token?grant_type=refresh_token',{m:'POST',b:{refresh_token:s.rt}}).then(j=>{setSes(j);return j.access_token}).catch(e=>{if(e.st>=400&&e.st<500){SB.ses=null;sbs()}throw e}).finally(()=>{rfp=null});
-return rfp}
+const sbs=()=>{try{localStorage.setItem(SBK,JSON.stringify({syn:SB.syn||0}))}catch(e){}};
+let PIN='',sbm='',sbBusy=0,sbDirty=0,sbPt;
+const sbMsg=m=>{sbm=m;const el=$('#sbm');if(el)el.textContent=m};
+async function rpc(fn,args,to){const h={apikey:SB_KEY,'Content-Type':'application/json'};if(SB_KEY.slice(0,3)=='eyJ')h.Authorization='Bearer '+SB_KEY;
+const r=await fetch(SB_URL+'/rest/v1/rpc/'+fn,{method:'POST',headers:h,body:JSON.stringify(args||{}),signal:(to&&window.AbortSignal&&AbortSignal.timeout)?AbortSignal.timeout(to):undefined});let j=null;try{j=await r.json()}catch(e){}
+if(!r.ok){const er=new Error((j&&(j.message||j.msg||j.error))||'Error '+r.status);er.st=r.status;throw er}return j}
 const hasData=()=>Object.keys(S.log).length||S.runs.length||Object.keys(S.bm).length;
 const remMod=d=>(d&&(d.mod||(d.ts>1e12?d.ts:0)))||0;
-async function sbRow(){const t=await tok(),r=await sbf('/rest/v1/tracker_state?select=data,updated_at&user_id=eq.'+SB.ses.uid,{},t);return r&&r[0]||null}
-async function sbPush(){const t=await tok(),d={...S};LOC.forEach(k=>delete d[k]);await sbf('/rest/v1/tracker_state?on_conflict=user_id',{m:'POST',h:{Prefer:'resolution=merge-duplicates,return=minimal'},b:{user_id:SB.ses.uid,data:d,updated_at:new Date().toISOString()}},t)}
 function adopt(d){const o=S;if(d.ts>1e12)delete d.ts;S=d;LOC.forEach(k=>{if(o[k]!==undefined)S[k]=o[k];else delete S[k]});norm();persist();applyS();go(tab,1)}
-function qp(){if(!SB.ses)return;clearTimeout(sbPt);sbPt=setTimeout(()=>sync(),2500)}
-async function sync(){if(!SB.ses||!SB.url)return;if(sbBusy){sbDirty=1;return}sbBusy=1;persist();sbMsg('Syncing…');
-try{const r=await sbRow(),rt=r?remMod(r.data):0,lt=S.mod||0;let a;
-if(!r||SB.force)a='push';
-else if(!SB.syn&&hasData()&&rt)a=confirm('Found data in your cloud account (saved '+new Date(rt).toLocaleString()+').\n\nOK = use the cloud data on this device.\nCancel = replace the cloud data with this device’s data.')?'pull':'push';
+function qp(){if(!PIN)return;clearTimeout(sbPt);sbPt=setTimeout(()=>sync(),2500)}
+async function sync(){if(!PIN||sbBusy)return sbBusy?(sbDirty=1):0;sbBusy=1;persist();sbMsg('Syncing…');
+try{let r=await rpc('ht_load',{p:PIN},12000);
+if(!r.ok&&r.reason=='nopin'){await rpc('ht_set_pin',{new_pin:PIN,old_pin:null},10000);r=await rpc('ht_load',{p:PIN},12000)}
+if(!r.ok){if(r.reason=='bad'){PIN='';sbMsg('Passcode changed on another device.');lkShow('unlock')}else sbMsg(r.reason=='locked'?'Too many wrong tries. Waiting a few minutes.':'Sync failed.');sbBusy=0;return}
+const d=r.data&&Object.keys(r.data).length?r.data:null,rt=d?remMod(d):0,lt=S.mod||0;let a;
+if(!d)a='push';
+else if(!SB.syn&&hasData()&&rt)a=confirm('Found saved data in the cloud (saved '+new Date(rt).toLocaleString()+').\n\nOK = use the cloud data on this device.\nCancel = replace the cloud data with this device’s data.')?'pull':'push';
 else a=rt>lt?'pull':(lt>rt||!rt)?'push':'none';
-if(a=='pull')adopt(r.data);else if(a=='push'){S.mod=S.mod||Date.now();persist();await sbPush()}
-SB.force=0;SB.syn=Date.now();sbs();sbMsg('Synced '+new Date().toLocaleTimeString([],{hour:'numeric',minute:'2-digit'}))}
-catch(e){sbMsg('Sync failed: '+(navigator.onLine===false?'you are offline. It will retry.':e.message+(e.st==404?' (did you run the SQL setup?)':e.st==401||!SB.ses?' Please sign in again.':'')));if(!SB.ses)go(tab,1)}
+if(a=='pull')adopt(d);else if(a=='push'){S.mod=S.mod||Date.now();persist();const x={...S};LOC.forEach(k=>delete x[k]);const w=await rpc('ht_save',{p:PIN,d:x},15000);if(!w.ok)throw new Error('Save was refused ('+w.reason+')')}
+SB.syn=Date.now();sbs();sbMsg('Synced '+new Date().toLocaleTimeString([],{hour:'numeric',minute:'2-digit'}))}
+catch(e){sbMsg(navigator.onLine===false||!e.st&&e.name!='Error'?'Offline. Your changes are saved here and will sync later.':'Sync failed: '+e.message)}
 sbBusy=0;if(sbDirty){sbDirty=0;qp()}}
-/* ===== Passcode lock (Apple-style). The passcode is the password of one private Supabase account.
-   Online: checked against Supabase. Offline: checked against a salted hash saved on this phone. ===== */
+async function erase(){if(!confirm('Erase all logged sessions and settings'+(PIN?', here and in the cloud':'')+'? This cannot be undone.')||!confirm('Really erase everything?'))return;
+if(PIN){try{const w=await rpc('ht_save',{p:PIN,d:{}},10000);if(!w.ok)throw new Error(w.reason)}catch(e){alert('Could not erase the cloud copy ('+e.message+'). Nothing was erased. Try again when you are online.');return}}
+S={};norm();persist();location.reload()}
+/* Passcode lock (Apple-style number pad) */
 const lkEnc=new TextEncoder(),lkHx=b=>[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('');
-const lkPw=async(pin,em)=>lkHx(await crypto.subtle.digest('SHA-256',lkEnc.encode('ht1|'+em.toLowerCase()+'|'+pin)));
 const lkH=async(pin,salt)=>{const k=await crypto.subtle.importKey('raw',lkEnc.encode(pin),'PBKDF2',false,['deriveBits']);return lkHx(await crypto.subtle.deriveBits({name:'PBKDF2',salt:lkEnc.encode(salt),iterations:100000,hash:'SHA-256'},k,256))};
-let LK=null,OWN='';try{LK=JSON.parse(localStorage.getItem('ht_lk')||'null');OWN=localStorage.getItem('ht_own')||''}catch(e){}
-async function mkLK(em,pin){const salt=lkHx(crypto.getRandomValues(new Uint8Array(16)));LK={e:em,s:salt,h:await lkH(pin,salt)};OWN=em;try{localStorage.setItem('ht_lk',JSON.stringify(LK));localStorage.setItem('ht_own',em)}catch(e){}}
-let LS={m:'',b:'',f:'',msg:'',busy:0,em:OWN,until:0,fail:0},lkAway=0;
-const lkTok=(em,pin)=>lkPw(pin,em).then(pw=>sbf('/auth/v1/token?grant_type=password',{m:'POST',to:8000,b:{email:em,password:pw}}));
+let LK=null;try{LK=JSON.parse(localStorage.getItem('ht_lk')||'null')}catch(e){}
+async function mkLK(pin){const salt=lkHx(crypto.getRandomValues(new Uint8Array(16)));LK={s:salt,h:await lkH(pin,salt)};try{localStorage.setItem('ht_lk',JSON.stringify(LK))}catch(e){}}
+let LS={m:'',b:'',f:'',msg:'',busy:0,until:0,fail:0},lkAway=0;
 function lkShow(m){if(m=='unlock'&&!LK)return;LS={...LS,m,b:'',f:'',msg:'',busy:0};document.body.classList.add('lkd');lkR()}
 function lkOpen(){LS.m='';LS.b='';LS.fail=0;document.body.classList.remove('lkd');$('#lk').innerHTML='';go(tab,1);sync()}
 function lkClose(){LS.m='';document.body.classList.remove('lkd');$('#lk').innerHTML=''}
 function lkDots(){const d=$('#lkdt');if(d)d.innerHTML=[0,1,2,3,4,5].map(i=>`<i class="${i<LS.b.length?'f':''}"></i>`).join('')}
-function lkX(){const x=$('#lkx');if(!x)return;x.textContent=LS.b?'Delete':/^chg/.test(LS.m)?'Cancel':(!SB.ses&&/^(new|old)/.test(LS.m))?'Back':''}
+function lkX(){const x=$('#lkx');if(x)x.textContent=LS.b?'Delete':/^chg/.test(LS.m)?'Cancel':''}
 function lkMsg(m,shake){LS.msg=m;const el=$('#lkm');if(el)el.textContent=m;if(shake){const d=$('#lkdt');if(d){d.classList.remove('sh');void d.offsetWidth;d.classList.add('sh')}}}
 function lkR(){const m=LS.m,el=$('#lk');
-if(m=='email'){el.innerHTML=`<div class="lkw"><div class="lkt">Welcome</div><div class="lkm" id="lkm">${esc(LS.msg)}</div><p style="color:#b9d2c3;font-size:14px;margin:0 0 14px">Enter your email once. Your progress is saved to your own account, then you unlock with a passcode.</p><input id="lke" type="email" autocomplete="email" autocapitalize="none" autocorrect="off" placeholder="you@example.com" value="${esc(LS.em)}"${OWN?' readonly':''}><button class="btn" onclick="lkE(1)">Create a passcode</button><button class="btn ghost" onclick="lkE(0)">I already have a passcode</button></div>`;return}
+if(m=='wait'||m=='off'){el.innerHTML=`<div class="lkw"><div class="lkt">${m=='wait'?'Connecting…':'No Connection'}</div><div class="lkm" id="lkm">${esc(LS.msg)}</div>${m=='off'?'<button class="btn ghost" onclick="lkInit()">Try again</button>':''}</div>`;return}
 const T={unlock:'Enter Passcode',new1:'Create a Passcode',new2:'Confirm Passcode',old:'Enter Your Passcode',chg0:'Enter Current Passcode',chg1:'Enter New Passcode',chg2:'Confirm New Passcode'};
 const K=[['1',''],['2','ABC'],['3','DEF'],['4','GHI'],['5','JKL'],['6','MNO'],['7','PQRS'],['8','TUV'],['9','WXYZ']];
 el.innerHTML=`<div class="lkw"><div class="lkt">${T[m]||''}</div><div class="lkm" id="lkm">${esc(LS.msg)}</div><div class="lkdt" id="lkdt"></div><div class="lkp">${K.map(k=>`<button onclick="lkK('${k[0]}')">${k[0]}<small>${k[1]}</small></button>`).join('')}<button class="e"></button><button onclick="lkK('0')">0<small></small></button><button class="t" id="lkx" onclick="lkK('x')"></button></div>${m=='unlock'?'<button class="lkl" onclick="lkForgot()">Forgot passcode?</button>':''}</div>`;lkDots();lkX()}
-function lkE(isNew){const em=($('#lke').value||'').trim().toLowerCase();
-if(!/^\S+@\S+\.\S+$/.test(em)){lkMsg('Enter a valid email address.');return}
-if(OWN&&em!=OWN){lkMsg('This app is locked to the original account.');return}
-LS={...LS,em,m:isNew?'new1':'old',b:'',f:'',msg:''};lkR()}
 function lkK(k){if(LS.busy)return;
-if(k=='x'){if(LS.b){LS.b=LS.b.slice(0,-1);lkDots();lkX();return}if(/^chg/.test(LS.m)){lkClose();return}if(!SB.ses&&/^(new|old)/.test(LS.m)){LS.m='email';LS.msg='';lkR()}return}
+if(k=='x'){if(LS.b){LS.b=LS.b.slice(0,-1);lkDots();lkX();return}if(/^chg/.test(LS.m))lkClose();return}
 if(LS.until>Date.now()){lkMsg('Too many tries. Wait a moment.');return}
 if(LS.b.length>=6)return;LS.b+=k;lkDots();lkX();if(LS.b.length==6)setTimeout(lkDone,120)}
 function lkBad(msg,re){LS.fail++;if(LS.fail>=5){LS.until=Date.now()+30000;LS.fail=0;msg='Too many tries. Wait 30 seconds.'}LS.b='';if(re){LS.msg='';lkR()}lkDots();lkX();lkMsg(msg,1)}
 async function lkCheck(pin){
-if(navigator.onLine!==false){try{const j=await lkTok(LK.e,pin);setSes(j);if(LK.h!==await lkH(pin,LK.s))await mkLK(LK.e,pin);return 'ok'}
-catch(e){if(e.st==429)return 'wait';if(e.st>=400&&e.st<500)return 'bad'}}
-return LK.h===await lkH(pin,LK.s)?'ok':'bad'}
+if(navigator.onLine!==false){try{const r=await rpc('ht_verify',{p:pin},6000);
+if(r.ok){if(!LK||LK.h!==await lkH(pin,LK.s))await mkLK(pin);return 'ok'}
+if(r.reason=='locked')return 'wait';if(r.reason=='bad')return 'bad'}catch(e){}}
+return LK&&LK.h===await lkH(pin,LK.s)?'ok':'bad'}
 async function lkDone(){const pin=LS.b,m=LS.m;LS.busy=1;
 try{
-if(m=='unlock'||m=='chg0'){const r=await lkCheck(pin);
-if(r=='ok'){LS.fail=0;if(m=='unlock')lkOpen();else{LS.m='chg1';LS.b='';LS.msg='';lkR()}}
-else lkBad(r=='wait'?'Too many attempts. Try again in a minute.':'Incorrect passcode')}
+if(m=='unlock'||m=='chg0'||m=='old'){let r;
+if(m=='old'){try{const v=await rpc('ht_verify',{p:pin},8000);r=v.ok?'ok':v.reason=='locked'?'wait':'bad';if(v.ok){await mkLK(pin);SB.syn=0;sbs()}}catch(e){lkBad('Go online for first-time setup.');return}}
+else r=await lkCheck(pin);
+if(r=='ok'){LS.fail=0;if(m=='chg0'){PIN=pin;LS.m='chg1';LS.b='';LS.msg='';lkR()}else{PIN=pin;lkOpen()}}
+else lkBad(r=='wait'?'Too many attempts. Try again in a few minutes.':'Incorrect passcode')}
 else if(m=='new1'||m=='chg1'){LS.f=pin;LS.m=m=='new1'?'new2':'chg2';LS.b='';LS.msg='';lkR()}
 else if(m=='new2'||m=='chg2'){if(pin!=LS.f){LS.m=m=='new2'?'new1':'chg1';lkBad('Passcodes did not match. Try again.',1)}else await lkSet(pin,m=='chg2')}
-else if(m=='old'){try{const j=await lkTok(LS.em,pin);setSes(j);SB.syn=0;sbs();await mkLK(LS.em,pin);lkOpen()}catch(e){lkBad(!e.st?'Go online for first-time setup.':e.st==429?'Too many attempts. Try again in a minute.':'Incorrect email or passcode.')}}
 }finally{LS.busy=0}}
 async function lkSet(pin,ch){
-try{
-if(SB.ses||ch){const t=await tok(),em=SB.ses.em;await sbf('/auth/v1/user',{m:'PUT',to:10000,b:{password:await lkPw(pin,em)}},t);await mkLK(em,pin)}
-else{const em=LS.em,j=await sbf('/auth/v1/signup',{m:'POST',to:10000,b:{email:em,password:await lkPw(pin,em)}});
-if(!j.access_token){LS.m='email';LS.b='';lkR();lkMsg('Turn off Confirm email in Supabase (Authentication, Providers, Email), delete the test user, then try again.');return}
-setSes(j);SB.syn=0;sbs();await mkLK(em,pin)}
+try{const r=await rpc('ht_set_pin',{new_pin:pin,old_pin:ch?PIN:null},10000);
+if(!r.ok){if(!ch&&r.reason!='invalid'){LS.m='old';LS.b='';lkR();lkMsg('A passcode already exists. Enter it.')}else{LS.m=ch?'chg1':'new1';LS.b='';lkR();lkMsg(r.reason=='invalid'?'Use exactly 6 digits.':'Could not change it ('+r.reason+').',1)}return}
+await mkLK(pin);PIN=pin;SB.syn=0;sbs();
 if(ch){lkClose();sbMsg('Passcode changed.');go(tab,1)}else lkOpen()
-}catch(e){
-if(!e.st){LS.m=ch?'chg1':'new1';LS.b='';lkR();lkMsg('You need to be online to do that.',1)}
-else if(/already/i.test(e.message||'')){LS.m='email';LS.b='';lkR();lkMsg('That email already has a passcode. Choose "I already have a passcode".')}
-else{LS.m=ch?'chg1':'new1';LS.b='';lkR();lkMsg(e.message||'Something went wrong.',1)}}}
-function lkForgot(){if(!confirm('Reset the passcode on this device? You will need your email and passcode again. If you forgot it, delete your user in Supabase (Authentication, Users) first, then set up a new one.'))return;
-LK=null;try{localStorage.removeItem('ht_lk')}catch(e){}SB.ses=null;SB.syn=0;sbs();LS={...LS,m:'email',b:'',f:'',msg:'',em:OWN};lkR()}
-function lkInit(){if(!(window.crypto&&crypto.subtle))return;
-if(LK)lkShow('unlock');else if(SB.ses){LS.em=SB.ses.em;lkShow('new1')}else lkShow('email')}
+}catch(e){LS.m=ch?'chg1':'new1';LS.b='';lkR();lkMsg('You need to be online to do that.',1)}}
+function lkForgot(){if(!confirm('Reset the passcode on this device? You will need your passcode again to get back in. If you forgot it, reset it in Supabase first (see the note at the bottom of supabase-setup.sql).'))return;
+LK=null;try{localStorage.removeItem('ht_lk')}catch(e){}PIN='';lkInit()}
+async function lkInit(){if(!(window.crypto&&crypto.subtle))return;
+if(LK){lkShow('unlock');return}
+LS.msg='';lkShow('wait');
+try{const r=await rpc('ht_status',{},8000);lkShow(r.has_pin?'old':'new1')}catch(e){LS.m='off';LS.msg='Connect to the internet once to set up your passcode.';lkR()}}
 document.addEventListener('visibilitychange',()=>{if(document.hidden)lkAway=Date.now();else if(LK&&!LS.m&&lkAway&&Date.now()-lkAway>300000)lkShow('unlock')});
-function cloud(){return `<div class="card"><h2>Passcode</h2><p class="sub">Your progress syncs to your account automatically.</p><p class="sub" id="sbm">${esc(sbm)}</p><div class="row"><button class="btn ghost" onclick="lkShow('unlock')">Lock now</button><button class="btn ghost" onclick="lkShow('chg0')">Change passcode</button></div></div>`}
+function cloud(){return `<div class="card"><h2>Passcode</h2><p class="sub">Your progress syncs to the cloud automatically.</p><p class="sub" id="sbm">${esc(sbm)}</p><div class="row"><button class="btn ghost" onclick="lkShow('unlock')">Lock now</button><button class="btn ghost" onclick="lkShow('chg0')">Change passcode</button></div></div>`}
 go('today');mini();remCheck();
 if(navigator.storage&&navigator.storage.persist)navigator.storage.persist().catch(()=>{});
 let td=fd(new Date());
