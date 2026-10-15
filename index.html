@@ -13,10 +13,10 @@
 <link rel="apple-touch-icon" href="icon-180.png">
 <title>Trials Tracker</title>
 <style>
-:root{--bg:#f2f4ee;--card:#fff;--ink:#10231b;--mut:#5d7367;--line:#d5e0d8;--turf:#0f3d2e;--ball:#e8540f;--ok:#1d7a4d;--glass:rgba(255,255,255,.55);--glass-b:rgba(255,255,255,.7);--spring:cubic-bezier(.32,.72,0,1);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px)}
-@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0a1b14;--card:#10291d;--ink:#eaf2ec;--mut:#8fa99a;--line:#1f3d2d;--turf:#0a1b14;--ball:#ff7a3d;--ok:#5fd08e;--glass:rgba(24,48,36,.5);--glass-b:rgba(255,255,255,.18)}}
+:root{--bg:#f2f4ee;--card:#fff;--ink:#10231b;--mut:#5d7367;--line:#d5e0d8;--turf:#0f3d2e;--ball:#e8540f;--ok:#1d7a4d;--ga:.55;--glass:rgba(255,255,255,var(--ga));--glass-b:rgba(255,255,255,.7);--spring:cubic-bezier(.32,.72,0,1);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0a1b14;--card:#10291d;--ink:#eaf2ec;--mut:#8fa99a;--line:#1f3d2d;--turf:#0a1b14;--ball:#ff7a3d;--ok:#5fd08e;--glass:rgba(24,48,36,var(--ga));--glass-b:rgba(255,255,255,.18)}}
 *{box-sizing:border-box}html,body{margin:0}html{scroll-padding-top:env(safe-area-inset-top,0px)}
-body{background:var(--bg);color:var(--ink);font:16px/1.45 -apple-system,system-ui,sans-serif;padding-bottom:calc(110px + env(safe-area-inset-bottom,0px));-webkit-tap-highlight-color:transparent;-webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:var(--ink);font:16px/1.45 -apple-system,system-ui,sans-serif;padding-bottom:calc(100px + env(safe-area-inset-bottom,0px));-webkit-tap-highlight-color:transparent;-webkit-font-smoothing:antialiased}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--turf);z-index:9}
 h1,h2,.big{font-family:"Avenir Next Condensed","Arial Narrow",Impact,sans-serif;font-weight:700;letter-spacing:.01em;margin:0}
 header{background:var(--turf);color:#f2f4ee;padding:14px 18px 22px;display:flex;gap:16px;align-items:center;border-radius:0 0 28px 28px}
@@ -69,11 +69,14 @@ ul.tp{padding-left:18px;margin:6px 0}.tp li{margin-bottom:8px}
 .li b{flex:1}.li span{color:var(--mut);font-size:20px}
 .empty{text-align:center;color:var(--mut);padding:24px 0}
 /* Liquid glass tab bar */
-nav{position:fixed;left:14px;right:14px;bottom:calc(env(safe-area-inset-bottom,0px) + 8px);max-width:520px;margin:0 auto;display:flex;padding:6px;border-radius:34px;z-index:20;
+nav{position:fixed;left:14px;right:14px;bottom:max(calc(env(safe-area-inset-bottom,0px) - 12px),8px);touch-action:none;-webkit-user-select:none;user-select:none;max-width:520px;margin:0 auto;display:flex;padding:6px;border-radius:34px;z-index:20;
 background:var(--glass);-webkit-backdrop-filter:blur(26px) saturate(190%) brightness(1.05);backdrop-filter:blur(26px) saturate(190%) brightness(1.05);
 border:1px solid var(--glass-b);box-shadow:0 10px 34px rgba(0,0,0,.18),0 2px 6px rgba(0,0,0,.08),inset 0 1.5px 0 rgba(255,255,255,.65),inset 0 -1px 0 rgba(255,255,255,.12)}
 nav::before{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(180deg,rgba(255,255,255,.35),rgba(255,255,255,0) 45%);pointer-events:none}
-nav .pill{position:absolute;top:6px;bottom:6px;left:6px;width:calc((100% - 12px)/5);border-radius:28px;background:color-mix(in srgb,var(--ball) 18%,var(--glass));box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 2px 10px rgba(0,0,0,.1);transition:transform .55s var(--spring)}
+nav .pill{position:absolute;top:6px;bottom:6px;left:6px;width:calc((100% - 12px)/5);border-radius:28px;transform-origin:center;background:linear-gradient(180deg,rgba(255,255,255,.42),rgba(255,255,255,.12)),color-mix(in srgb,var(--ball) 14%,transparent);-webkit-backdrop-filter:blur(3px) saturate(220%) brightness(1.12);backdrop-filter:blur(3px) saturate(220%) brightness(1.12);box-shadow:inset 0 1.5px 0 rgba(255,255,255,.8),inset 0 -1px 0 rgba(255,255,255,.25),inset 0 0 0 1px rgba(255,255,255,.18),0 2px 10px rgba(0,0,0,.12);transition:transform .6s var(--spring),box-shadow .3s}
+nav.drag .pill{transition:transform .09s linear,box-shadow .3s;box-shadow:inset 0 2px 0 rgba(255,255,255,.9),inset 0 0 0 1px rgba(255,255,255,.3),0 10px 26px rgba(0,0,0,.28)}
+nav.drag button.on:not(.pv){color:var(--mut)}nav button.pv{color:var(--ball)}nav button.pv svg{transform:scale(1.14)}nav button svg{transition:transform .3s var(--spring)}
+body::after{content:"";position:fixed;left:0;right:0;bottom:0;height:calc(max(env(safe-area-inset-bottom,0px),8px) + 84px);background:linear-gradient(transparent,color-mix(in srgb,var(--bg) 92%,transparent));pointer-events:none;z-index:15}
 nav button{position:relative;flex:1;border:0;background:none;padding:8px 0 7px;color:var(--mut);font-size:11px;font-weight:600;transition:color .3s,transform .3s var(--spring)}
 nav button.on{color:var(--ball)}nav button svg{display:block;margin:0 auto 2px;width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 /* Bottom sheet */
@@ -94,7 +97,7 @@ body.so #bd{opacity:1;pointer-events:auto}body.so #sh{transform:none}
 .ln{fill:none;stroke:var(--ball);stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;animation:dr 1.1s var(--spring) .15s forwards}@keyframes dr{to{stroke-dashoffset:0}}
 .ar{fill:url(#g);opacity:0;animation:fi .8s .5s forwards}@keyframes fi{to{opacity:1}}
 .bars{display:flex;gap:6px;align-items:flex-end}.bc{flex:1;text-align:center}.bc small{font-size:10px;color:var(--mut)}.trk{height:90px;display:flex;align-items:flex-end;background:color-mix(in srgb,var(--turf) 8%,transparent);border-radius:10px;overflow:hidden}.bar{width:100%;background:var(--ball);border-radius:8px 8px 0 0;transform-origin:bottom;animation:gr .8s var(--spring) both}@keyframes gr{from{transform:scaleY(0)}}
-#mt{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(env(safe-area-inset-bottom,0px) + 84px);z-index:21;display:none;border:1px solid var(--glass-b);border-radius:99px;padding:9px 18px;font-weight:700;color:var(--ink);background:var(--glass);-webkit-backdrop-filter:blur(22px) saturate(180%);backdrop-filter:blur(22px) saturate(180%);box-shadow:0 6px 20px rgba(0,0,0,.18),inset 0 1px 0 rgba(255,255,255,.5);font-variant-numeric:tabular-nums;max-width:90vw;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#mt{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(max(env(safe-area-inset-bottom,0px) - 12px,8px) + 76px);z-index:21;display:none;border:1px solid var(--glass-b);border-radius:99px;padding:9px 18px;font-weight:700;color:var(--ink);background:var(--glass);-webkit-backdrop-filter:blur(22px) saturate(180%);backdrop-filter:blur(22px) saturate(180%);box-shadow:0 6px 20px rgba(0,0,0,.18),inset 0 1px 0 rgba(255,255,255,.5);font-variant-numeric:tabular-nums;max-width:90vw;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style></head><body>
 <header><div class="t"><h1 id="h1"></h1><p id="hp"></p></div><div class="ring"><svg viewBox="0 0 84 84" width="84" height="84"><circle cx="42" cy="42" r="36" fill="none" stroke="#ffffff33" stroke-width="7"/><circle class="p" id="rp" cx="42" cy="42" r="36" fill="none" stroke="#ff7a3d" stroke-width="7" stroke-linecap="round" stroke-dasharray="0 226" transform="rotate(-90 42 42)"/></svg><b><span id="rn"></span></b></div></header>
@@ -213,6 +216,7 @@ for(let i=0;i<7;i++){const d=add(m,i),k=fd(d),s=sess(d),e=S.log[k]||{};h+=`<div 
 return h+'</div>'}
 function plan(){const cur=phase(pd(sel));let h='<div class="card">'+P.map((p,i)=>`<div class="ph ${i+1==cur?'cur':''}"><b>${i+1}. ${p.n}</b> <span class="sub">from ${p.s}</span><div>${p.g}</div></div>`).join('')+'</div>';
 h+=`<div class="card"><label>Hold phase (stay here until you are ready)</label><select onchange="S.hold=+this.value||0;save();go('plan')"><option value="0">Follow the calendar</option>${P.map((p,i)=>`<option value="${i+1}" ${S.hold==i+1?'selected':''}>Stay on Phase ${i+1}: ${p.n}</option>`).join('')}</select>
+<label>Glass opacity (like iOS 27’s Liquid Glass slider)</label><input type="range" style="padding:0" min="15" max="95" value="${Math.round((S.ga||.55)*100)}" oninput="S.ga=this.value/100;ag();save()">
 <label>Trial date</label><input type="date" value="${S.trial}" onchange="S.trial=this.value||'2027-02-02';save();head()">
 <label>Backup: copy this text somewhere safe, or paste a backup here and tap Restore</label><textarea id="bk">${esc(JSON.stringify(S))}</textarea>
 <div class="row"><button class="btn ghost" onclick="try{JSON.parse($('#bk').value);localStorage.setItem('ht1',$('#bk').value);location.reload()}catch(e){alert('That backup text is not valid.')}">Restore</button></div></div>`;return h}
@@ -274,11 +278,19 @@ function tc(){const e=lg(),s=sess(pd(sel));e.c=!e.c;if(s){if(e.c){e.x=s.i.map((_
 function se(n,b){const e=lg();e.e=e.e==n?0:n;document.querySelectorAll('.mood button').forEach((x,i)=>x.classList.toggle('on',e.e==i+1));save()}
 function sv(k,v){lg()[k]=v;save()}
 const TABS=[['today','Today','<path d="M12 3l2.6 5.6 6 .8-4.4 4.2 1.1 6L12 16.8 6.7 19.6l1.1-6L3.4 9.4l6-.8z"/>'],['week','Week','<rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M9 3v4M15 3v4"/>'],['plan','Plan','<path d="M4 6h16M4 12h16M4 18h10"/>'],['tips','Progress','<path d="M4 19V5M4 19h16M8 15l4-4 3 3 5-6"/>'],['ex','Exercises','<circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/>']];
-$('#nav').innerHTML='<i class="pill"></i>'+TABS.map(b=>`<button onclick="go('${b[0]}')"><svg viewBox="0 0 24 24">${b[2]}</svg>${b[1]}</button>`).join('');
-const NB=[...$('#nav').querySelectorAll('button')];
+$('#nav').innerHTML='<i class="pill"></i>'+TABS.map(b=>`<button><svg viewBox="0 0 24 24">${b[2]}</svg>${b[1]}</button>`).join('');
+const NB=[...$('#nav').querySelectorAll('button')],NV=$('#nav');let cw=0,dg=0,ci=0,sx=0;
+const cellW=()=>(NV.clientWidth-12)/5,pp=(x,sc)=>{$('#nav .pill').style.transform=`translateX(${x}px) scale(${sc||1})`};
+function mv(e){const x=e.clientX-NV.getBoundingClientRect().left-6;ci=Math.max(0,Math.min(4,Math.floor(x/cw)));pp(Math.max(0,Math.min(4*cw,x-cw/2)),1.16);NB.forEach((b,j)=>b.classList.toggle('pv',j==ci))}
+function dn(c){dg=0;NV.classList.remove('drag');NB.forEach(b=>b.classList.remove('pv'));if(c)go(TABS[ci][0]);else pp(TABS.findIndex(b=>b[0]==tab)*cellW(),1)}
+NV.addEventListener('pointerdown',e=>{cw=cellW();dg=1;NV.setPointerCapture(e.pointerId);NV.classList.add('drag');mv(e)});
+NV.addEventListener('pointermove',e=>{if(dg)mv(e)});
+NV.addEventListener('pointerup',()=>dg&&dn(1));NV.addEventListener('pointercancel',()=>dg&&dn(0));
+addEventListener('resize',()=>pp(TABS.findIndex(b=>b[0]==tab)*cellW(),1));
+const ag=()=>document.documentElement.style.setProperty('--ga',S.ga||.55);ag();
 function go(t,keep){const y=scrollY,same=t==tab;tab=t;cl();const m=$('#m');m.className='';m.innerHTML={today,week,plan,tips,ex:exs}[t]();
 if(!keep||!same){void m.offsetWidth;m.className='in'}
-const i=TABS.findIndex(b=>b[0]==t);NB.forEach((b,j)=>b.classList.toggle('on',i==j));$('#nav .pill').style.transform=`translateX(${i*100}%)`;head();scrollTo(0,keep&&same?y:0)}
+const i=TABS.findIndex(b=>b[0]==t);NB.forEach((b,j)=>b.classList.toggle('on',i==j));pp(i*cellW(),1);head();scrollTo(0,keep&&same?y:0)}
 document.addEventListener('keydown',e=>{if(e.key=='Escape')cl()});
 go('today');mini();
 if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
