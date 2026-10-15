@@ -13,58 +13,102 @@
 <link rel="apple-touch-icon" href="icon-180.png">
 <title>Trials Tracker</title>
 <style>
-:root{--bg:#f2f4ee;--card:#fff;--ink:#10231b;--mut:#5d7367;--line:#d5e0d8;--turf:#0f3d2e;--ball:#e8540f;--ok:#1d7a4d;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px)}
-@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0a1b14;--card:#10291d;--ink:#eaf2ec;--mut:#8fa99a;--line:#1f3d2d;--turf:#0a1b14;--ball:#ff7a3d;--ok:#5fd08e}}
-*{box-sizing:border-box}html,body{margin:0}
-body{background:var(--bg);color:var(--ink);font:16px/1.45 -apple-system,system-ui,sans-serif;padding-bottom:calc(76px + env(safe-area-inset-bottom,0px));-webkit-tap-highlight-color:transparent}
+:root{--bg:#f2f4ee;--card:#fff;--ink:#10231b;--mut:#5d7367;--line:#d5e0d8;--turf:#0f3d2e;--ball:#e8540f;--ok:#1d7a4d;--glass:rgba(255,255,255,.55);--glass-b:rgba(255,255,255,.7);--spring:cubic-bezier(.32,.72,0,1);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0a1b14;--card:#10291d;--ink:#eaf2ec;--mut:#8fa99a;--line:#1f3d2d;--turf:#0a1b14;--ball:#ff7a3d;--ok:#5fd08e;--glass:rgba(24,48,36,.5);--glass-b:rgba(255,255,255,.18)}}
+*{box-sizing:border-box}html,body{margin:0}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{background:var(--bg);color:var(--ink);font:16px/1.45 -apple-system,system-ui,sans-serif;padding-bottom:calc(110px + env(safe-area-inset-bottom,0px));-webkit-tap-highlight-color:transparent;-webkit-font-smoothing:antialiased}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--turf);z-index:9}
 h1,h2,.big{font-family:"Avenir Next Condensed","Arial Narrow",Impact,sans-serif;font-weight:700;letter-spacing:.01em;margin:0}
-header{background:var(--turf);color:#f2f4ee;padding:14px 18px 20px;display:flex;gap:16px;align-items:center}
-header .t{flex:1;min-width:0}header h1{font-size:30px;line-height:1.05}
+header{background:var(--turf);color:#f2f4ee;padding:14px 18px 22px;display:flex;gap:16px;align-items:center;border-radius:0 0 28px 28px}
+header .t{flex:1;min-width:0}header h1{font-size:32px;line-height:1.05}
 header p{margin:4px 0 0;color:#b9d2c3;font-size:14px}
 .ring{width:84px;height:84px;flex:none;position:relative}
+.ring circle.p{transition:stroke-dasharray .8s var(--spring)}
 .ring b{position:absolute;inset:0;display:grid;place-items:center;font:700 22px "Avenir Next Condensed","Arial Narrow",sans-serif;text-align:center;line-height:1}
 .ring small{display:block;font:500 10px -apple-system,sans-serif;color:#b9d2c3;margin-top:2px}
-main{padding:14px 14px 0;max-width:640px;margin:0 auto}
-.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}
-h2{font-size:22px;margin-bottom:2px}.sub{color:var(--mut);font-size:14px;margin:0 0 8px}
-.chip{display:inline-block;background:var(--turf);color:#f2f4ee;border-radius:99px;padding:2px 10px;font-size:13px;margin-right:6px}
-.note{border-left:4px solid var(--ball);padding:6px 10px;margin:8px 0;font-size:14px;background:color-mix(in srgb,var(--ball) 8%,transparent)}
-.it{display:flex;gap:12px;align-items:center;padding:11px 0;border-top:1px solid var(--line);cursor:pointer}
-.it:first-of-type{border-top:0}
-.bx{width:26px;height:26px;border-radius:50%;border:2px solid var(--mut);flex:none;display:grid;place-items:center;color:#fff;font-size:15px}
-.it.on .bx{background:var(--ok);border-color:var(--ok)}.it.on span{color:var(--mut);text-decoration:line-through}
-button,select,input,textarea{font:inherit;color:inherit}
-.btn{width:100%;border:0;border-radius:12px;padding:14px;font-weight:600;font-size:17px;background:var(--ball);color:#fff;margin-top:10px}
+main{padding:16px 14px 0;max-width:640px;margin:0 auto}
+main.in>*{animation:up .5s var(--spring) both}main.in>*:nth-child(2){animation-delay:.05s}main.in>*:nth-child(3){animation-delay:.1s}main.in>*:nth-child(n+4){animation-delay:.15s}
+@keyframes up{from{opacity:0;transform:translateY(14px) scale(.985)}to{opacity:1;transform:none}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:16px;margin-bottom:12px}
+h2{font-size:24px;margin-bottom:2px}.sub{color:var(--mut);font-size:14px;margin:0 0 8px}
+.note{border-left:4px solid var(--ball);padding:8px 12px;margin:0 0 12px;font-size:14px;border-radius:0 12px 12px 0;background:color-mix(in srgb,var(--ball) 8%,transparent)}
+.ex{display:flex;gap:12px;align-items:center;padding:12px 0;border-top:1px solid var(--line);cursor:pointer;transition:opacity .25s,transform .35s var(--spring)}
+.ex:first-of-type{border-top:0}.ex:active{transform:scale(.98)}
+.bx{width:28px;height:28px;border-radius:50%;border:2px solid var(--mut);flex:none;display:grid;place-items:center;color:#fff;font-size:15px;transition:background .25s,border-color .25s,transform .4s var(--spring)}
+.ex.on .bx{background:var(--ok);border-color:var(--ok);transform:scale(1.12);animation:pop .45s var(--spring)}
+@keyframes pop{0%{transform:scale(.7)}60%{transform:scale(1.25)}100%{transform:scale(1.12)}}
+.ex .tx{flex:1;min-width:0}.ex .nm{font-weight:600;font-size:16px;transition:color .25s}
+.ex.on .nm{color:var(--mut);text-decoration:line-through}.ex.on{opacity:.7}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:5px}
+.c{font-size:13px;font-weight:600;padding:2px 10px;border-radius:99px;background:color-mix(in srgb,var(--turf) 12%,transparent);color:var(--ink)}
+.c.s{background:color-mix(in srgb,var(--ball) 16%,transparent);color:var(--ball)}
+.xt{font-size:13px;color:var(--mut);margin-top:3px}
+.inf{width:34px;height:34px;flex:none;border-radius:50%;border:0;background:color-mix(in srgb,var(--ball) 14%,transparent);color:var(--ball);font-weight:700;font-size:16px;font-family:Georgia,serif;font-style:italic;transition:transform .3s var(--spring)}
+.inf:active{transform:scale(.88)}
+.sum{display:flex;gap:8px;margin:4px 0 6px;flex-wrap:wrap}
+button,select,input,textarea{font:inherit;color:inherit}button{cursor:pointer;transition:transform .3s var(--spring),opacity .2s}button:active{transform:scale(.96)}
+.btn{display:block;width:100%;border:0;border-radius:16px;padding:15px;font-weight:600;font-size:17px;background:var(--ball);color:#fff;margin-top:12px;text-align:center;text-decoration:none}
 .btn.done{background:var(--ok)}.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
 .row{display:flex;gap:8px;align-items:center;margin-top:10px}.row>*{flex:1}
-.mood{display:flex;gap:6px}.mood button{flex:1;padding:10px 0;border-radius:10px;border:1px solid var(--line);background:transparent}
+.mood{display:flex;gap:6px}.mood button{flex:1;padding:11px 0;border-radius:12px;border:1px solid var(--line);background:transparent;transition:background .25s,color .25s,transform .3s var(--spring)}
 .mood button.on{background:var(--turf);color:#f2f4ee;border-color:var(--turf)}
-input,textarea,select{width:100%;padding:10px;border-radius:10px;border:1px solid var(--line);background:transparent}
+input,textarea,select{width:100%;padding:11px;border-radius:12px;border:1px solid var(--line);background:transparent;font-size:16px}
 textarea{min-height:80px;resize:vertical}
 label{font-size:13px;color:var(--mut);display:block;margin:10px 0 4px}
-.wk{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-top:1px solid var(--line);cursor:pointer}
+.wk{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-top:1px solid var(--line);cursor:pointer;transition:transform .3s var(--spring)}.wk:active{transform:scale(.98)}
 .wk:first-of-type{border-top:0}.wk .d{width:54px;font-weight:600}.wk .s{flex:1;color:var(--mut);font-size:14px}.wk.today .d{color:var(--ball)}
-.nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.nav button{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 14px}
+.nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.nav button{background:var(--card);border:1px solid var(--line);border-radius:99px;padding:8px 16px}
 .ph{padding:10px 0;border-top:1px solid var(--line)}.ph:first-of-type{border-top:0}.ph.cur{border-left:4px solid var(--ball);padding-left:10px}
 .ph b{font-size:16px}.ph div{font-size:14px;color:var(--mut)}
 table{width:100%;border-collapse:collapse;font-size:13px}td,th{padding:3px;text-align:center}th{color:var(--mut);font-weight:500}td:first-child{text-align:left;width:34%}
 td input{padding:6px 2px;text-align:center}
 ul.tp{padding-left:18px;margin:6px 0}.tp li{margin-bottom:8px}
-nav{position:fixed;left:0;right:0;bottom:0;display:flex;background:var(--card);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px)}
-nav button{flex:1;border:0;background:none;padding:12px 0 10px;color:var(--mut);font-size:13px}nav button.on{color:var(--ball);font-weight:700}
-nav button i{display:block;font-style:normal;font-size:20px}
+.srch{position:sticky;top:calc(env(safe-area-inset-top,0px) + 8px);z-index:5;margin-bottom:12px}
+.srch input{border-radius:99px;padding:13px 18px;background:var(--glass);-webkit-backdrop-filter:blur(20px) saturate(180%);backdrop-filter:blur(20px) saturate(180%);border:1px solid var(--glass-b)}
+.li{display:flex;align-items:center;gap:10px;padding:13px 0;border-top:1px solid var(--line);cursor:pointer;transition:transform .3s var(--spring)}.li:first-child{border-top:0}.li:active{transform:scale(.98)}
+.li b{flex:1}.li span{color:var(--mut);font-size:20px}
+.empty{text-align:center;color:var(--mut);padding:24px 0}
+/* Liquid glass tab bar */
+nav{position:fixed;left:14px;right:14px;bottom:calc(env(safe-area-inset-bottom,0px) + 8px);max-width:520px;margin:0 auto;display:flex;padding:6px;border-radius:34px;z-index:20;
+background:var(--glass);-webkit-backdrop-filter:blur(26px) saturate(190%) brightness(1.05);backdrop-filter:blur(26px) saturate(190%) brightness(1.05);
+border:1px solid var(--glass-b);box-shadow:0 10px 34px rgba(0,0,0,.18),0 2px 6px rgba(0,0,0,.08),inset 0 1.5px 0 rgba(255,255,255,.65),inset 0 -1px 0 rgba(255,255,255,.12)}
+nav::before{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(180deg,rgba(255,255,255,.35),rgba(255,255,255,0) 45%);pointer-events:none}
+nav .pill{position:absolute;top:6px;bottom:6px;left:6px;width:calc((100% - 12px)/5);border-radius:28px;background:color-mix(in srgb,var(--ball) 18%,var(--glass));box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 2px 10px rgba(0,0,0,.1);transition:transform .55s var(--spring)}
+nav button{position:relative;flex:1;border:0;background:none;padding:8px 0 7px;color:var(--mut);font-size:11px;font-weight:600;transition:color .3s,transform .3s var(--spring)}
+nav button.on{color:var(--ball)}nav button svg{display:block;margin:0 auto 2px;width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+/* Bottom sheet */
+#bd{position:fixed;inset:0;background:rgba(0,0,0,.35);opacity:0;pointer-events:none;transition:opacity .35s;z-index:30}
+#sh{position:fixed;left:0;right:0;bottom:0;max-height:86vh;overflow:auto;z-index:31;transform:translateY(105%);transition:transform .5s var(--spring);margin:0 auto;max-width:640px;
+background:var(--glass);background-color:color-mix(in srgb,var(--card) 82%,transparent);-webkit-backdrop-filter:blur(30px) saturate(180%);backdrop-filter:blur(30px) saturate(180%);border:1px solid var(--glass-b);border-radius:30px 30px 0 0;padding:10px 20px calc(24px + env(safe-area-inset-bottom,0px));box-shadow:0 -10px 40px rgba(0,0,0,.2),inset 0 1.5px 0 rgba(255,255,255,.5)}
+body.so #bd{opacity:1;pointer-events:auto}body.so #sh{transform:none}
+#sh .gr{width:38px;height:5px;border-radius:9px;background:var(--mut);opacity:.5;margin:0 auto 14px}
+#sh h2{font-size:28px}#sh ol{padding-left:20px;margin:8px 0}#sh li{margin-bottom:6px}
+#sh .w{border-left:4px solid var(--ball);padding:8px 12px;border-radius:0 12px 12px 0;background:color-mix(in srgb,var(--ball) 8%,transparent);font-size:14px;margin-top:10px}
+.yt{background:#ff0033}
+
+.pls{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}.pl{min-width:40px;height:34px;padding:0 10px;border-radius:99px;border:1.5px solid var(--line);background:transparent;font-size:14px;font-weight:600;color:var(--mut);transition:background .25s,color .25s,transform .3s var(--spring)}.pl.on{background:var(--ok);border-color:var(--ok);color:#fff}
+.tmb{border:0;border-radius:99px;padding:7px 14px;background:color-mix(in srgb,var(--turf) 14%,transparent);font-weight:600;font-size:14px;margin-top:8px}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}.tile{background:color-mix(in srgb,var(--turf) 8%,transparent);border-radius:16px;padding:10px 4px;text-align:center}.tile b{display:block;font:700 22px "Avenir Next Condensed","Arial Narrow",sans-serif}.tile small{color:var(--mut);font-size:11px}
+.tmr{font:700 68px "Avenir Next Condensed","Arial Narrow",sans-serif;text-align:center;font-variant-numeric:tabular-nums;margin:8px 0}
+.seg{display:flex;gap:6px;margin:8px 0 4px}.seg button{flex:1;padding:9px 0;border-radius:99px;border:1px solid var(--line);background:transparent;font-size:14px}.seg button.on{background:var(--turf);color:#f2f4ee;border-color:var(--turf)}
+.ln{fill:none;stroke:var(--ball);stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;animation:dr 1.1s var(--spring) .15s forwards}@keyframes dr{to{stroke-dashoffset:0}}
+.ar{fill:url(#g);opacity:0;animation:fi .8s .5s forwards}@keyframes fi{to{opacity:1}}
+.bars{display:flex;gap:6px;align-items:flex-end}.bc{flex:1;text-align:center}.bc small{font-size:10px;color:var(--mut)}.trk{height:90px;display:flex;align-items:flex-end;background:color-mix(in srgb,var(--turf) 8%,transparent);border-radius:10px;overflow:hidden}.bar{width:100%;background:var(--ball);border-radius:8px 8px 0 0;transform-origin:bottom;animation:gr .8s var(--spring) both}@keyframes gr{from{transform:scaleY(0)}}
+#mt{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(env(safe-area-inset-bottom,0px) + 84px);z-index:21;display:none;border:1px solid var(--glass-b);border-radius:99px;padding:9px 18px;font-weight:700;color:var(--ink);background:var(--glass);-webkit-backdrop-filter:blur(22px) saturate(180%);backdrop-filter:blur(22px) saturate(180%);box-shadow:0 6px 20px rgba(0,0,0,.18),inset 0 1px 0 rgba(255,255,255,.5);font-variant-numeric:tabular-nums;max-width:90vw;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style></head><body>
-<header><div class="t"><h1 id="h1"></h1><p id="hp"></p></div><div class="ring" id="ring"></div></header>
+<header><div class="t"><h1 id="h1"></h1><p id="hp"></p></div><div class="ring"><svg viewBox="0 0 84 84" width="84" height="84"><circle cx="42" cy="42" r="36" fill="none" stroke="#ffffff33" stroke-width="7"/><circle class="p" id="rp" cx="42" cy="42" r="36" fill="none" stroke="#ff7a3d" stroke-width="7" stroke-linecap="round" stroke-dasharray="0 226" transform="rotate(-90 42 42)"/></svg><b><span id="rn"></span></b></div></header>
 <main id="m"></main>
 <nav id="nav"></nav>
+<div id="bd" onclick="cl()"></div><div id="sh"></div>
 <script>
 const $=s=>document.querySelector(s),pd=s=>{const[a,b,c]=s.split('-').map(Number);return new Date(a,b-1,c)},
 fd=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'),
 add=(d,n)=>{const x=new Date(d);x.setDate(x.getDate()+n);return x},esc=s=>String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 let S={};try{S=JSON.parse(localStorage.getItem('ht1')||'{}')}catch(e){}
 S.log=S.log||{};S.bm=S.bm||{};S.trial=S.trial||'2027-02-02';
-const save=()=>{try{localStorage.setItem('ht1',JSON.stringify(S))}catch(e){}};
+let st;const save=()=>{clearTimeout(st);st=setTimeout(()=>{try{localStorage.setItem('ht1',JSON.stringify(S))}catch(e){}},150)};
+addEventListener('pagehide',()=>{try{localStorage.setItem('ht1',JSON.stringify(S))}catch(e){}});
 const START=pd('2026-10-15'),DN=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 const P=[
 {n:'Foundation',s:'Oct 15',e:'2026-11-04',g:'Learn the movements and build consistency. Easy walking only: no hard running or sprints. Keep 3 good reps in reserve.'},
@@ -72,15 +116,15 @@ const P=[
 {n:'Athletic development',s:'Nov 26',e:'2026-12-23',g:'Running endurance, smooth acceleration, lateral movement and braking. No max-effort sprints yet.'},
 {n:'Hockey conditioning',s:'Dec 24',e:'2027-01-13',g:'Repeated-effort fitness. Friday is the one hard day; keep everything else controlled.'},
 {n:'Sharpen and taper',s:'Jan 14',e:'2027-02-02',g:'Keep strength and speed, shed fatigue, arrive fresh.'}];
-const W='Warm-up (5–10 min; 8–12 before fast running)|';
+const W='Warm-up 5–10 min (8–12 before fast running)|';
 const X={
 1:{1:['Strength A','20–25 min',W+'Bodyweight squat 2×6|Wall push-up 2×6|Glute bridge 2×8|Calf raise 2×10|Dead bug 2×5 per side'],
-2:['Aerobic + mobility','20–25 min','Comfortable walk 15–20 min|Cat–cow 8 reps|Hip-flexor stretch 30 s per side|Open-book rotations 6 per side|Wall angels 8 reps'],
+2:['Aerobic + mobility','20–25 min','Comfortable walk 15–20 min|Cat–cow 2×8 reps|Hip-flexor stretch 30 s per side|Open-book rotations 2×6 per side|Wall angels 2×8'],
 3:['Strength B','20–25 min',W+'Hip hinge 2×8|Supported reverse lunge 2×4 per leg|Wall push-up 2×6|Bird dog 2×5 per side|Bent-knee side plank 2×10 s per side'],
 5:['Speed movement basics','15–20 min','Easy march or walk 5 min|Side steps 3×20 s|Forward and back steps 3×20 s|Single-leg balance 2×15 s per leg|Gentle calf raises 2×10'],
 6:['Easy aerobic','15–25 min','Comfortable walk 15–25 min (build toward 25–30)|Cool down 3–5 min|Log how long and how it felt']},
 2:{1:['Strength A','30–35 min',W+'Squats 3×8–10|Incline push-ups 3×5–8|Glute bridges 3×10|Calf raises 3×12|Dead bugs 3×6 per side'],
-2:['Aerobic fitness','20–35 min','Warm up 5 min|Jog 1 min, walk 2 min: 3–4 rounds, build to 6|Cool down 3–5 min|Short mobility routine'],
+2:['Aerobic fitness','20–35 min','Warm up 5 min|Jog–walk intervals 3×3 min (1 min jog, 2 min walk), build to 6 rounds|Cool down 3–5 min|Short mobility routine'],
 3:['Strength B','30–35 min',W+'Dumbbell Romanian deadlift 2–3×8|Supported reverse lunge 3×5 per leg|Bent-over dumbbell row 3×8|Bird dog 2×6 per side|Bent-knee side plank 2×15–20 s per side'],
 5:['Movement and agility','20–25 min','Warm-up walk 5 min|Side steps 3×20 s|Forward/back steps 3×20 s|Controlled lateral shuffles 3×5 m each way|Single-leg balance 2×20 s per leg'],
 6:['Conditioning + strength','25–35 min','Easy walk or walk-jog 20–25 min|Bodyweight squat 2×8|Glute bridge 2×10|Calf raise 2×12']},
@@ -92,7 +136,7 @@ const X={
 4:{1:['Strength A','30–35 min',W+'Goblet squat 3×10|Push-up variation 3×8–12|Glute bridge 3×12|Calf raises 3×15|Dead bugs 3×8 per side'],
 2:['Aerobic base','30–45 min','Easy run or run-walk 25–35 min|Mobility 8–10 min'],
 3:['Strength B','30–35 min',W+'Romanian deadlift 3×10|Reverse lunges 3×8 per leg|Dumbbell rows 3×10–12|Bird dogs 2×8 per side|Side planks 3×25–30 s per side'],
-5:['Repeat-effort conditioning','30–40 min','Warm up 10–12 min: easy movement, dynamic mobility, gradual accelerations|Set 1: 4 × (15 s fast at 75–85%, then 60–90 s easy walk/jog)|Rest 3 min|Set 2: same 4 efforts, only if set 1 felt controlled|Cool down walk 5 min'],
+5:['Repeat-effort conditioning','30–40 min','Warm up 10–12 min: easy movement, dynamic mobility, gradual accelerations|Set 1: Fast efforts 4×15 s at 75–85%, with 60–90 s easy walk/jog between|Rest 3 min|Set 2: Fast efforts 4×15 s, only if set 1 felt controlled|Cool down walk 5 min'],
 6:['Easy conditioning','30–50 min','Easy cardio 20–30 min|Mobility 8–10 min']}};
 const TIPS=[
 ['Test yourself four times','Use the benchmark grid below at the start, week 6, week 11 and week 15. Same route, same time of day. Numbers beat feelings for knowing what is working.'],
@@ -103,25 +147,64 @@ const TIPS=[
 ['Train braking, not just speed','Practise decelerating in 2–3 steps on Fridays from Phase 3. Fast starts and clean stops are what a forward is judged on.'],
 ['Protect the basics','Sleep 8 hours, drink water through the day, eat protein with each meal. Training only works if you recover from it.'],
 ['Confirm the trial date','Set it in Plan. The app counts down and the final week should be planned backwards from it.']];
+const PO='Chin tucks 2×8|Prone Y raises 2×8, hold 2 s|Wall angels 2×8|Hip-flexor stretch 30 s per side';
+/* Exercise library: [name, matcher, how-to steps, watch-out, YouTube search] */
+const L=[
+['Bodyweight squat',/squat/,'Stand with feet shoulder-width, toes slightly out.|Push hips back and bend knees, lowering until thighs are about parallel (or as low as is comfortable).|Keep chest up and knees tracking over your toes.|Drive through the whole foot to stand tall.','Knees caving in, or heels lifting. Hold an 8 kg weight at your chest for a goblet squat.','bodyweight squat form'],
+['Wall push-up',/wall push|push-up|push up/,'Stand an arm’s length from a wall, hands at chest height, a bit wider than shoulders.|Bend elbows to bring your chest toward the wall, body in one straight line.|Push back to straight arms.|Progress: incline (hands on a bench), then knees, then full.','Sagging hips or flaring elbows straight out. Keep elbows about 45° from your body.','wall push up form'],
+['Glute bridge',/glute bridge/,'Lie on your back, knees bent, feet flat and hip-width.|Tuck your ribs down, squeeze your glutes and lift hips until shoulders to knees form a line.|Pause 1 second, then lower slowly.','Arching your lower back. Stop when glutes (not back) are doing the work.','glute bridge form'],
+['Calf raise',/calf raise/,'Stand tall, feet hip-width (hold a wall for balance).|Rise onto the balls of your feet as high as you can.|Pause, then lower slowly over 2–3 seconds.','Rolling to the outside of your feet. Push through the big toe.','calf raise form'],
+['Dead bug',/dead bug/,'Lie on your back, arms straight up, hips and knees bent at 90°.|Press your lower back gently into the floor.|Slowly lower the opposite arm and leg toward the floor, then return.|Alternate sides.','Lower back lifting off the floor. Go smaller if it does.','dead bug exercise'],
+['Hip hinge / Romanian deadlift',/hinge|romanian/,'Stand with feet hip-width, soft knees, weights in front of thighs.|Push hips straight back, sliding the weights down your thighs with a flat back.|Stop when you feel a hamstring stretch (about mid-shin).|Squeeze glutes to stand tall.','Rounding your back or squatting down instead of hinging back.','romanian deadlift dumbbell form'],
+['Reverse lunge',/lunge/,'Stand tall (hold a wall or chair if “supported”).|Step one foot back and lower until both knees are about 90°.|Push through the front heel to return.|Finish all reps on one leg, then switch.','Front knee drifting past your toes or leaning forward. Take a longer step back.','reverse lunge form'],
+['Bent-over row',/row/,'Hinge forward with a flat back, a weight in each hand, arms hanging.|Pull elbows back toward your hips, squeezing shoulder blades.|Lower under control.','Using momentum or rounding your back.','dumbbell bent over row form'],
+['Bird dog',/bird dog/,'Start on hands and knees, back flat.|Reach one arm forward and the opposite leg back, level with your body.|Hold 1–2 seconds, return, switch sides.','Hips rotating or back arching. Move slowly.','bird dog exercise form'],
+['Side plank',/side plank/,'Lie on your side, forearm under shoulder, knees bent (easier) or legs straight.|Lift hips so your body forms a line.|Hold for the time, breathing steadily. Repeat other side.','Hips dropping. Squeeze your side and glutes.','side plank form'],
+['Cat–cow',/cat/,'On hands and knees, inhale and drop your belly, lifting chest and tailbone (cow).|Exhale and round your back toward the ceiling, tucking chin and tailbone (cat).|Move slowly with your breath.','Rushing. Aim for smooth, full range.','cat cow stretch'],
+['Hip-flexor stretch',/hip-flexor|hip flexor/,'Kneel on one knee (pad under it), other foot forward.|Tuck your tailbone under and gently shift forward until you feel the front of the back hip stretch.|Hold for the time, then switch.','Arching your lower back. Squeeze the glute of the kneeling leg.','kneeling hip flexor stretch'],
+['Open-book rotation',/open-book|open book/,'Lie on your side, knees bent in front, arms together straight out.|Lift the top arm up and over, rotating your chest open, following your hand with your eyes.|Return slowly. Do all reps, then switch sides.','Knees drifting apart. Keep them stacked.','open book thoracic rotation'],
+['Wall angels',/wall angel/,'Stand with back, head and hips against a wall, feet slightly forward.|Put arms in a “goalpost” shape against the wall.|Slide arms up and down, keeping elbows and wrists touching the wall.','Ribs flaring or lower back arching. Only go as high as you can keep contact.','wall angels exercise'],
+['Side steps',/side step/,'Athletic stance: knees bent, hips back, chest up.|Step sideways, keeping toes forward and feet never crossing.|Take quick, light steps for the time, then reverse direction.','Standing upright. Stay low like a hockey stance.','side step agility drill'],
+['Forward and back steps',/forward and back|forward-to-backward|forward\/back/,'Athletic stance, weight on the balls of your feet.|Take small quick steps forward, then backpedal back to start.|Stay low and keep eyes up.','Taking big steps. Short and quick is the goal.','forward backward footwork drill'],
+['Single-leg balance',/balance/,'Stand on one leg, slight knee bend, hands on hips.|Hold steady for the time, then switch.|Progress by closing your eyes or standing on a pillow.','Locking your knee. Keep it soft.','single leg balance exercise'],
+['Lateral shuffle',/shuffle/,'Athletic stance, then push off the trailing leg to slide sideways.|Keep feet from crossing and hips low.|Stop in control after 5 m and shuffle back.','Hopping upright. Stay low and quiet.','lateral shuffle drill'],
+['Accelerations',/accelerations|fast efforts/,'Start in a split or athletic stance.|Lean forward slightly and drive with powerful, quick steps.|Run at the stated effort, then slow down smoothly and walk back to recover fully.','Going all out before you’re ready. Keep it smooth at the stated effort.','acceleration sprint drill form'],
+['Chin tucks',/chin tuck/,'Sit or stand tall, looking forward.|Glide your head straight back, making a “double chin”, without tilting.|Hold 1 second, release.','Looking down. Keep eyes level.','chin tuck exercise'],
+['Prone Y raise',/prone y/,'Lie face down, arms overhead in a “Y”, thumbs up.|Lift arms a few inches by squeezing between your shoulder blades.|Hold 2 seconds, lower slowly.','Shrugging shoulders. Keep neck long.','prone Y raise exercise'],
+['Walking & easy cardio',/walk|march|cardio|jog|run/,'Keep a pace where you can talk in full sentences.|Walk tall, shoulders relaxed, arms swinging.|For walk-jog intervals, jog gently and walk to recover before the next round.','Going too hard on easy days.','walk jog intervals for beginners'],
+['Warm-up',/warm/,'Start with easy movement: marching, arm circles, leg swings.|Add bodyweight squats and gentle lunges.|Before fast running, add a few gradual build-up accelerations.','Skipping it. It protects you from injuries.','dynamic warm up before workout'],
+['Mobility',/mobility|cool down/,'Take it slow with easy stretching and joint circles.|Breathe deeply and never force a stretch into pain.','Bouncing in stretches.','mobility routine beginners'],
+['Hockey stance hold',/stance/,'Stand with feet slightly wider than shoulders, hips back and chest forward in a half-squat.|Hold for the time, keeping knees over toes.','Letting your back round.','hockey stance exercise']
+];
+const lib=n=>{n=n.toLowerCase();return L.findIndex(e=>e[1].test(n))};
+const yt=e=>'https://www.youtube.com/results?search_query='+encodeURIComponent(L[e][4]+' #shorts');
+function parse(t){let m;const c=x=>(x||'').replace(/^(reps\b)?[\s,:]*/,'');
+if(m=t.match(/^(.*?)\s+([\d–]+)×([\d–]+)(\s+(?:min|s|m)\b)?\s*(.*)$/))return{n:m[1],s:m[2],a:m[3]+(m[4]?' '+m[4].trim():' reps'),x:c(m[5])};
+if(m=t.match(/^([^()]*?)\s+([\d–]+)\s*(min|s)\b[:,]?\s*(.*)$/))return{n:m[1],s:m[3]=='s'?'1':'',a:m[2]+' '+m[3],x:c(m[4])};
+return{n:t,s:'',a:'',x:''}}
+const tot=t=>{const p=parse(t);return p.s?+(p.s.match(/\d+/g)||[0]).pop():0};
+const timed=n=>/(run|jog|cardio|walk)/i.test(n)&&!/cool|warm|march|back|gentle/i.test(n);
+function exRow(t,i,on,sd){const p=parse(t),k=lib(p.n),n=tot(t),sp=p.s?+p.s==1?'1 set':p.s+' sets':'';
+return`<div class="ex ${on?'on':''}" data-i="${i}" onclick="tg(${i})"><div class="bx">${on?'✓':''}</div><div class="tx"><div class="nm">${esc(p.n)}</div><div class="chips">${sp?`<span class="c s">${sp}</span>`:''}${p.a?`<span class="c">${p.a}</span>`:''}</div>${p.x?`<div class="xt">${esc(p.x)}</div>`:''}
+${n>1?`<div class="pls">${Array.from({length:n},(_,j)=>`<button class="pl ${j<sd?'on':''}" onclick="event.stopPropagation();ps(${i},${j+1})">${j+1}</button>`).join('')}<span class="xt" style="align-self:center">${sd||0}/${n} sets</span></div>`:''}
+${timed(p.n)?`<button class="tmb" onclick="event.stopPropagation();ot(${i},'r')">⏱ Time it</button>`:''}</div>${k>=0?`<button class="inf" aria-label="How to" onclick="event.stopPropagation();op(${k})">i</button>`:''}</div>`}
 let sel=fd(new Date()),tab='today';
 const phase=d=>{if(S.hold)return S.hold;const t=fd(d);for(let i=0;i<5;i++)if(t<=P[i].e)return i+1;return 5};
-const PO='Posture finisher (5 min): chin tucks 2×8|Prone Y raises on the mat 2×8, hold 2 s|Wall angels 2×8|Hip-flexor stretch 30 s per side';
 const sess=d=>{const w=d.getDay();if(w==0||w==4)return null;const r=X[Math.min(phase(d),4)][w];if(!r)return null;let i=r[2].split('|'),m=r[1];if(w==1||w==3||w==6){i=i.concat(PO.split('|'));m+=' + 5 min posture'}return{t:r[0],m,i}};
 const mon=d=>add(d,-((d.getDay()+6)%7));
 function weekDone(d){const m=mon(d);let c=0;for(let i=0;i<7;i++){const k=fd(add(m,i));if(S.log[k]&&S.log[k].c&&sess(add(m,i)))c++}return c}
 function head(){const d=pd(sel),ph=phase(d),tr=Math.round((pd(S.trial)-new Date(fd(new Date())+'T00:00'))/864e5),w=weekDone(d);
-$('#h1').textContent=tab=='today'?DN[d.getDay()]+' '+d.toLocaleDateString(undefined,{day:'numeric',month:'short'}):'Trials Tracker';
+$('#h1').textContent=tab=='today'?DN[d.getDay()]+' '+d.toLocaleDateString(undefined,{day:'numeric',month:'short'}):tab=='ex'?'Exercises':'Trials Tracker';
 $('#hp').textContent=`Phase ${ph}: ${P[ph-1].n} · ${tr>0?tr+' days to trials':tr==0?'Trial day':'Trials passed'}`;
-const c=2*Math.PI*36,f=c*Math.min(w,5)/5;
-$('#ring').innerHTML=`<svg viewBox="0 0 84 84" width="84" height="84"><circle cx="42" cy="42" r="36" fill="none" stroke="#ffffff33" stroke-width="7"/><circle cx="42" cy="42" r="36" fill="none" stroke="#ff7a3d" stroke-width="7" stroke-linecap="round" stroke-dasharray="${f} ${c}" transform="rotate(-90 42 42)"/></svg><b><span>${w}/5<small>this week</small></span></b>`}
+$('#rp').setAttribute('stroke-dasharray',`${226.2*Math.min(w,5)/5} 226.2`);$('#rn').innerHTML=`${w}/5<small>this week</small>`}
 function today(){const d=pd(sel),s=sess(d),e=S.log[sel]||{},x=e.x||[],ph=phase(d);let h='';
 if(ph==5){const t=sel;h+=`<div class="note">${t<='2027-01-20'?'Sharpen: keep the normal pattern, add nothing new.':t<='2027-01-27'?'Reduce volume by 20–30%: fewer reps, no exhausting leg work.':'Taper: short and comfortable. No hard conditioning in the last 48 hours.'}</div>`}
-if(!s){h+=`<div class="card"><h2>Rest day</h2><p class="sub">Recovery is when you adapt. Gentle walking is optional.</p><div class="it ${e.c?'on':''}" onclick="tc()"><div class="bx">${e.c?'✓':''}</div><span>Gentle walk done</span></div></div>`}
-else{h+=`<div class="card"><h2>${s.t}</h2><p class="sub">${s.m} · ${P[ph-1].n}</p>${s.i.map((t,i)=>`<div class="it ${x.includes(i)?'on':''}" onclick="tg(${i})"><div class="bx">${x.includes(i)?'✓':''}</div><span>${esc(t)}</span></div>`).join('')}
-<label>How hard was it? (1 easy · 5 maxed)</label><div class="mood">${[1,2,3,4,5].map(n=>`<button class="${e.e==n?'on':''}" onclick="se(${n})">${n}</button>`).join('')}</div>
+if(!s){h+=`<div class="card"><h2>Rest day</h2><p class="sub">Recovery is when you adapt. Gentle walking is optional.</p><div class="ex ${e.c?'on':''}" onclick="tc()"><div class="bx">${e.c?'✓':''}</div><div class="tx"><div class="nm">Gentle walk done</div></div></div></div>`}
+else{h+=`<div class="card"><h2>${s.t}</h2><p class="sub">${P[ph-1].n}</p><div class="sum"><span class="c">${s.i.length} exercises</span><span class="c">⏱ ${s.m}</span></div>${s.i.map((t,i)=>exRow(t,i,x.includes(i),(e.sd||{})[i]||0)).join('')}
+<label>How hard was it? (1 easy · 5 maxed)</label><div class="mood">${[1,2,3,4,5].map(n=>`<button class="${e.e==n?'on':''}" onclick="se(${n},this)">${n}</button>`).join('')}</div>
 <div class="row"><div><label>Minutes</label><input type="number" inputmode="numeric" value="${e.m||''}" oninput="sv('m',this.value)"></div></div>
 <label>Notes: energy, soreness, running</label><textarea oninput="sv('n',this.value)">${esc(e.n)}</textarea>
-<button class="btn ${e.c?'done':''}" onclick="tc()">${e.c?'Session complete ✓':'Mark session complete'}</button></div>`}
+<button class="btn ${e.c?'done':''}" id="cb" onclick="tc()">${e.c?'Session complete ✓':'Mark session complete'}</button></div>`}
 h+=`<div class="card"><b>This phase</b><p class="sub" style="margin:4px 0 0">${P[ph-1].g}</p></div>`;
 if(sel!=fd(new Date()))h+=`<button class="btn ghost" onclick="sel=fd(new Date());go('today')">Back to today</button>`;
 return h}
@@ -133,16 +216,70 @@ h+=`<div class="card"><label>Hold phase (stay here until you are ready)</label><
 <label>Trial date</label><input type="date" value="${S.trial}" onchange="S.trial=this.value||'2027-02-02';save();head()">
 <label>Backup: copy this text somewhere safe, or paste a backup here and tap Restore</label><textarea id="bk">${esc(JSON.stringify(S))}</textarea>
 <div class="row"><button class="btn ghost" onclick="try{JSON.parse($('#bk').value);localStorage.setItem('ht1',$('#bk').value);location.reload()}catch(e){alert('That backup text is not valid.')}">Restore</button></div></div>`;return h}
+const fm=t=>{t=Math.round(t);const h=t/3600|0,m=(t%3600)/60|0,x=t%60;return(h?h+':'+String(m).padStart(2,'0'):m)+':'+String(x).padStart(2,'0')};
+const sd0=d=>d.toLocaleDateString(undefined,{day:'numeric',month:'short'});
+let rm='r';
+S.runs=S.runs||[];S.tm=S.tm||{a:0,t:0};
+function chart(p,f,lo){const W=320,H=150,L=10,R=10,T=14,B=24,v=p.map(q=>q.v),mn=Math.min(...v),mx=Math.max(...v),pad=(mx-mn||mx*.1||1)*.15,a=mn-pad,b=mx+pad,
+X=i=>p.length>1?L+(W-L-R)*i/(p.length-1):W/2,Y=x=>{const r=(x-a)/(b-a);return T+(H-T-B)*(lo?r:1-r)},pts=p.map((q,i)=>[X(i),Y(q.v)]),d=pts.map((q,i)=>(i?'L':'M')+q[0].toFixed(1)+' '+q[1].toFixed(1)).join('');
+return`<svg viewBox="0 0 ${W} ${H}" width="100%"><defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--ball)" stop-opacity=".3"/><stop offset="1" stop-color="var(--ball)" stop-opacity="0"/></linearGradient></defs>
+${[0,.5,1].map(r=>`<line x1="${L}" x2="${W-R}" y1="${T+(H-T-B)*r}" y2="${T+(H-T-B)*r}" stroke="var(--line)"/>`).join('')}
+${p.length>1?`<path class="ar" d="${d}L${pts[pts.length-1][0]} ${H-B}L${pts[0][0]} ${H-B}Z"/><path class="ln" pathLength="1" d="${d}"/>`:''}
+${pts.map((q,i)=>`<circle cx="${q[0]}" cy="${q[1]}" r="${i==pts.length-1?6:3.5}" fill="${i==pts.length-1?'var(--ball)':'var(--card)'}" stroke="var(--ball)" stroke-width="2"/>`).join('')}
+<text x="${L}" y="${H-6}" font-size="11" fill="var(--mut)">${p[0].d}</text><text x="${W-R}" y="${H-6}" font-size="11" fill="var(--mut)" text-anchor="end">${p.length>1?p[p.length-1].d:''}</text></svg>`}
+function runs(){const all=S.runs,l=all.filter(r=>rm=='t'?r.t=='t':r.t!='t'),pace=rm!='t'&&l.filter(r=>r.k).length>=2,src=pace?l.filter(r=>r.k):l,lo=rm=='t'||pace,
+p=src.map(r=>({v:pace?r.s/r.k:r.s,d:sd0(pd(r.d))})),f=pace?v=>fm(v)+'/km':fm;
+let h=`<div class="card"><h2>Running progress</h2><div class="seg"><button class="${rm!='t'?'on':''}" onclick="rm='r';go('tips',1)">All runs</button><button class="${rm=='t'?'on':''}" onclick="rm='t';go('tips',1)">1.6 km trials</button></div>`;
+if(!p.length)h+=`<p class="sub">Nothing logged yet. Tap “⏱ Time it” on a run in Today, or start a trial below.</p>`;
+else{const v=p.map(q=>q.v),best=lo?Math.min(...v):Math.max(...v),ch=(v[v.length-1]-v[0])/v[0]*100*(lo?-1:1);
+h+=chart(p,f,lo)+`<div class="tiles"><div class="tile"><b>${f(v[v.length-1])}</b><small>Latest</small></div><div class="tile"><b>${f(best)}</b><small>Best</small></div><div class="tile"><b>${p.length<2?'–':(ch>=0?'+':'')+ch.toFixed(0)+'%'}</b><small>${lo?'Faster':'Longer'} vs first</small></div></div><p class="sub">${pace?'Pace per km. Higher on the chart means faster.':rm=='t'?'1.6 km time. Higher on the chart means faster.':'Time per run. Add a distance when saving to see pace instead.'}</p>`}
+h+=`<div class="row"><button class="btn ghost" onclick="ot(-1,'r')">⏱ Start a run</button><button class="btn" onclick="ot(-1,'t')">1.6 km trial</button></div>`;
+const rc=all.map((r,ix)=>[r,ix]).slice(-6).reverse();if(rc.length)h+=`<div style="margin-top:10px">${rc.map(([r,ix])=>`<div class="li"><b>${esc(r.n)}${r.t=='t'?' 🏁':''}<div class="xt">${sd0(pd(r.d))}${r.k?' · '+r.k+' km · '+fm(r.s/r.k)+'/km':''}</div></b><span style="font-size:16px;font-weight:600;color:var(--ink)">${fm(r.s)}</span><button class="inf" style="font-style:normal;font-family:inherit" onclick="dr(${ix})">✕</button></div>`).join('')}</div>`;
+return h+'</div>'}
+function dr(i){if(confirm('Delete this run?')){S.runs.splice(i,1);save();go('tips',1)}}
+function wkly(){const m=mon(new Date()),B=[];let ts=0,tn=0,ws=0,wn=0;
+for(let i=7;i>=0;i--){const w=add(m,-7*i);let pl=0,dn=0;for(let j=0;j<7;j++){const d=add(w,j),e=S.log[fd(d)];if(sess(d))pl++;if(e&&e.c&&sess(d)){dn++;tn++}if(e&&e.sd){const q=Object.values(e.sd).reduce((a,b)=>a+b,0);ts+=q;if(i==0)ws+=q}}B.push([w,dn,pl||1])}
+const cur=B[7][1];
+return`<div class="card"><h2>Consistency</h2><div class="tiles"><div class="tile"><b>${cur}</b><small>Sessions this week</small></div><div class="tile"><b>${ws}</b><small>Sets this week</small></div><div class="tile"><b>${tn}</b><small>Sessions, 8 weeks</small></div></div>
+<div class="bars">${B.map((b,i)=>`<div class="bc"><div class="trk"><div class="bar" style="height:${Math.max(b[1]/b[2]*100,4)}%;animation-delay:${i*50}ms"></div></div><small>${sd0(b[0])}</small></div>`).join('')}</div><p class="sub">Sessions completed per week (full bar = every planned session).</p></div>`}
 function tips(){const C=['Start','Week 6','Week 11','Week 15'],T=[['1.6 km time (min:sec)','t'],['Max good push-ups','p'],['Single-leg balance (s)','b']];
-let h='<div class="card"><h2>Benchmarks</h2><p class="sub">Record on the same route and surface each time.</p><table><tr><th></th>'+C.map(c=>`<th>${c}</th>`).join('')+'</tr>'+T.map(t=>`<tr><td>${t[0]}</td>${C.map((c,i)=>`<td><input value="${esc((S.bm[t[1]]||[])[i])}" oninput="(S.bm['${t[1]}']=S.bm['${t[1]}']||[])[${i}]=this.value;save()"></td>`).join('')}</tr>`).join('')+'</table></div>';
+let h=runs()+wkly()+'<div class="card"><h2>Benchmarks</h2><p class="sub">Record on the same route and surface each time.</p><table><tr><th></th>'+C.map(c=>`<th>${c}</th>`).join('')+'</tr>'+T.map(t=>`<tr><td>${t[0]}</td>${C.map((c,i)=>`<td><input value="${esc((S.bm[t[1]]||[])[i])}" oninput="(S.bm['${t[1]}']=S.bm['${t[1]}']||[])[${i}]=this.value;save()"></td>`).join('')}</tr>`).join('')+'</table></div>';
 return h+'<div class="card"><h2>Ways to improve the plan</h2><ul class="tp">'+TIPS.map(t=>`<li><b>${t[0]}.</b> ${t[1]}</li>`).join('')+'</ul></div>'}
+/* Stopwatch: uses timestamps so it keeps counting if the app is backgrounded */
+const tms=()=>S.tm.a+(S.tm.t?Date.now()-S.tm.t:0);
+function ot(i,k){const T=S.tm;if(!T.a&&!T.t){Object.assign(T,{a:0,t:0,k,i,km:k=='t'?'1.6':'',n:k=='t'?'1.6 km time trial':i>=0?parse(sess(pd(sel)).i[i]).n:'Run',d:fd(new Date()),sl:sel});save()}tsh();document.body.classList.add('so')}
+function tsh(){const T=S.tm;$('#sh').innerHTML=`<div class="gr"></div><h2>${esc(T.n)}</h2><div class="tmr" id="tt">${fm(tms()/1e3)}</div><div class="row"><button class="btn ghost" onclick="tmR()">Reset</button><button class="btn" id="tgb" onclick="tmT()">${T.t?'Pause':tms()?'Resume':'Start'}</button></div>
+<label>Distance in km (optional, gives you pace)</label><input type="number" step="0.01" inputmode="decimal" value="${T.km||''}" oninput="S.tm.km=this.value;save()"><button class="btn" style="background:var(--ok)" onclick="tmS()">Save this run</button><button class="btn ghost" onclick="cl()">Hide (timer keeps running)</button>`}
+function tmT(){const T=S.tm;if(T.t){T.a+=Date.now()-T.t;T.t=0}else T.t=Date.now();save();$('#tgb').textContent=T.t?'Pause':'Resume';mini()}
+function tmR(){if(tms()&&!confirm('Reset the timer?'))return;S.tm={a:0,t:0};save();cl();mini()}
+function tmS(){const T=S.tm;if(T.t){T.a+=Date.now()-T.t;T.t=0}const sec=Math.round(T.a/1e3);if(sec<5){alert('Start the timer first.');return}
+const k=+T.km||(T.k=='t'?1.6:0);S.runs.push({d:T.d,n:T.n,s:sec,k:k||0,t:T.k});
+if(T.i>=0&&tab=='today'&&T.sl==sel){const s=sess(pd(sel));if(s){const e=lg();e.m=e.m||Math.round(sec/60);sd1(T.i,tot(s.i[T.i]),true);e.c=(e.x||[]).length==s.i.length}}
+S.tm={a:0,t:0};save();cl();mini();go(tab,1)}
+function mini(){const T=S.tm,on=(T.a||T.t)&&!document.body.classList.contains('so');let b=$('#mt');if(!b){b=document.createElement('button');b.id='mt';b.onclick=()=>{tsh();document.body.classList.add('so')};document.body.appendChild(b)}b.style.display=on?'block':'none';b.textContent=(T.t?'⏱ ':'⏸ ')+fm(tms()/1e3)+' · '+(T.n||'')}
+setInterval(()=>{const t=$('#tt');if(t)t.textContent=fm(tms()/1e3);if(S.tm.a||S.tm.t)mini()},500);
+function exs(){return`<div class="srch"><input id="q" type="search" placeholder="Search exercises…" autocomplete="off" oninput="fx(this.value)"></div><div class="card" id="el">${exl('')}</div>`}
+function exl(q){q=q.trim().toLowerCase();const r=L.map((e,i)=>[e,i]).filter(([e])=>!q||(e[0]+' '+e[2]).toLowerCase().includes(q));
+return r.length?r.map(([e,i])=>`<div class="li" onclick="op(${i})"><b>${e[0]}</b><span>›</span></div>`).join(''):'<div class="empty">No match. Try “squat” or “stretch”.</div>'}
+function fx(v){$('#el').innerHTML=exl(v)}
+function op(i){const e=L[i];$('#sh').innerHTML=`<div class="gr"></div><h2>${e[0]}</h2><ol>${e[2].split('|').map(s=>`<li>${s}</li>`).join('')}</ol><div class="w"><b>Watch out:</b> ${e[3]}</div><a class="btn yt" href="${yt(i)}" target="_blank" rel="noopener">▶ Watch a YouTube Short</a><button class="btn ghost" onclick="cl()">Done</button>`;$('#sh').scrollTop=0;document.body.classList.add('so');mini()}
+function cl(){document.body.classList.remove('so');mini()}
 function lg(){return S.log[sel]=S.log[sel]||{}}
-function tg(i){const e=lg(),x=e.x=e.x||[],k=x.indexOf(i);k<0?x.push(i):x.splice(k,1);const s=sess(pd(sel));e.c=!!s&&x.length==s.i.length;save();go('today')}
-function tc(){const e=lg();e.c=!e.c;save();go('today')}
-function se(n){const e=lg();e.e=e.e==n?0:n;save();go('today')}
+function rr(i){const s=sess(pd(sel)),e=lg(),el=document.querySelector(`.ex[data-i="${i}"]`);if(el)el.outerHTML=exRow(s.i[i],i,(e.x||[]).includes(i),(e.sd||{})[i]||0);e.c=!!s&&(e.x||[]).length==s.i.length;cs();save();head()}
+function sd1(i,n,on){const e=lg(),x=e.x=e.x||[],sd=e.sd=e.sd||{},k=x.indexOf(i);if(n!=null)sd[i]=n;if(on&&k<0)x.push(i);if(!on&&k>=0)x.splice(k,1)}
+function tg(i){const s=sess(pd(sel)),e=lg(),on=!(e.x||[]).includes(i),n=tot(s.i[i]);sd1(i,on?n:0,on);rr(i)}
+function ps(i,n){const s=sess(pd(sel)),e=lg(),t=tot(s.i[i]),c=(e.sd||{})[i]||0,v=c==n?n-1:n;sd1(i,v,v>=t);rr(i)}
+function cs(){const b=$('#cb'),c=lg().c;if(b){b.classList.toggle('done',!!c);b.textContent=c?'Session complete ✓':'Mark session complete'}}
+function tc(){const e=lg(),s=sess(pd(sel));e.c=!e.c;if(s){if(e.c){e.x=s.i.map((_,i)=>i);e.sd={};s.i.forEach((t,i)=>e.sd[i]=tot(t))}else{e.x=[];e.sd={}}}save();go('today',1)}
+function se(n,b){const e=lg();e.e=e.e==n?0:n;document.querySelectorAll('.mood button').forEach((x,i)=>x.classList.toggle('on',e.e==i+1));save()}
 function sv(k,v){lg()[k]=v;save()}
-function go(t){tab=t;const ae=document.activeElement;$('#m').innerHTML={today,week,plan,tips}[t]();
-$('#nav').innerHTML=[['today','🏑','Today'],['week','📅','Week'],['plan','🗺️','Plan'],['tips','📈','Progress']].map(b=>`<button class="${tab==b[0]?'on':''}" onclick="go('${b[0]}')"><i>${b[1]}</i>${b[2]}</button>`).join('');head();window.scrollTo(0,0)}
-go('today');
+const TABS=[['today','Today','<path d="M12 3l2.6 5.6 6 .8-4.4 4.2 1.1 6L12 16.8 6.7 19.6l1.1-6L3.4 9.4l6-.8z"/>'],['week','Week','<rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M9 3v4M15 3v4"/>'],['plan','Plan','<path d="M4 6h16M4 12h16M4 18h10"/>'],['tips','Progress','<path d="M4 19V5M4 19h16M8 15l4-4 3 3 5-6"/>'],['ex','Exercises','<circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/>']];
+$('#nav').innerHTML='<i class="pill"></i>'+TABS.map(b=>`<button onclick="go('${b[0]}')"><svg viewBox="0 0 24 24">${b[2]}</svg>${b[1]}</button>`).join('');
+const NB=[...$('#nav').querySelectorAll('button')];
+function go(t,keep){const y=scrollY,same=t==tab;tab=t;cl();const m=$('#m');m.className='';m.innerHTML={today,week,plan,tips,ex:exs}[t]();
+if(!keep||!same){void m.offsetWidth;m.className='in'}
+const i=TABS.findIndex(b=>b[0]==t);NB.forEach((b,j)=>b.classList.toggle('on',i==j));$('#nav .pill').style.transform=`translateX(${i*100}%)`;head();scrollTo(0,keep&&same?y:0)}
+document.addEventListener('keydown',e=>{if(e.key=='Escape')cl()});
+go('today');mini();
 if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
 </script></body></html>
