@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=1">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -380,13 +380,32 @@ input,textarea,select{border:0;background:color-mix(in srgb,var(--mut) 13%,trans
 #tst.on{opacity:1;transform:translate(-50%,0);pointer-events:auto}
 #tst button{border:0;background:none;color:#64d2ff;font-weight:700;font-size:14px;font-family:inherit;padding:6px 2px}
 .wsm{color:var(--mut);font-size:13px;font-weight:600}
-.wks{display:flex;gap:12px;margin:10px 0 4px}.wks>div{flex:1}.wks small{display:block;color:var(--mut);font-weight:600;font-size:12px;margin-bottom:6px}
+.wks{display:flex;gap:12px;margin:10px 0 4px;align-items:flex-start}.wks>div{flex:1}.wks small{display:block;color:var(--mut);font-weight:600;font-size:12px;margin-bottom:6px}
 .stp{display:flex;align-items:center;justify-content:space-between;border-radius:99px;background:color-mix(in srgb,var(--mut) 12%,transparent);padding:5px}
 .stp button{width:48px;height:48px;border-radius:50%;border:0;background:var(--card);color:var(--ink);font:600 24px -apple-system,system-ui,sans-serif}
 .stp b{font:700 20px -apple-system,system-ui,sans-serif;font-variant-numeric:tabular-nums}
 #wk .col{display:flex;flex-direction:column;gap:8px;margin-top:6px}
 .pl{min-width:44px;height:44px}.inf{width:44px;height:44px}.tmb{min-height:44px;padding:10px 16px}.stm button{min-height:44px}
 @media(min-width:1024px){#tst{left:calc(50% + 134px);bottom:28px}}
+
+/* ===== Mobile feel ===== */
+html{-webkit-text-size-adjust:100%;touch-action:manipulation;overscroll-behavior:none}
+*{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+nav{touch-action:none}
+body{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
+input,textarea,select{-webkit-user-select:text;user-select:text;font-size:16px!important}
+#sh{overscroll-behavior:contain}
+button,.ex,.up,.pc,.rc,.li,.hero{transition:transform .12s ease,background .2s,opacity .2s}
+button:active,.ex:active,.up:active,.pc:active,.rc:active,.li:active,.hero:active{transform:scale(.97)}
+nav button:active,.ex.on:active{transform:none}
+.ex.on{cursor:default}
+span.pl{display:inline-flex;align-items:center;justify-content:center;min-width:40px;height:34px}
+.rst{display:block;margin:10px auto 0;border:0;background:none;color:var(--mut);font-weight:600;font-size:14px;min-height:44px}
+
+/* ===== Quick check ===== */
+.rdr{display:flex;gap:8px;margin:6px 0 14px}
+.rdr button{flex:1;min-height:48px;border-radius:14px;border:1.5px solid var(--line);background:transparent;color:var(--ink);font-weight:600;font-size:15px}
+.rdr button.on{background:var(--turf);border-color:var(--turf);color:#fff}
 </style></head><body>
 <div id="pg"><header><div class="t"><h1 id="h1"></h1><p id="hp"></p></div><div class="ring"><svg viewBox="0 0 84 84" width="84" height="84"><circle cx="42" cy="42" r="36" fill="none" stroke="#ffffff33" stroke-width="7"/><circle class="p" id="rp" cx="42" cy="42" r="36" fill="none" stroke="#ff7a3d" stroke-width="7" stroke-linecap="round" stroke-dasharray="0 226" transform="rotate(-90 42 42)"/></svg><b><span id="rn"></span></b></div><button id="cg" aria-label="Settings" onclick="cgo()"><svg viewBox="0 0 24 24"><path d="M21.96 11.08 L23.89 11.41 L23.89 12.59 L21.96 12.92 L21.86 13.69 L23.63 14.50 L23.33 15.65 L21.38 15.46 L21.08 16.19 L22.59 17.43 L22.00 18.46 L20.17 17.77 L19.69 18.39 L20.82 19.99 L19.99 20.82 L18.39 19.69 L17.77 20.17 L18.46 22.00 L17.43 22.59 L16.19 21.08 L15.46 21.38 L15.65 23.33 L14.50 23.63 L13.69 21.86 L12.92 21.96 L12.59 23.89 L11.41 23.89 L11.08 21.96 L10.31 21.86 L9.50 23.63 L8.35 23.33 L8.54 21.38 L7.81 21.08 L6.57 22.59 L5.54 22.00 L6.23 20.17 L5.61 19.69 L4.01 20.82 L3.18 19.99 L4.31 18.39 L3.83 17.77 L2.00 18.46 L1.41 17.43 L2.92 16.19 L2.62 15.46 L0.67 15.65 L0.37 14.50 L2.14 13.69 L2.04 12.92 L0.11 12.59 L0.11 11.41 L2.04 11.08 L2.14 10.31 L0.37 9.50 L0.67 8.35 L2.62 8.54 L2.92 7.81 L1.41 6.57 L2.00 5.54 L3.83 6.23 L4.31 5.61 L3.18 4.01 L4.01 3.18 L5.61 4.31 L6.23 3.83 L5.54 2.00 L6.57 1.41 L7.81 2.92 L8.54 2.62 L8.35 0.67 L9.50 0.37 L10.31 2.14 L11.08 2.04 L11.41 0.11 L12.59 0.11 L12.92 2.04 L13.69 2.14 L14.50 0.37 L15.65 0.67 L15.46 2.62 L16.19 2.92 L17.43 1.41 L18.46 2.00 L17.77 3.83 L18.39 4.31 L19.99 3.18 L20.82 4.01 L19.69 5.61 L20.17 6.23 L22.00 5.54 L22.59 6.57 L21.08 7.81 L21.38 8.54 L23.33 8.35 L23.63 9.50 L21.86 10.31Z M21 12A9 9 0 1 0 3 12A9 9 0 1 0 21 12Z" fill="currentColor" fill-rule="evenodd" stroke="none"/><circle cx="12" cy="12" r="6.9" fill="none" stroke="currentColor" stroke-width="1.4"/><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 12L11.44 18.38"/><path d="M12 12L6.76 8.33"/><path d="M12 12L17.80 9.30"/></g><circle cx="12" cy="12" r="1.8" fill="currentColor" stroke="none"/></svg></button></header>
 <main id="m"></main></div>
@@ -413,44 +432,54 @@ const ACH=[['first','First rep','Complete your first session','medal',()=>cnt()>
 function newAch(){S.aw=S.aw||[];const n=ACH.filter(a=>a[4]()&&!S.aw.includes(a[0]));if(n.length){S.aw.push(...n.map(a=>a[0]));save()}return n}
 const trophies=()=>{const t=a=>`<div class="tr ${a[4]()?'on':''}"><i>${ico(a[3])}</i><b>${a[1]}</b><small>${a[2]}</small></div>`,on=ACH.filter(a=>a[4]()),off=ACH.filter(a=>!a[4]());return `<h3 class="st">Trophies · ${on.length} of ${ACH.length}</h3>${on.length?`<div class="tro">${on.map(t).join('')}</div>`:'<p class="sub">Finish a session to earn your first trophy.</p>'}${off.length?`<details class="lk"><summary>${off.length} still to earn</summary><div class="tro" style="margin-top:8px">${off.map(t).join('')}</div></details>`:''}`};
 function fin(){cf();if(!sess(pd(sel)))return;setTimeout(()=>{if(document.body.classList.contains('so'))return;const s=sess(pd(sel)),e=lg(),sets=Object.values(e.sd||{}).reduce((a,b)=>a+b,0),nw=newAch();
-$('#sh').innerHTML=`<div class="gr"></div><div class="fin"><i class="fi">${ico('trophy')}</i><h2>Session complete</h2><p class="sub">${esc(s.t)}. Nice work.</p><div class="tiles"><div class="tile"><b>${streak()}</b><small>Streak</small></div><div class="tile"><b>${sets}</b><small>Sets</small></div><div class="tile"><b>${weekDone(pd(sel))}/5</b><small>This week</small></div></div>${nw.map(a=>`<div class="note">🏆 Unlocked: <b>${a[1]}</b>. ${a[2]}</div>`).join('')}<button class="btn" onclick="cl()">Done</button></div>`;$('#sh').scrollTop=0;document.body.classList.add('so')},550)}
+$('#sh').innerHTML=`<div class="gr"></div><div class="fin"><i class="fi">${ico('trophy')}</i><h2>Session complete</h2><p class="sub">${esc(s.t)}. Nice work.</p><div class="tiles"><div class="tile"><b>${streak()}</b><small>Streak</small></div><div class="tile"><b>${sets}</b><small>Sets</small></div><div class="tile"><b>${weekDone(pd(sel))}/5</b><small>This week</small></div></div><label>How hard was it?</label><div class="mood">${[1,2,3,4,5].map(n=>`<button class="${e.e==n?'on':''}" onclick="se(${n},this)">${n}</button>`).join('')}</div>${nw.map(a=>`<div class="note">🏆 Unlocked: <b>${a[1]}</b>. ${a[2]}</div>`).join('')}<button class="btn" onclick="cl()">Done</button></div>`;$('#sh').scrollTop=0;document.body.classList.add('so')},550)}
 function cu(el){const t=+el.dataset.n;if(!t||S.rm)return;const t0=performance.now();(function f(n){const p=Math.min(1,(n-t0)/700);el.textContent=Math.round(t*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(f)})(t0)}
-let RT=0;function rest(){const n=+S.rs;if(!n)return;RT=Date.now()+n*1e3;rtu()}
+let RT=0;function rest(k){const b=+S.rs;if(!b)return;const n=k==1?Math.max(b*1.5,90):k==2?Math.max(Math.round(b*.75/5)*5,30):b;RT=Date.now()+n*1e3;rtu()}
+const restK=i=>{const s=sess(pd(sel));if(!s)return 0;const w=((S.lw||{})[parse(s.i[i]).n.toLowerCase()]||{}).w;return w>0?1:2};
 let STB=null;
-function stSet(i){const s=sess(pd(sel));if(!s)return;const e=lg(),n=tot(s.i[i]),p=parse(s.i[i]),c=(e.sd||{})[i]||0;if(n&&c>=n)return;ssA();const m=(p.a||'').match(/(\d+)\s*(min|s)\b/),d=m?+m[1]*(m[2]=='min'?60:1):0;STB={i,j:c+1,n:n||1,nm:p.n,d,t0:Date.now(),k:sel};RT=0;HP('w');rtu()}
-function sbd(){if(!STB)return;const{i,j,k}=STB;STB=null;if(k==sel){ps(i,j);if(WK)WK.adv=1}}
+function stSet(i){const s=sess(pd(sel));if(!s)return;const e=lg(),n=tot(s.i[i]),p=parse(s.i[i]),c=(e.sd||{})[i]||0;if(n&&c>=n||(e.x||[]).includes(i))return;ssA();const m=(p.a||'').match(/(\d+)\s*(min|s)\b/),d=m?+m[1]*(m[2]=='min'?60:1):0;STB={i,j:c+1,n:n||1,nm:p.n,d,t0:Date.now(),k:sel};RT=0;HP('w');rtu()}
+function sbd(){if(!STB)return;const{i,j,k}=STB;STB=null;if(k==sel){if(WK&&WK.i==i)wkSv();ps(i,j);if(WK)WK.adv=1}}
 const ssg=()=>S.ss&&S.ss.k==sel?S.ss:{a:0,t:0},ssm=()=>{const T=ssg();return T.a+(T.t?Date.now()-T.t:0)};
 function ssu(){const t=$('#sst'),b=$('#ssb');if(t)t.textContent=fm(ssm()/1e3);if(b){const T=ssg();b.textContent=T.t?'Pause':ssm()?'Resume':'Start'}}
 function ssT(){if(!S.ss||S.ss.k!=sel)S.ss={k:sel,a:0,t:0};const T=S.ss;if(T.t){T.a+=Date.now()-T.t;T.t=0}else T.t=Date.now();save();HP('s');ssu()}
-var WK=null,WKS='',TOT=0,TU=null,OFF=navigator.onLine===false,SBOK=0;
+document.addEventListener('gesturestart',e=>e.preventDefault());var WK=null,WKS='',TOT=0,TU=null,OFF=navigator.onLine===false,SBOK=0;
 function toast(m,undo){let t=$('#tst');if(!t){t=document.createElement('div');t.id='tst';t.onclick=e=>{if(e.target.closest('button')&&TU){const f=TU;TU=null;f();toast('Undone')}};document.body.appendChild(t)}
 TU=undo||null;t.innerHTML=esc(m)+(undo?'<button>Undo</button>':'');t.classList.add('on');clearTimeout(TOT);TOT=setTimeout(()=>{t.classList.remove('on');TU=null},undo?4500:2000)}
 function ssA(){if(sel!=fd(new Date()))return;if(!S.ss||S.ss.k!=sel)S.ss={k:sel,a:0,t:0};const T=S.ss;if(!T.t&&!T.a&&!lg().c){T.t=Date.now();save();ssu()}}
 function ssR(){if(!ssm())return;const prev={...S.ss};S.ss={k:sel,a:0,t:0};save();ssu();toast('Session timer reset',()=>{S.ss=prev;save();ssu()})}
 const AW=()=>!!((S.ss&&S.ss.t)||STB||WK);
 const wkNext=()=>{const s=sess(pd(sel));if(!s)return -1;const x=lg().x||[];for(let i=0;i<s.i.length;i++)if(!x.includes(i))return i;return -1};
-function wkSet(i){const s=sess(pd(sel)),p=parse(s.i[i]),L=(S.lw||{})[p.n.toLowerCase()]||{},a=p.a||'',tm=/\d\s*(s|min)\b/.test(a)&&!/reps/.test(a),r0=+(a.match(/\d+/g)||[10]).pop();WK={i,w:L.w||0,r:L.r||r0,tm}}
+function wkSet(i){const s=sess(pd(sel)),p=parse(s.i[i]),L=(S.lw||{})[p.n.toLowerCase()]||{},a=p.a||'',tm=/\d\s*(s|min)\b/.test(a)&&!/reps/.test(a),r0=+(a.match(/\d+/g)||[10]).pop();WK={i,w:L.w>=16?16:L.w>=8?8:0,r:L.r||r0,tm}}
 function wkSv(){const s=sess(pd(sel));if(!s||!WK)return;S.lw=S.lw||{};S.lw[parse(s.i[WK.i]).n.toLowerCase()]={w:WK.w,r:WK.r};save()}
-function wkU(){const a=$('#wkw'),b=$('#wkrp');if(a)a.textContent=WK.w||'BW';if(b)b.textContent=WK.r}
-function wkA(k,d){WK[k]=Math.max(0,WK[k]+d);wkU();wkSv();HP('t')}
+function wkU(){const a=$('#wkw'),b=$('#wkrp');if(a)a.textContent=WK.w==16?'16 kg (both)':WK.w?WK.w+' kg':'Bodyweight';if(b)b.textContent=WK.r}
+function wkA(k,d){if(k=='w'){const o=[0,8,16];let q=o.indexOf(WK.w);if(q<0)q=0;WK.w=o[Math.max(0,Math.min(2,q+d))]}else WK[k]=Math.max(0,WK[k]+d);wkU();wkSv();HP('t')}
 function wkGo(d){const s=sess(pd(sel));if(!s)return;const i=Math.max(0,Math.min(s.i.length-1,WK.i+d));STB=null;wkSet(i);WKS='';wkr()}
 function wkT(){const i=WK.i;if(STB&&STB.i==i){const el=Math.floor((Date.now()-STB.t0)/1e3);return fm(Math.max(STB.d?STB.d-el:el,0))}if(RT)return fm(Math.max(Math.ceil((RT-Date.now())/1e3),0));return'Ready'}
-function wkOpen(){const s=sess(pd(sel));if(!s)return;ssA();let i=wkNext();if(i<0)i=0;wkSet(i);WKS='';document.body.classList.add('so');wkr()}
+function stAuto(i){const s=sess(pd(sel));if(!s)return;const t=s.i[i],a=parse(t).a||'';if(tot(t)||(/\d\s*(min|s)\b/.test(a)&&!/reps/.test(a)))stSet(i)}
+function autoNext(){if(!WK||!document.body.classList.contains('so'))return;if(!(lg().x||[]).includes(WK.i))stAuto(WK.i)}
+function autoFin(){const e=lg(),T=ssg();if(T.t){T.a+=Date.now()-T.t;T.t=0}const mn=Math.round(ssm()/6e4);if(mn>=1&&!e.m)e.m=mn;STB=null;RT=0;rtu();cl();setTimeout(()=>{if(tab=='today')go('today',1)},80)}
+function rdo(){const e=lg(),snap=JSON.stringify(e),ss=S.ss?{...S.ss}:null;e.c=false;e.x=[];e.sd={};S.ss={k:sel,a:0,t:0};save();go('today',1);toast('Day reset',()=>{S.log[sel]=JSON.parse(snap);S.ss=ss;save();go('today',1)})}
+var RDS={};
+function rdOpen(){RDS={sl:1,so:0,jp:0};const row=(k,l,o)=>`<label>${l}</label><div class="rdr">${o.map((t,j)=>`<button class="${RDS[k]==j?'on':''}" onclick="rdS('${k}',${j},this)">${t}</button>`).join('')}</div>`;$('#sh').innerHTML=`<div class="gr"></div><h2>Quick check</h2><p class="sub">Ten seconds. It sets today&rsquo;s load.</p>${row('sl','Sleep',['Poor','OK','Good'])}${row('so','Soreness',['Fresh','Sore','Very sore'])}${row('jp','Joint pain',['None','Mild','Sharp'])}<p class="sub">Sharp or pinching pain swaps the session for a gentle reset day.</p><button class="btn" onclick="rdGo()">Start</button>`;document.body.classList.add('so');mini()}
+function rdS(k,j,b){RDS[k]=j;b.parentNode.querySelectorAll('button').forEach((x,i)=>x.classList.toggle('on',i==j));HP('t')}
+function rdGo(){const e=lg();e.rd={sl:RDS.sl,so:RDS.so,jp:RDS.jp};save();cl();go('today',1);setTimeout(()=>wkOpen(),60)}
+function skp(){if(!WK)return;const i=WK.i,e=lg();if((e.x||[]).includes(i))return;ssA();STB=null;RT=0;rtu();(e.sk=e.sk||[]).push(i);sd1(i,0,true);WK.adv=1;rr(i);toast('Skipped and logged');wkr()}
+function wkOpen(a){const s=sess(pd(sel));if(!s)return;{const e=lg();if(!e.rd&&sel==fd(new Date())&&!(e.c||(e.x||[]).length||Object.keys(e.sd||{}).length)){rdOpen();return}}ssA();let i=typeof a=='number'?a:wkNext();if(i<0)i=0;if((lg().x||[]).includes(i))return;wkSet(i);WKS='';document.body.classList.add('so');wkr();stAuto(i);wkr()}
 function wkr(){if(!WK||!document.body.classList.contains('so'))return;const s=sess(pd(sel));if(!s){WK=null;return}const x=lg().x||[];let i=WK.i;
 if(WK.adv&&!STB){WK.adv=0;if(x.includes(i)){const nn=wkNext();if(nn>=0&&nn!=i){wkSet(nn);i=nn}}}
-const p=parse(s.i[i]),n=tot(s.i[i]),c=(lg().sd||{})[i]||0,st=STB&&STB.i==i?'s':RT?'r':'i',all=wkNext()<0,fin=!!lg().c,dn=x.includes(i),sig=[i,c,st,all,fin,dn].join();
-if(WKS!=sig||!$('#wk')){WKS=sig;let btn;
+const p=parse(s.i[i]),n=tot(s.i[i]),c=(lg().sd||{})[i]||0,st=STB&&STB.i==i?'s':RT?'r':'i',all=wkNext()<0,fin=!!lg().c,dn=x.includes(i),du=/\d\s*(min|s)\b/.test(p.a||'')&&!/reps/.test(p.a||''),sig=[i,c,st,all,fin,dn].join();
+if(WKS!=sig||!$('#wk')){WKS=sig;let btn;const L0=(S.lw||{})[p.n.toLowerCase()],up=+((p.a||'').match(/\d+/g)||[0]).pop(),hs=[];if(n&&!WK.tm&&L0&&up>0&&L0.r>=up&&/squat|deadlift|hinge|lunge|row|step-up|push-up|bridge|calf/i.test(p.n))hs.push('Top of the range last time. Add load (bodyweight to 8 kg, one weight to both) or lower for 3 s.');if(/per (leg|side)/i.test(p.x||''))hs.push('Do one side, then the other. That is one set.');if(/(walk|jog|run|cardio)/i.test(p.n)&&du)hs.push('Talk test: full sentences should be possible. If not, slow down.');const hints=hs.map(h=>`<p class="sub">${h}</p>`).join('');
 if(st=='s')btn=`<button class="btn" style="background:var(--ok)" onclick="sbd();wkr()">Done set</button><button class="btn ghost" onclick="STB=null;rtu();wkr()">Stop timer</button>`;
-else if(st=='r')btn=`<button class="btn" onclick="RT=0;rtu();wkr()">Skip rest</button><button class="btn ghost" onclick="RT+=15e3">+15 s</button>`;
-else if(all)btn=fin?'<p class="sub">Session complete \u2713</p>':`<button class="btn" onclick="cl();tc()">Finish session</button>`;
+else if(st=='r')btn=`<button class="btn" onclick="RT=0;rtu();autoNext();wkr()">Skip rest</button><button class="btn ghost" onclick="RT+=15e3">+15 s</button>`;
+else if(all)btn='<p class="sub">Session complete \u2713</p>';
 else if(dn)btn=`<button class="btn" onclick="wkGo(1)">Next exercise</button>`;
-else btn=n?`<button class="btn" onclick="stSet(${i});wkr()">Start set ${Math.min(c+1,n)}</button>`:`<button class="btn" onclick="tg(${i});WK.adv=1;wkr()">Mark done</button>`;
-$('#sh').innerHTML=`<div id="wk"><div class="gr"></div><small class="wsm" id="wsm"></small><h2>${esc(p.n)}</h2><div class="chips">${n?`<span class="c s">Set ${Math.min(c+1,n)} of ${n}</span>`:''}${p.a?`<span class="c">${p.a}</span>`:''}</div>${p.x?`<p class="sub">${esc(p.x)}</p>`:''}<div class="tmr" id="wt"></div>${n?`<div class="wks"><div><small>Weight (kg)</small><div class="stp"><button onclick="wkA('w',-1)">\u2212</button><b id="wkw"></b><button onclick="wkA('w',1)">+</button></div></div>${WK.tm?'':'<div><small>Reps</small><div class="stp"><button onclick="wkA(\'r\',-1)">\u2212</button><b id="wkrp"></b><button onclick="wkA(\'r\',1)">+</button></div></div>'}</div>`:''}<div class="col">${btn}</div><div class="row"><button class="btn ghost" onclick="wkGo(-1)">Back</button><button class="btn ghost" onclick="wkGo(1)">Skip</button></div><button class="btn ghost" onclick="cl()">Close</button></div>`;wkU()}
+else btn=(n||du)?`<button class="btn" onclick="stSet(${i});wkr()">${n?'Start set '+Math.min(c+1,n):'Start'}</button>`:`<button class="btn" onclick="tg(${i});WK.adv=1;wkr()">Finish</button>`;
+$('#sh').innerHTML=`<div id="wk"><div class="gr"></div><small class="wsm" id="wsm"></small><h2>${esc(p.n)}</h2><div class="chips">${n?`<span class="c s">Set ${Math.min(c+1,n)} of ${n}</span>`:''}${p.a?`<span class="c">${p.a}</span>`:''}</div>${p.x?`<p class="sub">${esc(p.x)}</p>`:''}<div class="tmr" id="wt"></div>${n?`<div class="wks"><div><small>Load</small><div class="stp"><button onclick="wkA('w',-1)">\u2212</button><b id="wkw"></b><button onclick="wkA('w',1)">+</button></div></div>${WK.tm?'':'<div><small>Reps</small><div class="stp"><button onclick="wkA(\'r\',-1)">\u2212</button><b id="wkrp"></b><button onclick="wkA(\'r\',1)">+</button></div></div>'}</div>`:''}${hints}<div class="col">${btn}</div><div class="row"><button class="btn ghost" onclick="wkGo(-1)">Back</button><button class="btn ghost" onclick="wkGo(1)">Skip</button></div><button class="btn ghost" onclick="skp()">Can&rsquo;t do this one</button><button class="btn ghost" onclick="cl()">Close</button></div>`;wkU()}
 $('#wt').textContent=wkT();$('#wsm').textContent='Exercise '+(i+1)+' of '+s.i.length+' \u00b7 '+fm(ssm()/1e3)}
 function rtu(){let b=$('#rt');if(!b){b=document.createElement('div');b.id='rt';b.onclick=e=>{const a=e.target.closest('button');if(!a)return;const k=a.dataset.a;if(k=='1')RT+=15e3;else if(k=='0')RT=0;else if(k=='d')sbd();else if(k=='x')STB=null;rtu()};document.body.appendChild(b)}
 const mode=STB?'s':'r';if(b.dataset.mode!=mode){b.dataset.mode=mode;b.innerHTML=mode=='s'?'<span class="mi"><small></small><b></b></span><button class="rbt" data-a="d">Done</button><button class="rbt" data-a="x">\u2715</button>':'<span class="mi"><small>Rest</small><b></b></span><button class="rbt" data-a="1">+15 s</button><button class="rbt" data-a="0">Skip</button>'}
 if(STB){const el=Math.floor((Date.now()-STB.t0)/1e3),l=STB.d?STB.d-el:el;if(STB.d&&l<=0){HP('w');sbd();rtu();return}b.style.display='flex';b.querySelector('small').textContent='Set '+STB.j+' of '+STB.n+' \u00b7 '+STB.nm;b.querySelector('b').textContent=fm(Math.max(l,0));return}
-if(!RT){b.style.display='none';return}const l=Math.ceil((RT-Date.now())/1e3);if(l<=0){RT=0;b.style.display='none';HP('w');return}b.style.display='flex';b.querySelector('b').textContent=fm(l)}
+if(!RT){b.style.display='none';return}const l=Math.ceil((RT-Date.now())/1e3);if(l<=0){RT=0;b.style.display='none';HP('w');autoNext();return}b.style.display='flex';b.querySelector('b').textContent=fm(l)}
 let sw=null,swc=0;
 document.addEventListener('pointerdown',e=>{const x=e.target.closest&&e.target.closest('.ex[data-i]');if(!x||e.target.closest('button'))return;sw={x,i:+x.dataset.i,sx:e.clientX,sy:e.clientY,dx:0,on:0,h:0}});
 document.addEventListener('pointermove',e=>{if(!sw)return;const dx=e.clientX-sw.sx,dy=e.clientY-sw.sy;if(!sw.on){if(Math.abs(dy)>14&&Math.abs(dy)>Math.abs(dx)){sw=null;return}if(Math.abs(dx)<10)return;sw.on=1}
@@ -493,6 +522,9 @@ const X={
 5:['Repeat-effort conditioning','30–40 min','Ready check: only do this if you can run 20 min with no walk breaks. If not, repeat the Phase 3 acceleration session|Warm up 10–12 min: easy movement, dynamic mobility, gradual accelerations|Set 1: Fast efforts 4×10–15 s at 75–85% (start at 10 s), with 60–90 s easy walk/jog between|Rest 3 min|Set 2: Fast efforts 4×15 s, only if set 1 felt controlled|Cool down walk 5 min'],
 6:['Easy conditioning','30–50 min','Easy cardio 20–30 min|Mobility 8–10 min']}};
 const TIPS=[
+['Pain rule','Sharp, pinching or joint pain means stop that exercise. Use Can’t do this one, it is logged and the session still completes. Muscle burn is fine, joint pain is not.'],
+['Your two weights','You have two 8 kg weights: one is 8 kg, both is 16 kg. In the workout, 16 kg means both weights. Move up only when you hit the top of the rep range with good form, then drop back to the bottom of the range.'],
+['Lighter weeks','Weeks 4, 8 and 12 automatically take one set off anything with three or more sets. Fitness is built in the recovery, so do not add the sets back.'],
 ['Test yourself four times','Use the benchmark grid below at the start, week 6, week 11 and week 15. Same route, same time of day. Numbers beat feelings for knowing what is working. Skip or shorten a test if you are not recovered: an all-out effort on a tired day tells you nothing.'],
 ['When 8 kg feels light','Slow the lowering to 3 seconds, pause 2 seconds at the bottom, or move to a harder push-up variation. Add difficulty, not endless reps, and keep technique first.'],
 ['Rate every session','Tap an effort score after each session. If you hit 4 or 5 on easy days, or soreness lasts past 48 hours, repeat the previous week.'],
@@ -531,6 +563,18 @@ const L=[
 ['Mobility',/mobility|cool down/,'Take it slow with easy stretching and joint circles.|Breathe deeply and never force a stretch into pain.','Bouncing in stretches.',null],
 ['Hockey stance hold',/stance/,'Stand with feet slightly wider than shoulders, hips back and chest forward in a half-squat.|Hold for the time, keeping knees over toes.','Letting your back round.',null]
 ];
+L.splice(0,0,
+['Joint prep',/joint prep/,'Ankle rocks: knee over toes, heel down, 10 slow rocks each side.|Leg swings: hold a wall, swing front to back then side to side, 10 each leg.|Hip circles: on all fours, draw big slow circles with each knee, 8 each way.|Upper-back rotations: on all fours, hand behind head, rotate open and closed, 8 per side.|Glute bridges: 8 slow reps to wake up the glutes.','Rushing. Move through full range slowly so joints warm up before load.',''],
+['Split squat',/split squat/,'Stand in a long stride, back heel lifted, front foot flat.|Lower straight down until the back knee almost touches the floor.|Keep your front knee tracking over your toes and your chest tall.|Push through the front heel to rise. Finish all reps on one leg, then switch.','Front knee collapsing inward or the stride too short. Hold a wall for balance if needed.',''],
+['Low step-up',/step-up|step up/,'Use a low, stable step (stair or sturdy box).|Place your whole foot on the step and stand up using that leg, not by pushing off the back foot.|Lower slowly for 3 seconds.|Finish all reps on one leg, then switch.','Pushing off the floor foot, or the knee falling inward. Go lower if it feels wobbly.',''],
+['Side-lying leg raise',/side-lying/,'Lie on your side, hips stacked, bottom knee bent for balance.|Keep the top leg straight and the toes pointing forward.|Lift to hip height, pause 1 second, lower slowly.','Rolling your hips back or swinging the leg. Small and controlled beats high.',''],
+['Adductor squeeze',/adductor/,'Lie on your back, knees bent, feet flat, a pillow or ball between your knees.|Squeeze it firmly for 3 seconds without arching your back.|Relax fully between reps.','Holding your breath or squeezing so hard you strain. About 70% effort is plenty.',''],
+['Slider hamstring curl',/slider|hamstring curl/,'Lie on your back with your heels on a towel on a smooth floor, hips lifted in a bridge.|Slowly slide your heels away, then pull them back, keeping your hips up.|Go only as far as you can control. Move slowly on the way out.','Hips sagging or the lower back arching. Shorten the range until it is smooth.',''],
+['Single-leg glute bridge',/single-leg (glute )?bridge/,'Lie on your back, one foot flat, the other leg straight or knee pulled in.|Lift your hips by pushing through the planted heel.|Keep your hips level, pause 1 second, lower slowly. Finish one side, then switch.','Hips twisting or dropping on the lifted side, or the lower back doing the work.',''],
+['Copenhagen plank',/copenhagen/,'Lie on your side with your top foot or knee resting on a bench or chair, bottom leg underneath.|Lift your hips so your body forms a straight line, using the inner thigh of the top leg.|Start with your top knee on the bench (short lever). Move to the foot when it feels easy.|Hold, then switch sides.','Hips sagging, or pushing through pain in the groin. Stop if you feel a sharp pull.',''],
+['Suitcase carry',/suitcase/,'Hold one 8 kg weight at your side like a suitcase.|Stand tall, ribs down, shoulders level, and walk slowly without leaning.|Do the time on one side, then switch.','Leaning toward the weight. Keep your torso upright.',''],
+['Landing practice',/stick the landing|land and hold|skater hops|lateral bounds/,'Land softly on the ball of the foot, then sink into a quiet half-squat.|Keep your knee tracking over your toes and your chest up.|Hold the landing still for 2 seconds before the next rep. Quality beats height or distance.','Knees collapsing in, landing stiff-legged or loud. If it is noisy, slow down.',''],
+['Shift finisher',/shift finisher/,'Only do this if the earlier efforts felt controlled.|Run strongly at about 70-75% for 30 seconds, like a hockey shift.|Walk for about 3 minutes until your breathing settles before the next one.','Going all-out. This should feel strong but repeatable.','']);
 const lib=n=>{n=n.toLowerCase();return L.findIndex(e=>e[1].test(n))};
 const yt=e=>'https://www.youtube.com/shorts/'+L[e][4];
 function parse(t){let m;const c=x=>(x||'').replace(/^(reps\b)?[\s,:]*/,'');
@@ -540,18 +584,49 @@ return{n:t,s:'',a:'',x:''}}
 const tot=t=>{const p=parse(t);return p.s?+(p.s.match(/\d+/g)||[0]).pop():0};
 const timed=n=>/(run|jog|cardio|walk)/i.test(n)&&!/cool|warm|march|back|gentle/i.test(n);
 function exRow(t,i,on,sd){const p=parse(t),k=lib(p.n),n=tot(t),sp=p.s?+p.s==1?'1 set':p.s+' sets':'';
-return`<div class="ex ${on?'on':''}" data-i="${i}" onclick="tg(${i})"><div class="bx">${on?'✓':''}</div><div class="tx"><div class="nm">${esc(p.n)}</div><div class="chips">${sp?`<span class="c s">${sp}</span>`:''}${p.a?`<span class="c">${p.a}</span>`:''}</div>${p.x?`<div class="xt">${esc(p.x)}</div>`:''}
-${n>1?`<div class="pls">${Array.from({length:n},(_,j)=>`<button class="pl ${j<sd?'on':''}" onclick="event.stopPropagation();ps(${i},${j+1})">${j+1}</button>`).join('')}<span class="xt" style="align-self:center">${sd||0}/${n} sets</span></div>`:''}
-${p.s?`<button class="tmb" onclick="event.stopPropagation();stSet(${i})">▶ Set timer</button>`:''}${timed(p.n)?`<button class="tmb" onclick="event.stopPropagation();ot(${i},'r')">⏱ Time it</button>`:''}</div>${k>=0?`<button class="inf" aria-label="How to" onclick="event.stopPropagation();op(${k})">i</button>`:''}</div>`}
+return`<div class="ex ${on?'on':''}" data-i="${i}" ${on?'':`onclick="wkOpen(${i})"`}><div class="bx">${on?'✓':''}</div><div class="tx"><div class="nm">${esc(p.n)}</div><div class="chips">${sp?`<span class="c s">${sp}</span>`:''}${p.a?`<span class="c">${p.a}</span>`:''}</div>${p.x?`<div class="xt">${esc(p.x)}</div>`:''}
+${n>1?`<div class="pls">${Array.from({length:n},(_,j)=>`<span class="pl ${j<sd?'on':''}">${j+1}</span>`).join('')}<span class="xt" style="align-self:center">${sd||0}/${n} sets</span></div>`:''}
+${timed(p.n)?`<button class="tmb" onclick="event.stopPropagation();ot(${i},'r')">⏱ Time it</button>`:''}</div>${k>=0?`<button class="inf" aria-label="How to" onclick="event.stopPropagation();op(${k})">i</button>`:''}</div>`}
 let sel=fd(new Date()),tab='today';
 const phase=d=>{if(S.hold)return S.hold;const t=fd(d);for(let i=0;i<5;i++)if(t<=P[i].e)return i+1;return 5};
 const dd=d=>Math.round((pd(S.trial)-d)/864e5),tier=d=>{const n=dd(d);return n>=15?0:n>=8?1:n>=3?2:3};
-const TP=(d,w)=>{const t=tier(d),b=X[4][w];if(t==3)return['Light activation','10–15 min','Easy walk 10 min|Dynamic mobility 5 min|2–3 relaxed accelerations of 10 m|Stay fresh: no hard efforts'];
+const TP=(d,w,Xp)=>{const t=tier(d),b=(Xp||X)[4][w];if(t==3)return['Light activation','10–15 min','Easy walk 10 min|Dynamic mobility 5 min|2–3 relaxed accelerations of 10 m|Stay fresh: no hard efforts'];
 if(w==1||w==3){let i=b[2].split('|').map(x=>x.replace('3×','2×'));if(t==1)i=i.slice(0,-1);if(t==2)i=i.slice(0,4);return[b[0],t?'15–20 min':'20–25 min',i.join('|')]}
 if(w==2)return[b[0],['25–30 min','20–25 min','15–20 min'][t],['Easy run or run-walk 20–30 min|Mobility 8–10 min','Easy run or run-walk 15–20 min|Mobility 8–10 min','Easy walk or very easy jog 15 min|Mobility 8–10 min'][t]];
 if(w==5)return t?['Speed primer',t==1?'20–25 min':'15–20 min',t==1?'Warm up 10 min|4×10 s fast efforts at 70–80%, walk 60–90 s between|Cool down walk 5 min':'Warm up 8 min|3×10 s relaxed fast efforts at about 70%, full recovery|Cool down walk 5 min']:['Repeat-effort conditioning','25–30 min','Warm up 10 min: easy movement, dynamic mobility, gradual accelerations|Fast efforts 4×10–15 s at 75–85%, 60–90 s easy walk/jog between (one set only)|Cool down walk 5 min'];
 return['Easy conditioning',['25–30 min','20–25 min','15–20 min'][t],['Easy cardio 20–25 min|Mobility 8–10 min','Easy cardio 15–20 min|Mobility 8–10 min','Easy walk 15 min|Mobility 8–10 min'][t]]};
-const sess=d=>{const w=d.getDay();if(w==0||w==4)return null;const ph=phase(d),r=ph==5?TP(d,w):X[ph][w];if(!r)return null;let i=r[2].split('|'),m=r[1];if(w==1||w==3||w==6){i=i.concat(PO.split('|'));m+=' + 5 min posture'}return{t:r[0],m,i}};
+const X2=JSON.parse(JSON.stringify(X));
+(function(){const ins=(ph,wd,items,before)=>{const r=X2[ph][wd];let a=r[2].split('|'),k=before?a.findIndex(x=>x.startsWith(before)):-1;if(k<0)a.push(...items);else a.splice(k,0,...items);r[2]=a.join('|')},
+pre=(ph,wd,it)=>{const r=X2[ph][wd];r[2]=it+'|'+r[2]},rp=(ph,wd,a,b)=>{const r=X2[ph][wd];r[2]=r[2].split('|').map(x=>x.startsWith(a)?b:x).join('|')},mm=(ph,wd,m)=>{X2[ph][wd][1]=m};
+for(const ph of [1,2,3,4])for(const wd of [1,3]){rp(ph,wd,'Warm-up 5–10 min','Joint prep 6 min: ankle rocks, hip circles, upper-back rotations, glute bridges');
+X2[ph][wd][2]=X2[ph][wd][2].split('|').map(x=>/squat|hinge|deadlift|push-up|lunge/i.test(x.split(/\s\d/)[0])?x.replace(/(×[\d–]+)$/,'$1 lower for 3 s').replace(/(×[\d–]+ per leg)$/,'$1, lower for 3 s'):x).join('|')}
+ins(1,1,['Low step-up 2×5 per leg','Side-lying leg raise 2×8 per side']);mm(1,1,'25–30 min');
+ins(1,3,['Adductor squeeze 2×8, hold 3 s']);mm(1,3,'25–30 min');
+ins(2,1,['Low step-up 3×6 per leg','Side-lying leg raise 3×10 per side']);mm(2,1,'35–40 min');
+ins(2,3,['Slider hamstring curl 2×6','Adductor squeeze 3×8, hold 3 s','Suitcase carry 2×20 s per side']);mm(2,3,'35–40 min');
+ins(3,1,['Split squat 3×6 per leg','Side-lying leg raise 3×12 per side','Suitcase carry 3×20 s per side']);mm(3,1,'35–40 min');
+ins(3,3,['Slider hamstring curl 3×6','Single-leg glute bridge 3×8 per leg','Copenhagen plank 2×15 s per side']);mm(3,3,'35–40 min');
+ins(4,1,['Split squat 3×8 per leg','Side-lying leg raise 3×12 per side','Suitcase carry 3×30 s per side'],'When 8 kg');mm(4,1,'35–40 min');
+ins(4,3,['Slider hamstring curl 3×8','Single-leg glute bridge 3×10 per leg','Copenhagen plank 3×20 s per side'],'When 8 kg');mm(4,3,'35–40 min');
+for(const ph of [1,2,3,4])pre(ph,5,'Joint prep 4 min: ankle rocks, leg swings, hip circles');
+for(const ph of [3,4])pre(ph,2,'Joint prep 4 min: ankle rocks, leg swings, hip circles');
+ins(1,5,['Step down and stick the landing 2×5 per leg']);mm(1,5,'20–25 min');
+ins(2,5,['Step down and stick the landing 3×5 per leg']);mm(2,5,'25–30 min');
+ins(3,5,['Hop and stick the landing 3×5','Skater hops, stick each landing 3×4 per side'],'Walk back');mm(3,5,'30–40 min');
+ins(4,5,['Lateral bounds, hold each landing 2 s 3×4 per side'],'Set 1');
+ins(4,5,['Shift finisher 2×30 s strong effort at 70–75%, 3 min walk between (only if set 2 felt controlled)'],'Cool down');mm(4,5,'35–45 min');
+rp(1,2,'Comfortable walk','Comfortable walk 15–20 min, talk test: speak in full sentences');
+rp(1,6,'Comfortable walk','Comfortable walk 15–25 min (build toward 25–30), talk test: speak in full sentences');
+rp(4,2,'Easy run','Easy run or run-walk 25–35 min, talk test: full sentences')})();
+const dl=d=>{const w=Math.floor(Math.round((d-new Date(2026,9,12))/864e5)/7)+1;return w>0&&w<=12&&w%4==0};
+const RESET='Easy walk 10 min|Ankle rocks 2×10 per side|Hip circles 2×8 per side|Cat–cow 2×8|Open-book rotations 2×6 per side';
+const rdMode=r=>r.jp==2?2:(r.jp==1||r.so==2||(r.sl==0&&r.so>=1))?1:0;
+const sess0=(d,Xp)=>{const w=d.getDay();if(w==0||w==4)return null;const ph=phase(d),r=ph==5?TP(d,w,Xp):Xp[ph][w];if(!r)return null;let i=r[2].split('|'),m=r[1];if(w==1||w==3||w==6){i=i.concat(PO.split('|'));m+=' + 5 min posture'}return{t:r[0],m,i}};
+const adapt=(s,d,e)=>{let i=s.i.slice(),t=s.t;const ph=phase(d),cut=x=>x.replace(/(\d)×/,(a,n)=>(+n>2?n-1:n)+'×');
+if(ph<5&&dl(d)){i=i.map(cut);t+=' · lighter week'}
+const rd=e&&e.rd;if(rd){const k=rdMode(rd);if(k==2)return{t:'Joint-friendly reset',m:'10–15 min',i:RESET.split('|')};if(k==1){i=i.filter(x=>/^(warm|joint|cool)/i.test(x)||!/jump|hop|bound|land|accelerat|fast effort|sprint|shift/i.test(x)).map(cut);t+=' · light day'}}
+return{t,m:s.m,i}};
+const sess=d=>{const e=S.log[fd(d)],old=e&&!e.v&&(e.c||(e.x||[]).length||Object.keys(e.sd||{}).length);if(old)return sess0(d,X);const s=sess0(d,X2);return s&&adapt(s,d,e)};
 const mon=d=>add(d,-((d.getDay()+6)%7));
 function weekDone(d){const m=mon(d);let c=0;for(let i=0;i<7;i++){const k=fd(add(m,i));if(S.log[k]&&S.log[k].c&&sess(add(m,i)))c++}return c}
 function head(){const d=pd(sel),ph=phase(d),tr=Math.round((pd(S.trial)-new Date(fd(new Date())+'T00:00'))/864e5),w=weekDone(d);
@@ -581,7 +656,7 @@ else{h+=`<div class="card" id="sess"><h2>${s.t}</h2><p class="sub">${P[ph-1].n}<
 <label>How hard was it? (1 easy · 5 maxed)</label><div class="mood">${[1,2,3,4,5].map(n=>`<button class="${e.e==n?'on':''}" onclick="se(${n},this)">${n}</button>`).join('')}</div>
 <div class="row"><div><label>Minutes</label><input type="number" inputmode="numeric" value="${e.m||''}" oninput="sv('m',this.value)"></div></div>
 <label>Notes: energy, soreness, running</label><textarea oninput="sv('n',this.value)">${esc(e.n)}</textarea>
-<button class="btn ${e.c?'done':''}" id="cb" onclick="tc()">${e.c?'Session complete ✓':'Mark session complete'}</button></div>`}
+${e.c?'<div class="btn done" id="cb" style="text-align:center">Session complete ✓</div><button class="rst" onclick="rdo()">Reset this day</button>':''}</div>`}
 h+=recent();h+=`<div class="card"><b>This phase</b><p class="sub" style="margin:4px 0 0">${P[ph-1].g}</p></div>`;
 if(sel!=fd(new Date()))h+=`<button class="btn ghost" onclick="sel=fd(new Date());go('today')">Back to today</button>`;
 return h}
@@ -633,9 +708,9 @@ for(let i=7;i>=0;i--){const w=add(m,-7*i);let pl=0,dn=0;for(let j=0;j<7;j++){con
 const cur=B[7][1];
 return`<div class="card"><h2>Consistency</h2><div class="tiles"><div class="tile"><b>${cur}</b><small>Sessions this week</small></div><div class="tile"><b>${ws}</b><small>Sets this week</small></div><div class="tile"><b>${tn}</b><small>Sessions, 8 weeks</small></div></div>
 <div class="bars">${B.map((b,i)=>`<div class="bc"><div class="trk"><div class="bar" style="height:${Math.max(b[1]/b[2]*100,4)}%;animation-delay:${i*50}ms"></div></div><small>${sd0(b[0])}</small></div>`).join('')}</div><p class="sub">Sessions completed per week (full bar = every planned session).</p></div>`}
-function tips(){const C=['Start','Week 6','Week 11','Week 15'],T=[['1.6 km time (min:sec)','t'],['Max good push-ups','p'],['Single-leg balance (s)','b']];
+function tips(){const C=['Start','Week 6','Week 11','Week 15'],T=[['1.6 km time (min:sec)','t'],['Max good push-ups','p'],['Single-leg balance (s)','b'],['Single-leg balance, other leg (s)','b2'],['Wall sit (s)','ws'],['Single-leg bridge hold, left (s)','gl'],['Single-leg bridge hold, right (s)','gr'],['Copenhagen hold, left (s)','cl'],['Copenhagen hold, right (s)','cr'],['10 m sprint (s)','s10']];
 const L2=Object.values(S.log),ts=L2.reduce((a,e)=>a+(e.sd?Object.values(e.sd).reduce((x,y)=>x+y,0):0),0);
-let h='<h3 class="st">Your Stats</h3><div class="car">'+stat(streak(),'session streak','void 0','flame')+stat(dtt()>0?dtt():'–','days to trials','void 0','trophy')+stat(L2.filter(e=>e.c).length,'sessions logged','void 0','medal')+stat(ts,'sets logged','void 0','dumbbell')+'</div>'+trophies()+runs()+wkly()+'<div class="card"><h2>Benchmarks</h2><p class="sub">Record on the same route and surface each time.</p><table><tr><th></th>'+C.map(c=>`<th>${c}</th>`).join('')+'</tr>'+T.map(t=>`<tr><td>${t[0]}</td>${C.map((c,i)=>`<td><input value="${esc((S.bm[t[1]]||[])[i])}" oninput="(S.bm['${t[1]}']=S.bm['${t[1]}']||[])[${i}]=this.value;save()"></td>`).join('')}</tr>`).join('')+'</table></div>';
+let h='<h3 class="st">Your Stats</h3><div class="car">'+stat(streak(),'session streak','void 0','flame')+stat(dtt()>0?dtt():'–','days to trials','void 0','trophy')+stat(L2.filter(e=>e.c).length,'sessions logged','void 0','medal')+stat(ts,'sets logged','void 0','dumbbell')+'</div>'+trophies()+runs()+wkly()+'<div class="card"><h2>Benchmarks</h2><p class="sub">Record on the same route and surface each time.</p><table><tr><th></th>'+C.map(c=>`<th>${c}</th>`).join('')+'</tr>'+T.map(t=>`<tr><td>${t[0]}</td>${C.map((c,i)=>`<td><input value="${esc((S.bm[t[1]]||[])[i])}" oninput="(S.bm['${t[1]}']=S.bm['${t[1]}']||[])[${i}]=this.value;save()"></td>`).join('')}</tr>`).join('')+'</table>'+(()=>{const o=[];[['b','b2','Balance'],['gl','gr','Bridge hold'],['cl','cr','Copenhagen hold']].forEach(([a,b,n])=>{for(let i=3;i>=0;i--){const x=parseFloat((S.bm[a]||[])[i]),y=parseFloat((S.bm[b]||[])[i]);if(x>0&&y>0){const g=Math.round(Math.abs(x-y)/Math.max(x,y)*100);if(g>12)o.push(n+': sides differ by '+g+'%. Add an extra set on the weaker side.');break}}});return o.map(t=>'<div class="note">'+t+'</div>').join('')})()+'</div>';
 return h+'<div class="card"><h2>Ways to improve the plan</h2><ul class="tp">'+TIPS.map(t=>`<li><b>${t[0]}.</b> ${t[1]}</li>`).join('')+'</ul></div>'}
 /* Stopwatch: uses timestamps so it keeps counting if the app is backgrounded */
 const tms=()=>S.tm.a+(S.tm.t?Date.now()-S.tm.t:0);
@@ -667,14 +742,14 @@ function pl(i){const id=L[i][4],h=$('#vp');if(!h||!id)return;
 h.innerHTML=`<div class="vp"><iframe src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1&playsinline=1&rel=0&modestbranding=1&loop=1&playlist=${id}" title="Exercise demo" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div><a class="vpl" href="${yt(i)}" target="_blank" rel="noopener">Video not loading? Open in YouTube</a>`;
 setTimeout(()=>h.scrollIntoView({behavior:'smooth',block:'nearest'}),60)}
 function cl(){WK=null;document.querySelectorAll('#sh iframe').forEach(f=>f.src='about:blank');document.body.classList.remove('so');mini()}
-function lg(){return S.log[sel]=S.log[sel]||{}}
-function rr(i){const s=sess(pd(sel)),e=lg(),was=e.c,el=document.querySelector(`.ex[data-i="${i}"]`);if(el)el.outerHTML=exRow(s.i[i],i,(e.x||[]).includes(i),(e.sd||{})[i]||0);e.c=!!s&&(e.x||[]).length==s.i.length;if(e.c&&!was){HP('w');fin()}cs();save();head()}
+function lg(){const e=S.log[sel]=S.log[sel]||{};if(!e.v&&!(e.c||(e.x||[]).length||Object.keys(e.sd||{}).length))e.v=2;return e}
+function rr(i){const s=sess(pd(sel)),e=lg(),was=e.c,el=document.querySelector(`.ex[data-i="${i}"]`);if(el)el.outerHTML=exRow(s.i[i],i,(e.x||[]).includes(i),(e.sd||{})[i]||0);e.c=!!s&&(e.x||[]).length==s.i.length;if(e.c&&!was){autoFin();HP('w');fin()}cs();save();head()}
 function sd1(i,n,on){const e=lg(),x=e.x=e.x||[],sd=e.sd=e.sd||{},k=x.indexOf(i);if(n!=null)sd[i]=n;if(on&&k<0)x.push(i);if(!on&&k>=0)x.splice(k,1)}
-function tg(i){if(!(lg().x||[]).includes(i))ssA();const s=sess(pd(sel)),e=lg(),on=!(e.x||[]).includes(i),n=tot(s.i[i]);HP(on?'s':'t');sd1(i,on?n:0,on);rr(i)}
-function ps(i,n){if(n>(((lg().sd||{})[i])||0))ssA();const s=sess(pd(sel)),e=lg(),t=tot(s.i[i]),c=(e.sd||{})[i]||0,v=c==n?n-1:n;sd1(i,v,v>=t);rr(i);if(v>c&&v<t)rest()}
+function tg(i){const s=sess(pd(sel)),e=lg();if((e.x||[]).includes(i))return;ssA();HP('s');sd1(i,tot(s.i[i]),true);rr(i)}
+function ps(i,n){const s=sess(pd(sel)),e=lg(),t=tot(s.i[i]),c=(e.sd||{})[i]||0;if(n<=c)return;ssA();sd1(i,n,n>=t);rr(i);if(n<t)rest(restK(i))}
 function cs(){const b=$('#cb'),c=lg().c;if(b){b.classList.toggle('done',!!c);b.textContent=c?'Session complete ✓':'Mark session complete'}}
 function tc(){const e=lg(),s=sess(pd(sel));e.c=!e.c;if(e.c){const T=ssg();if(T.t){T.a+=Date.now()-T.t;T.t=0}const mn=Math.round(ssm()/6e4);if(mn>=1&&!e.m)e.m=mn}HP(e.c?'w':'t');if(e.c)fin();if(s){if(e.c){e.x=s.i.map((_,i)=>i);e.sd={};s.i.forEach((t,i)=>e.sd[i]=tot(t))}else{e.x=[];e.sd={}}}save();go('today',1)}
-function se(n,b){const e=lg();e.e=e.e==n?0:n;document.querySelectorAll('.mood button').forEach((x,i)=>x.classList.toggle('on',e.e==i+1));save()}
+function se(n,b){const e=lg();e.e=e.e==n?0:n;document.querySelectorAll('.mood button').forEach((x,i)=>x.classList.toggle('on',e.e==i%5+1));save()}
 function sv(k,v){lg()[k]=v;save()}
 const TABS=[['today','Today','<path d="M12 3l2.6 5.6 6 .8-4.4 4.2 1.1 6L12 16.8 6.7 19.6l1.1-6L3.4 9.4l6-.8z"/>'],['week','Week','<rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M9 3v4M15 3v4"/>'],['plan','Plan','<path d="M4 6h16M4 12h16M4 18h10"/>'],['tips','Progress','<path d="M4 19V5M4 19h16M8 15l4-4 3 3 5-6"/>'],['ex','Exercises','<circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/>']];
 $('#nav').innerHTML='<i class="pill"></i>'+TABS.map(b=>`<button><svg viewBox="0 0 24 24">${b[2]}</svg>${b[1]}</button>`).join('');
