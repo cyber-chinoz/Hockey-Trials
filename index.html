@@ -13,12 +13,12 @@
 <link rel="apple-touch-icon" href="icon-180.png">
 <title>Trials Tracker</title>
 <style>
-:root{--bg:#f2f4ee;--card:#fff;--ink:#10231b;--mut:#5d7367;--line:#d5e0d8;--turf:#0f3d2e;--ball:#e8540f;--ok:#1d7a4d;--ga:.42;--hl:1;--glass:rgba(255,255,255,var(--ga));--glass-b:rgba(255,255,255,.7);--spring:cubic-bezier(.32,.72,0,1);box-sizing:border-box}
+:root{--bg:#f2f4ee;--card:#fff;--ink:#10231b;--mut:#5d7367;--line:#d5e0d8;--turf:#0f3d2e;--ball:#e8540f;--ok:#1d7a4d;--ga:.42;--hl:1;--glass:rgba(255,255,255,var(--ga));--glass-b:rgba(255,255,255,.7);--spring:cubic-bezier(.32,.72,0,1);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px)}
 @media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0a1b14;--card:#10291d;--ink:#eaf2ec;--mut:#8fa99a;--line:#1f3d2d;--turf:#0a1b14;--ball:#ff7a3d;--ok:#5fd08e;--glass:rgba(24,48,36,var(--ga));--glass-b:rgba(255,255,255,.18)}}
 :root[data-theme=dark]{--bg:#0a1b14;--card:#10291d;--ink:#eaf2ec;--mut:#8fa99a;--line:#1f3d2d;--turf:#0a1b14;--ball:#ff7a3d;--ok:#5fd08e;--glass:rgba(24,48,36,var(--ga));--glass-b:rgba(255,255,255,.18)}
 *{box-sizing:border-box}html,body{margin:0}html{scroll-padding-top:env(safe-area-inset-top,0px)}
 body{background:var(--bg);color:var(--ink);font:16px/1.45 -apple-system,system-ui,sans-serif;padding-bottom:calc(100px + env(safe-area-inset-bottom,0px));-webkit-tap-highlight-color:transparent;-webkit-font-smoothing:antialiased}
-body::before{content:"";position:fixed;inset:0 0 auto;height:calc(env(safe-area-inset-top,0px) + 6px);background:linear-gradient(color-mix(in srgb,var(--bg) 78%,transparent),transparent);pointer-events:none;z-index:9}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:9}
 h1,h2,.big{font-family:"Avenir Next Condensed","Arial Narrow",Impact,sans-serif;font-weight:700;letter-spacing:.01em;margin:0}
 header{color:var(--ink);padding:18px 18px 8px;display:flex;gap:16px;align-items:center}
 header .t{flex:1;min-width:0}header h1{font-size:32px;line-height:1.05}
@@ -291,7 +291,7 @@ input[type=range]{height:36px}
 html{overscroll-behavior-x:none}
 #sh{overscroll-behavior:contain}
 #sh .gr{position:relative}#sh .gr::before{content:"";position:absolute;left:-30px;right:-30px;top:-12px;bottom:-14px}
-#bk{position:fixed;inset:0;z-index:-1;overflow:hidden;background:var(--bg);pointer-events:none}
+#bk{position:fixed;inset:0;z-index:-1;overflow:hidden;background:var(--bg);padding-top:env(safe-area-inset-top,0px);pointer-events:none}
 #bk .dm{position:absolute;inset:0;background:#000;opacity:.2;pointer-events:none}
 html.bkd{overflow-x:hidden}
 html.bkd #pg{position:relative;background:var(--bg);min-height:100vh;box-shadow:-10px 0 30px rgba(0,0,0,.22)}
@@ -406,17 +406,15 @@ span.pl{display:inline-flex;align-items:center;justify-content:center;min-width:
 .rdr{display:flex;gap:8px;margin:6px 0 14px}
 .rdr button{flex:1;min-height:48px;border-radius:14px;border:1.5px solid var(--line);background:transparent;color:var(--ink);font-weight:600;font-size:15px}
 .rdr button.on{background:var(--turf);border-color:var(--turf);color:#fff}
-.bmc{width:100%;min-height:38px;padding:6px 2px;border-radius:10px;border:1px solid rgba(128,128,128,.35);background:transparent;font:inherit;color:var(--ink)}header{padding-top:calc(env(safe-area-inset-top,0px) + 22px);padding-right:128px}
-#cg{position:fixed;top:calc(env(safe-area-inset-top,0px) + 12px);right:16px;z-index:12;-webkit-backdrop-filter:blur(20px) saturate(180%);backdrop-filter:blur(20px) saturate(180%);background:color-mix(in srgb,var(--card) 72%,transparent);box-shadow:0 2px 10px rgba(0,0,0,.12)}
-#cg.on{background:color-mix(in srgb,var(--card) 72%,transparent)}
-.ring{position:fixed;top:calc(env(safe-area-inset-top,0px) + 8px);right:68px;z-index:12;width:50px;height:50px;border-radius:50%;-webkit-backdrop-filter:blur(20px) saturate(180%);backdrop-filter:blur(20px) saturate(180%);background:color-mix(in srgb,var(--card) 72%,transparent);box-shadow:0 2px 10px rgba(0,0,0,.12)}
-.ring b{font-size:13px}</style></head><body>
+
+.wsd{text-align:center;font-weight:700;color:var(--ball);min-height:22px;margin:-6px 0 8px}
+</style></head><body>
 <div id="pg"><header><div class="t"><h1 id="h1"></h1><p id="hp"></p></div><div class="ring"><svg viewBox="0 0 84 84" width="84" height="84"><circle cx="42" cy="42" r="36" fill="none" stroke="#ffffff33" stroke-width="7"/><circle class="p" id="rp" cx="42" cy="42" r="36" fill="none" stroke="#ff7a3d" stroke-width="7" stroke-linecap="round" stroke-dasharray="0 226" transform="rotate(-90 42 42)"/></svg><b><span id="rn"></span></b></div><button id="cg" aria-label="Settings" onclick="cgo()"><svg viewBox="0 0 24 24"><path d="M21.96 11.08 L23.89 11.41 L23.89 12.59 L21.96 12.92 L21.86 13.69 L23.63 14.50 L23.33 15.65 L21.38 15.46 L21.08 16.19 L22.59 17.43 L22.00 18.46 L20.17 17.77 L19.69 18.39 L20.82 19.99 L19.99 20.82 L18.39 19.69 L17.77 20.17 L18.46 22.00 L17.43 22.59 L16.19 21.08 L15.46 21.38 L15.65 23.33 L14.50 23.63 L13.69 21.86 L12.92 21.96 L12.59 23.89 L11.41 23.89 L11.08 21.96 L10.31 21.86 L9.50 23.63 L8.35 23.33 L8.54 21.38 L7.81 21.08 L6.57 22.59 L5.54 22.00 L6.23 20.17 L5.61 19.69 L4.01 20.82 L3.18 19.99 L4.31 18.39 L3.83 17.77 L2.00 18.46 L1.41 17.43 L2.92 16.19 L2.62 15.46 L0.67 15.65 L0.37 14.50 L2.14 13.69 L2.04 12.92 L0.11 12.59 L0.11 11.41 L2.04 11.08 L2.14 10.31 L0.37 9.50 L0.67 8.35 L2.62 8.54 L2.92 7.81 L1.41 6.57 L2.00 5.54 L3.83 6.23 L4.31 5.61 L3.18 4.01 L4.01 3.18 L5.61 4.31 L6.23 3.83 L5.54 2.00 L6.57 1.41 L7.81 2.92 L8.54 2.62 L8.35 0.67 L9.50 0.37 L10.31 2.14 L11.08 2.04 L11.41 0.11 L12.59 0.11 L12.92 2.04 L13.69 2.14 L14.50 0.37 L15.65 0.67 L15.46 2.62 L16.19 2.92 L17.43 1.41 L18.46 2.00 L17.77 3.83 L18.39 4.31 L19.99 3.18 L20.82 4.01 L19.69 5.61 L20.17 6.23 L22.00 5.54 L22.59 6.57 L21.08 7.81 L21.38 8.54 L23.33 8.35 L23.63 9.50 L21.86 10.31Z M21 12A9 9 0 1 0 3 12A9 9 0 1 0 21 12Z" fill="currentColor" fill-rule="evenodd" stroke="none"/><circle cx="12" cy="12" r="6.9" fill="none" stroke="currentColor" stroke-width="1.4"/><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 12L11.44 18.38"/><path d="M12 12L6.76 8.33"/><path d="M12 12L17.80 9.30"/></g><circle cx="12" cy="12" r="1.8" fill="currentColor" stroke="none"/></svg></button></header>
 <main id="m"></main></div>
 <nav id="nav"></nav>
 <div id="bd" onclick="cl()"></div><div id="sh"></div><div id="lk"></div>
 <script src="vendor.js"></script>
-<script>try{history.scrollRestoration='manual'}catch(e){}scrollTo(0,0);
+<script>
 const $=s=>document.querySelector(s),pd=s=>{const[a,b,c]=s.split('-').map(Number);return new Date(a,b-1,c)},
 fd=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'),
 add=(d,n)=>{const x=new Date(d);x.setDate(x.getDate()+n);return x},esc=s=>String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -441,7 +439,7 @@ function cu(el){const t=+el.dataset.n;if(!t||S.rm)return;const t0=performance.no
 let RT=0;function rest(k){const b=+S.rs;if(!b)return;const n=k==1?Math.max(b*1.5,90):k==2?Math.max(Math.round(b*.75/5)*5,30):b;RT=Date.now()+n*1e3;rtu()}
 const restK=i=>{const s=sess(pd(sel));if(!s)return 0;const w=((S.lw||{})[parse(s.i[i]).n.toLowerCase()]||{}).w;return w>0?1:2};
 let STB=null;
-function stSet(i){const s=sess(pd(sel));if(!s)return;const e=lg(),n=tot(s.i[i]),p=parse(s.i[i]),c=(e.sd||{})[i]||0;if(n&&c>=n||(e.x||[]).includes(i))return;ssA();const m=(p.a||'').match(/(\d+)\s*(min|s)\b/),d=m?+m[1]*(m[2]=='min'?60:1):0;STB={i,j:c+1,n:n||1,nm:p.n,d,t0:Date.now(),k:sel};RT=0;HP('w');rtu()}
+function stSet(i){const s=sess(pd(sel));if(!s)return;const e=lg(),n=tot(s.i[i]),p=parse(s.i[i]),c=(e.sd||{})[i]||0;if(n&&c>=n||(e.x||[]).includes(i))return;ssA();const m=(p.a||'').match(/(\d+)\s*(min|s)\b/),d=m?+m[1]*(m[2]=='min'?60:1):0;STB={i,j:c+1,n:n||1,nm:p.n,d,t0:Date.now()+(d?5000:0),lead:!!d,sd:!!d&&/per (leg|side)/i.test(p.x||''),side:0,k:sel};RT=0;HP('w');rtu()}
 function sbd(){if(!STB)return;const{i,j,k}=STB;STB=null;if(k==sel){if(WK&&WK.i==i)wkSv();ps(i,j);if(WK)WK.adv=1}}
 const ssg=()=>S.ss&&S.ss.k==sel?S.ss:{a:0,t:0},ssm=()=>{const T=ssg();return T.a+(T.t?Date.now()-T.t:0)};
 function ssu(){const t=$('#sst'),b=$('#ssb');if(t)t.textContent=fm(ssm()/1e3);if(b){const T=ssg();b.textContent=T.t?'Pause':ssm()?'Resume':'Start'}}
@@ -458,32 +456,39 @@ function wkSv(){const s=sess(pd(sel));if(!s||!WK)return;S.lw=S.lw||{};S.lw[parse
 function wkU(){const a=$('#wkw'),b=$('#wkrp');if(a)a.textContent=WK.w==16?'16 kg (both)':WK.w?WK.w+' kg':'Bodyweight';if(b)b.textContent=WK.r}
 function wkA(k,d){if(k=='w'){const o=[0,8,16];let q=o.indexOf(WK.w);if(q<0)q=0;WK.w=o[Math.max(0,Math.min(2,q+d))]}else WK[k]=Math.max(0,WK[k]+d);wkU();wkSv();HP('t')}
 function wkGo(d){const s=sess(pd(sel));if(!s)return;const i=Math.max(0,Math.min(s.i.length-1,WK.i+d));STB=null;wkSet(i);WKS='';wkr()}
-function wkT(){const i=WK.i;if(STB&&STB.i==i){const el=Math.floor((Date.now()-STB.t0)/1e3);return fm(Math.max(STB.d?STB.d-el:el,0))}if(RT)return fm(Math.max(Math.ceil((RT-Date.now())/1e3),0));return'Ready'}
+function wkT(){const i=WK.i;if(STB&&STB.i==i){const q=stS();return q.ph=='g'?String(q.v):fm(q.v)}if(RT)return fm(Math.max(Math.ceil((RT-Date.now())/1e3),0));return'Ready'}
 function stAuto(i){const s=sess(pd(sel));if(!s)return;const t=s.i[i],a=parse(t).a||'';if(tot(t)||(/\d\s*(min|s)\b/.test(a)&&!/reps/.test(a)))stSet(i)}
 function autoNext(){if(!WK||!document.body.classList.contains('so'))return;if(!(lg().x||[]).includes(WK.i))stAuto(WK.i)}
 function autoFin(){const e=lg(),T=ssg();if(T.t){T.a+=Date.now()-T.t;T.t=0}const mn=Math.round(ssm()/6e4);if(mn>=1&&!e.m)e.m=mn;STB=null;RT=0;rtu();cl();setTimeout(()=>{if(tab=='today')go('today',1)},80)}
 function rdo(){const e=lg(),snap=JSON.stringify(e),ss=S.ss?{...S.ss}:null;e.c=false;e.x=[];e.sd={};S.ss={k:sel,a:0,t:0};save();go('today',1);toast('Day reset',()=>{S.log[sel]=JSON.parse(snap);S.ss=ss;save();go('today',1)})}
 var RDS={};
+function tutShow(t,m){if(t!='today'||S.tut)return;const h='<div class="card" id="tut"><h2>How a session works</h2><ul class="tp"><li>Tap <b>Start session</b>. The timers start themselves.</li><li>Each timed set counts you in, times the set, then runs your rest.</li><li>An exercise finishes when its sets are done. You cannot tick it by hand, so your log stays honest.</li><li>The session completes itself after the last exercise.</li><li>Pain or too tired? Tap <b>Can&rsquo;t do this one</b>.</li></ul><button class="btn" onclick="S.tut=1;save();go(\'today\',1)">Got it</button></div>',c=m.querySelector('.car');c?c.insertAdjacentHTML('afterend',h):m.insertAdjacentHTML('afterbegin',h)}
+document.addEventListener('pointerdown',()=>{try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();if(AC.state=='suspended')AC.resume()}catch(e){}},{once:true,passive:true});
 function rdOpen(){RDS={sl:1,so:0,jp:0};const row=(k,l,o)=>`<label>${l}</label><div class="rdr">${o.map((t,j)=>`<button class="${RDS[k]==j?'on':''}" onclick="rdS('${k}',${j},this)">${t}</button>`).join('')}</div>`;$('#sh').innerHTML=`<div class="gr"></div><h2>Quick check</h2><p class="sub">Ten seconds. It sets today&rsquo;s load.</p>${row('sl','Sleep',['Poor','OK','Good'])}${row('so','Soreness',['Fresh','Sore','Very sore'])}${row('jp','Joint pain',['None','Mild','Sharp'])}<p class="sub">Sharp or pinching pain swaps the session for a gentle reset day.</p><button class="btn" onclick="rdGo()">Start</button>`;document.body.classList.add('so');mini()}
 function rdS(k,j,b){RDS[k]=j;b.parentNode.querySelectorAll('button').forEach((x,i)=>x.classList.toggle('on',i==j));HP('t')}
 function rdGo(){const e=lg();e.rd={sl:RDS.sl,so:RDS.so,jp:RDS.jp};save();cl();go('today',1);setTimeout(()=>wkOpen(),60)}
-function skc(b){if(b.dataset.a){skp();return}b.dataset.a=1;b.textContent='Tap again to skip (logged as skipped)';setTimeout(()=>{if(b.isConnected){delete b.dataset.a;b.innerHTML='Can&rsquo;t do this one'}},4000)}
 function skp(){if(!WK)return;const i=WK.i,e=lg();if((e.x||[]).includes(i))return;ssA();STB=null;RT=0;rtu();(e.sk=e.sk||[]).push(i);sd1(i,0,true);WK.adv=1;rr(i);toast('Skipped and logged');wkr()}
 function wkOpen(a){const s=sess(pd(sel));if(!s)return;{const e=lg();if(!e.rd&&sel==fd(new Date())&&!(e.c||(e.x||[]).length||Object.keys(e.sd||{}).length)){rdOpen();return}}ssA();let i=typeof a=='number'?a:wkNext();if(i<0)i=0;if((lg().x||[]).includes(i))return;wkSet(i);WKS='';document.body.classList.add('so');wkr();stAuto(i);wkr()}
 function wkr(){if(!WK||!document.body.classList.contains('so'))return;const s=sess(pd(sel));if(!s){WK=null;return}const x=lg().x||[];let i=WK.i;
 if(WK.adv&&!STB){WK.adv=0;if(x.includes(i)){const nn=wkNext();if(nn>=0&&nn!=i){wkSet(nn);i=nn}}}
-const p=parse(s.i[i]),n=tot(s.i[i]),c=(lg().sd||{})[i]||0,st=STB&&STB.i==i?'s':RT?'r':'i',all=wkNext()<0,fin=!!lg().c,dn=x.includes(i),du=/\d\s*(min|s)\b/.test(p.a||'')&&!/reps/.test(p.a||''),sig=[i,c,st,all,fin,dn].join();
-if(WKS!=sig||!$('#wk')){WKS=sig;let btn;const L0=(S.lw||{})[p.n.toLowerCase()],up=+((p.a||'').match(/\d+/g)||[0]).pop(),hs=[];if(n&&!WK.tm&&L0&&up>0&&L0.r>=up&&/squat|deadlift|hinge|lunge|row|step-up|push-up|bridge|calf/i.test(p.n))hs.push('Top of the range last time. Add load (bodyweight to 8 kg, one weight to both) or lower for 3 s.');if(/per (leg|side)/i.test(p.x||''))hs.push('Do one side, then the other. That is one set.');if(/(walk|jog|run|cardio)/i.test(p.n)&&du)hs.push('Talk test: full sentences should be possible. If not, slow down.');const hints=hs.map(h=>`<p class="sub">${h}</p>`).join('');
-if(st=='s')btn=`${STB.d?'':'<button class="btn" style="background:var(--ok)" onclick="sbd();wkr()">Done set</button>'}<button class="btn ghost" onclick="STB=null;rtu();wkr()">Stop timer</button>`;
+const p=parse(s.i[i]),n=tot(s.i[i]),c=(lg().sd||{})[i]||0,st=STB&&STB.i==i?(STB.t0>Date.now()?'g':'s'):RT?'r':'i',all=wkNext()<0,fin=!!lg().c,dn=x.includes(i),du=/\d\s*(min|s)\b/.test(p.a||'')&&!/reps/.test(p.a||''),sig=[i,c,st,all,fin,dn].join();
+if(WKS!=sig||!$('#wk')){WKS=sig;let btn;const L0=(S.lw||{})[p.n.toLowerCase()],up=+((p.a||'').match(/\d+/g)||[0]).pop(),hs=[];if(n&&!WK.tm&&L0&&up>0&&L0.r>=up&&/squat|deadlift|hinge|lunge|row|step-up|push-up|bridge|calf/i.test(p.n))hs.push('Top of the range last time. Add load (bodyweight to 8 kg, one weight to both) or lower for 3 s.');if(/per (leg|side)/i.test(p.x||''))hs.push(du&&!/reps/.test(p.a||'')?'The timer runs your left side, then switches to your right.':'Do one side, then the other. That is one set.');if(/(walk|jog|run|cardio)/i.test(p.n)&&du)hs.push('Talk test: full sentences should be possible. If not, slow down.');const hints=hs.map(h=>`<p class="sub">${h}</p>`).join('');
+if(st=='g')btn=`<button class="btn ghost" onclick="STB=null;rtu();wkr()">Cancel</button>`;else if(st=='s')btn=`<button class="btn" style="background:var(--ok)" onclick="sbd();wkr()">Done set</button><button class="btn ghost" onclick="STB=null;rtu();wkr()">Stop timer</button>`;
 else if(st=='r')btn=`<button class="btn" onclick="RT=0;rtu();autoNext();wkr()">Skip rest</button><button class="btn ghost" onclick="RT+=15e3">+15 s</button>`;
 else if(all)btn='<p class="sub">Session complete \u2713</p>';
 else if(dn)btn=`<button class="btn" onclick="wkGo(1)">Next exercise</button>`;
 else btn=(n||du)?`<button class="btn" onclick="stSet(${i});wkr()">${n?'Start set '+Math.min(c+1,n):'Start'}</button>`:`<button class="btn" onclick="tg(${i});WK.adv=1;wkr()">Finish</button>`;
-$('#sh').innerHTML=`<div id="wk"><div class="gr"></div><small class="wsm" id="wsm"></small><h2>${esc(p.n)}</h2><div class="chips">${n?`<span class="c s">Set ${Math.min(c+1,n)} of ${n}</span>`:''}${p.a?`<span class="c">${p.a}</span>`:''}</div>${p.x?`<p class="sub">${esc(p.x)}</p>`:''}<div class="tmr" id="wt"></div>${n?`<div class="wks"><div><small>Load</small><div class="stp"><button onclick="wkA('w',-1)">\u2212</button><b id="wkw"></b><button onclick="wkA('w',1)">+</button></div></div>${WK.tm?'':'<div><small>Reps</small><div class="stp"><button onclick="wkA(\'r\',-1)">\u2212</button><b id="wkrp"></b><button onclick="wkA(\'r\',1)">+</button></div></div>'}</div>`:''}${hints}<div class="col">${btn}</div><button class="btn ghost" onclick="skc(this)">Can&rsquo;t do this one</button><button class="btn ghost" onclick="cl()">Close</button></div>`;wkU()}
-$('#wt').textContent=wkT();$('#wsm').textContent='Exercise '+(i+1)+' of '+s.i.length+' \u00b7 '+fm(ssm()/1e3)}
+$('#sh').innerHTML=`<div id="wk"><div class="gr"></div><small class="wsm" id="wsm"></small><h2>${esc(p.n)}</h2><div class="chips">${n?`<span class="c s">Set ${Math.min(c+1,n)} of ${n}</span>`:''}${p.a?`<span class="c">${p.a}</span>`:''}</div>${p.x?`<p class="sub">${esc(p.x)}</p>`:''}<div class="tmr" id="wt"></div><div class="wsd" id="wst"></div>${n?`<div class="wks"><div><small>Load</small><div class="stp"><button onclick="wkA('w',-1)">\u2212</button><b id="wkw"></b><button onclick="wkA('w',1)">+</button></div></div>${WK.tm?'':'<div><small>Reps</small><div class="stp"><button onclick="wkA(\'r\',-1)">\u2212</button><b id="wkrp"></b><button onclick="wkA(\'r\',1)">+</button></div></div>'}</div>`:''}${hints}<div class="col">${btn}</div><div class="row"><button class="btn ghost" onclick="wkGo(-1)">Back</button><button class="btn ghost" onclick="wkGo(1)">Skip</button></div><button class="btn ghost" onclick="skp()">Can&rsquo;t do this one</button><button class="btn ghost" onclick="cl()">Close</button></div>`;wkU()}
+$('#wt').textContent=wkT();$('#wst').textContent=STB&&STB.i==i?(STB.t0>Date.now()?(STB.side?'Switch sides. Get ready':'Get ready'):(STB.sd?(STB.side?'Right side':'Left side'):'')):'';$('#wsm').textContent='Exercise '+(i+1)+' of '+s.i.length+' \u00b7 '+fm(ssm()/1e3)}
+function stS(){if(!STB)return null;const now=Date.now(),g=STB.t0-now;if(g>0)return{ph:'g',v:Math.ceil(g/1e3)};const el=Math.floor((now-STB.t0)/1e3);return{ph:'r',v:STB.d?Math.max(STB.d-el,0):el}}
+function stTk(k,on){if(STB.lt==k)return;STB.lt=k;if(on){HP('s');snd('t')}}
 function rtu(){let b=$('#rt');if(!b){b=document.createElement('div');b.id='rt';b.onclick=e=>{const a=e.target.closest('button');if(!a)return;const k=a.dataset.a;if(k=='1')RT+=15e3;else if(k=='0')RT=0;else if(k=='d')sbd();else if(k=='x')STB=null;rtu()};document.body.appendChild(b)}
 const mode=STB?'s':'r';if(b.dataset.mode!=mode){b.dataset.mode=mode;b.innerHTML=mode=='s'?'<span class="mi"><small></small><b></b></span><button class="rbt" data-a="d">Done</button><button class="rbt" data-a="x">\u2715</button>':'<span class="mi"><small>Rest</small><b></b></span><button class="rbt" data-a="1">+15 s</button><button class="rbt" data-a="0">Skip</button>'}
-if(STB){const el=Math.floor((Date.now()-STB.t0)/1e3),l=STB.d?STB.d-el:el;if(STB.d&&l<=0){HP('w');sbd();rtu();return}b.style.display='flex';b.querySelector('[data-a=d]').style.display=STB.d?'none':'';b.querySelector('small').textContent='Set '+STB.j+' of '+STB.n+' \u00b7 '+STB.nm;b.querySelector('b').textContent=fm(Math.max(l,0));return}
+if(STB){const q=stS(),sdl=STB.sd?(STB.side?' \u00b7 Right side':' \u00b7 Left side'):'';
+if(q.ph=='g'){stTk('g'+q.v,q.v<=3);b.style.display='flex';b.querySelector('small').textContent=(STB.side?'Switch sides':'Get ready')+' \u00b7 '+STB.nm;b.querySelector('b').textContent=q.v;return}
+if(!STB.gd){STB.gd=1;if(STB.lead){HP('w');snd('t')}}
+if(STB.d){if(q.v>0)stTk('r'+q.v,q.v<=3);else{if(STB.sd&&!STB.side){STB.side=1;STB.t0=Date.now()+5000;STB.gd=0;STB.lt='';HP('w');snd('w');rtu();return}HP('w');snd('w');sbd();rtu();return}}
+b.style.display='flex';b.querySelector('small').textContent='Set '+STB.j+' of '+STB.n+' \u00b7 '+STB.nm+sdl;b.querySelector('b').textContent=fm(q.v);return}
 if(!RT){b.style.display='none';return}const l=Math.ceil((RT-Date.now())/1e3);if(l<=0){RT=0;b.style.display='none';HP('w');autoNext();return}b.style.display='flex';b.querySelector('b').textContent=fm(l)}
 let sw=null,swc=0;
 document.addEventListener('pointerdown',e=>{const x=e.target.closest&&e.target.closest('.ex[data-i]');if(!x||e.target.closest('button'))return;sw={x,i:+x.dataset.i,sx:e.clientX,sy:e.clientY,dx:0,on:0,h:0}});
@@ -568,7 +573,7 @@ const L=[
 ['Mobility',/mobility|cool down/,'Take it slow with easy stretching and joint circles.|Breathe deeply and never force a stretch into pain.','Bouncing in stretches.',null],
 ['Hockey stance hold',/stance/,'Stand with feet slightly wider than shoulders, hips back and chest forward in a half-squat.|Hold for the time, keeping knees over toes.','Letting your back round.',null]
 ];
-L.splice(0,0,
+L.splice(0,0,['Posture block',/posture block/,'Chin tucks: draw your chin straight back, 8 slow reps.|Prone Y raises: lie face down, lift arms in a Y, hold 2 seconds, 8 reps.|Wall angels: back and arms on a wall, slide up and down, 8 reps.|Hip-flexor stretch: half-kneeling, squeeze the back glute, 30 seconds each side.','Rushing. These are slow and light. Stop if anything pinches.',''],
 ['Joint prep',/joint prep/,'Ankle rocks: knee over toes, heel down, 10 slow rocks each side.|Leg swings: hold a wall, swing front to back then side to side, 10 each leg.|Hip circles: on all fours, draw big slow circles with each knee, 8 each way.|Upper-back rotations: on all fours, hand behind head, rotate open and closed, 8 per side.|Glute bridges: 8 slow reps to wake up the glutes.','Rushing. Move through full range slowly so joints warm up before load.',''],
 ['Split squat',/split squat/,'Stand in a long stride, back heel lifted, front foot flat.|Lower straight down until the back knee almost touches the floor.|Keep your front knee tracking over your toes and your chest tall.|Push through the front heel to rise. Finish all reps on one leg, then switch.','Front knee collapsing inward or the stride too short. Hold a wall for balance if needed.',''],
 ['Low step-up',/step-up|step up/,'Use a low, stable step (stair or sturdy box).|Place your whole foot on the step and stand up using that leg, not by pushing off the back foot.|Lower slowly for 3 seconds.|Finish all reps on one leg, then switch.','Pushing off the floor foot, or the knee falling inward. Go lower if it feels wobbly.',''],
@@ -589,7 +594,7 @@ return{n:t,s:'',a:'',x:''}}
 const tot=t=>{const p=parse(t);return p.s?+(p.s.match(/\d+/g)||[0]).pop():0};
 const timed=n=>/(run|jog|cardio|walk)/i.test(n)&&!/cool|warm|march|back|gentle/i.test(n);
 function exRow(t,i,on,sd){const p=parse(t),k=lib(p.n),n=tot(t),sp=p.s?+p.s==1?'1 set':p.s+' sets':'';
-return`<div class="ex ${on?'on':''}" data-i="${i}" ${on?'':`onclick="wkOpen()"`}><div class="bx">${on?'✓':''}</div><div class="tx"><div class="nm">${esc(p.n)}</div><div class="chips">${sp?`<span class="c s">${sp}</span>`:''}${p.a?`<span class="c">${p.a}</span>`:''}</div>${p.x?`<div class="xt">${esc(p.x)}</div>`:''}
+return`<div class="ex ${on?'on':''}" data-i="${i}" ${on?'':`onclick="wkOpen(${i})"`}><div class="bx">${on?'✓':''}</div><div class="tx"><div class="nm">${esc(p.n)}</div><div class="chips">${sp?`<span class="c s">${sp}</span>`:''}${p.a?`<span class="c">${p.a}</span>`:''}</div>${p.x?`<div class="xt">${esc(p.x)}</div>`:''}
 ${n>1?`<div class="pls">${Array.from({length:n},(_,j)=>`<span class="pl ${j<sd?'on':''}">${j+1}</span>`).join('')}<span class="xt" style="align-self:center">${sd||0}/${n} sets</span></div>`:''}
 ${timed(p.n)?`<button class="tmb" onclick="event.stopPropagation();ot(${i},'r')">⏱ Time it</button>`:''}</div>${k>=0?`<button class="inf" aria-label="How to" onclick="event.stopPropagation();op(${k})">i</button>`:''}</div>`}
 let sel=fd(new Date()),tab='today';
@@ -626,12 +631,17 @@ rp(4,2,'Easy run','Easy run or run-walk 25–35 min, talk test: full sentences')
 const dl=d=>{const w=Math.floor(Math.round((d-new Date(2026,9,12))/864e5)/7)+1;return w>0&&w<=12&&w%4==0};
 const RESET='Easy walk 10 min|Ankle rocks 2×10 per side|Hip circles 2×8 per side|Cat–cow 2×8|Open-book rotations 2×6 per side';
 const rdMode=r=>r.jp==2?2:(r.jp==1||r.so==2||(r.sl==0&&r.so>=1))?1:0;
-const sess0=(d,Xp)=>{const w=d.getDay();if(w==0||w==4)return null;const ph=phase(d),r=ph==5?TP(d,w,Xp):Xp[ph][w];if(!r)return null;let i=r[2].split('|'),m=r[1];if(w==1||w==3||w==6){i=i.concat(PO.split('|'));m+=' + 5 min posture'}return{t:r[0],m,i}};
+const PO2='Posture block 4 min: chin tucks, prone Y raises, wall angels, 8 reps each, hip-flexor stretch 30 s per side';
+const estM=i=>{const b=+S.rs>0?+S.rs:0;let t=0;for(const x of i){const p=parse(x),n=tot(x),a=p.a||'',pm=a.match(/(\d+)(?:–(\d+))?\s*(min|s)\b/),tm=pm&&!/reps/.test(a),sd=/per (leg|side)/i.test(p.x||'')?2:1,ld=/\d\s*kg/.test(x);let w;
+if(tm)w=(n||1)*((+pm[1]+(+pm[2]||+pm[1]))/2)*(pm[3]=='min'?60:1)*sd;else if(n)w=n*(10+((a.match(/\d+/g)||[8]).slice(-1)[0])*5)*sd;else w=30;
+const r=b?(ld?Math.max(b*1.5,90):Math.max(Math.round(b*.75/5)*5,30)):0;t+=w+(n>1?(n-1)*r:0)+20}
+const m=t/60,lo=Math.round(m*.92/5)*5,hi=Math.max(Math.round(m*1.12/5)*5,lo+5);return lo+'–'+hi+' min'};
+const sess0=(d,Xp)=>{const w=d.getDay();if(w==0||w==4)return null;const ph=phase(d),r=ph==5?TP(d,w,Xp):Xp[ph][w];if(!r)return null;let i=r[2].split('|'),m=r[1];if(w==1||w==3||w==6){if(Xp===X){i=i.concat(PO.split('|'));m+=' + 5 min posture'}else i=i.concat(PO2.split('|'))}return{t:r[0],m,i}};
 const adapt=(s,d,e)=>{let i=s.i.slice(),t=s.t;const ph=phase(d),cut=x=>x.replace(/(\d)×/,(a,n)=>(+n>2?n-1:n)+'×');
 if(ph<5&&dl(d)){i=i.map(cut);t+=' · lighter week'}
 const rd=e&&e.rd;if(rd){const k=rdMode(rd);if(k==2)return{t:'Joint-friendly reset',m:'10–15 min',i:RESET.split('|')};if(k==1){i=i.filter(x=>/^(warm|joint|cool)/i.test(x)||!/jump|hop|bound|land|accelerat|fast effort|sprint|shift/i.test(x)).map(cut);t+=' · light day'}}
-return{t,m:s.m,i}};
-const sess=d=>{const e=S.log[fd(d)],old=e&&!e.v&&(e.c||(e.x||[]).length||Object.keys(e.sd||{}).length);if(old)return sess0(d,X);const s=sess0(d,X2);if(s)s.i=s.i.filter(x=>!/^Log how long/i.test(x));return s&&adapt(s,d,e)};
+return{t,m:estM(i),i}};
+const sess=d=>{const e=S.log[fd(d)],old=e&&!e.v&&(e.c||(e.x||[]).length||Object.keys(e.sd||{}).length);if(old)return sess0(d,X);const s=sess0(d,X2);return s&&adapt(s,d,e)};
 const mon=d=>add(d,-((d.getDay()+6)%7));
 function weekDone(d){const m=mon(d);let c=0;for(let i=0;i<7;i++){const k=fd(add(m,i));if(S.log[k]&&S.log[k].c&&sess(add(m,i)))c++}return c}
 function head(){const d=pd(sel),ph=phase(d),tr=Math.round((pd(S.trial)-new Date(fd(new Date())+'T00:00'))/864e5),w=weekDone(d);
@@ -659,8 +669,10 @@ if(ph==5)h+=`<div class="note">${['Sharpen: lighter than Phase 4. One conditioni
 if(!s){h+=`<div class="card" id="sess"><h2>Active recovery</h2><p class="sub">A gentle walk is optional. Tick it off if you do it.</p><div class="ex ${e.c?'on':''}" onclick="tc()"><div class="bx">${e.c?'✓':''}</div><div class="tx"><div class="nm">Gentle walk done</div></div></div></div>`}
 else{h+=`<div class="card" id="sess"><h2>${s.t}</h2><p class="sub">${P[ph-1].n}</p><div class="sum"><span class="c">${s.i.length} exercises</span><span class="c">⏱ ${s.m}</span></div>${e.c?'':'<button class="btn" onclick="wkOpen()">Start session</button>'}<div class="stm"><div style="flex:1"><small>Session timer</small><div class="stt" id="sst">${fm(ssm()/1e3)}</div></div><button class="g" onclick="ssR()">Reset</button><button id="ssb" onclick="ssT()">${ssg().t?'Pause':ssm()?'Resume':'Start'}</button></div>${s.i.map((t,i)=>exRow(t,i,x.includes(i),(e.sd||{})[i]||0)).join('')}
 <label>How hard was it? (1 easy · 5 maxed)</label><div class="mood">${[1,2,3,4,5].map(n=>`<button class="${e.e==n?'on':''}" onclick="se(${n},this)">${n}</button>`).join('')}</div>
+<div class="row"><div><label>Minutes</label><input type="number" inputmode="numeric" value="${e.m||''}" oninput="sv('m',this.value)"></div></div>
+<label>Notes: energy, soreness, running</label><textarea oninput="sv('n',this.value)">${esc(e.n)}</textarea>
 ${e.c?'<div class="btn done" id="cb" style="text-align:center">Session complete ✓</div><button class="rst" onclick="rdo()">Reset this day</button>':''}</div>`}
-h+=recent();h+=`<p class="sub" style="text-align:center">App version 34</p><div class="card"><b>This phase</b><p class="sub" style="margin:4px 0 0">${P[ph-1].g}</p></div>`;
+h+=recent();h+=`<div class="card"><b>This phase</b><p class="sub" style="margin:4px 0 0">${P[ph-1].g}</p></div>`;
 if(sel!=fd(new Date()))h+=`<button class="btn ghost" onclick="sel=fd(new Date());go('today')">Back to today</button>`;
 return h}
 function week(){const m=mon(pd(sel)),n=fd(new Date());let h=`<div class="nav"><button onclick="sel=fd(add(pd(sel),-7));go('week')">‹ Prev</button><b>${m.toLocaleDateString(undefined,{day:'numeric',month:'short'})} – ${add(m,6).toLocaleDateString(undefined,{day:'numeric',month:'short'})}</b><button onclick="sel=fd(add(pd(sel),7));go('week')">Next ›</button></div><div class="card">`;
@@ -683,7 +695,7 @@ return `<div class="card"><h2>Appearance</h2><label>Theme</label>${seg('theme',[
 ${!navigator.standalone&&/iPhone|iPad/.test(navigator.userAgent)?`<div class="card"><h2>Install on your iPhone</h2><p class="sub">In Safari tap Share, then Add to Home Screen, and open the app from its icon. You get full screen, and notifications only work from the installed app.</p></div>`:''}
 ${notifCard()}
 ${cloud()}
-<div class="card"><h2>App</h2><p class="sub">Built with canvas-confetti and Lucide icons (ISC licence).</p><button class="btn ghost" onclick="(navigator.serviceWorker?navigator.serviceWorker.getRegistrations().then(r=>Promise.all(r.map(x=>x.unregister()))):Promise.resolve()).then(()=>window.caches?caches.keys().then(k=>Promise.all(k.map(c=>caches.delete(c)))):0).then(()=>{scrollTo(0,0);location.reload()})">Refresh app (get the latest version)</button>
+<div class="card"><h2>App</h2><p class="sub">Built with canvas-confetti and Lucide icons (ISC licence).</p><button class="btn ghost" onclick="(navigator.serviceWorker?navigator.serviceWorker.getRegistrations().then(r=>Promise.all(r.map(x=>x.unregister()))):Promise.resolve()).then(()=>window.caches?caches.keys().then(k=>Promise.all(k.map(c=>caches.delete(c)))):0).then(()=>location.reload())">Refresh app (get the latest version)</button>
 <button class="btn ghost" style="color:#d63030" onclick="erase()">Erase all data</button></div>`}
 const fm=t=>{t=Math.round(t);const h=t/3600|0,m=(t%3600)/60|0,x=t%60;return(h?h+':'+String(m).padStart(2,'0'):m)+':'+String(x).padStart(2,'0')};
 const sd0=d=>d.toLocaleDateString(undefined,{day:'numeric',month:'short'});
@@ -711,23 +723,20 @@ for(let i=7;i>=0;i--){const w=add(m,-7*i);let pl=0,dn=0;for(let j=0;j<7;j++){con
 const cur=B[7][1];
 return`<div class="card"><h2>Consistency</h2><div class="tiles"><div class="tile"><b>${cur}</b><small>Sessions this week</small></div><div class="tile"><b>${ws}</b><small>Sets this week</small></div><div class="tile"><b>${tn}</b><small>Sessions, 8 weeks</small></div></div>
 <div class="bars">${B.map((b,i)=>`<div class="bc"><div class="trk"><div class="bar" style="height:${Math.max(b[1]/b[2]*100,4)}%;animation-delay:${i*50}ms"></div></div><small>${sd0(b[0])}</small></div>`).join('')}</div><p class="sub">Sessions completed per week (full bar = every planned session).</p></div>`}
-var BT=null;const BMN={p:'Max good push-ups',b:'Single-leg balance (s)',b2:'Single-leg balance, other leg (s)',ws:'Wall sit (s)',gl:'Single-leg bridge hold, left (s)',gr:'Single-leg bridge hold, right (s)',cl:'Copenhagen hold, left (s)',cr:'Copenhagen hold, right (s)',s10:'10 m sprint (s)'};
-function bt(k,i){BT={k,i,t:0,n:0,iv:0};btr();document.body.classList.add('so')}
-function btr(){const B=BT,c=B.k=='p';$('#sh').innerHTML=`<div class="gr"></div><h2>${BMN[B.k]}</h2><p class="sub">${c?'Tap once for each good rep. Stop when your form breaks.':B.k=='s10'?'Tap Start as you go and Stop as you cross 10 m. Same surface each time.':'Tap Start when you are in position. Tap Stop when your form breaks.'}</p><div class="tmr" id="btv">${c?B.n:B.t?'':'0:00'}</div><button class="btn" onclick="btg()">${c?'+1 rep':B.t?'Stop and save':'Start'}</button>${c?'<button class="btn" style="background:var(--ok)" onclick="BT.n&&btsave(String(BT.n))">Save</button>':''}<button class="btn ghost" onclick="cl()">Close</button>`}
-function btu(){if(!BT||!BT.t)return;const ms=Date.now()-BT.t,e=$('#btv');if(e)e.textContent=BT.k=='s10'?(ms/1e3).toFixed(2):fm(ms/1e3)}
-function btg(){const B=BT;if(B.k=='p'){B.n++;$('#btv').textContent=B.n;HP('s');return}if(!B.t){B.t=Date.now();B.iv=setInterval(btu,50);btr();return}const ms=Date.now()-B.t;btsave(B.k=='s10'?(ms/1e3).toFixed(2):String(Math.round(ms/1e3)))}
-function btsave(v){const B=BT;(S.bm[B.k]=S.bm[B.k]||[])[B.i]=v;save();HP('w');cl();go('tips',1);toast('Saved: '+v)}
-function tips(){const C=['Start','Week 6','Week 11','Week 15'],T=Object.entries(BMN).map(([k,n])=>[n,k]);
+function tips(){const C=['Start','Week 6','Week 11','Week 15'],T=[['1.6 km time (min:sec)','t'],['Max good push-ups','p'],['Single-leg balance (s)','b'],['Single-leg balance, other leg (s)','b2'],['Wall sit (s)','ws'],['Single-leg bridge hold, left (s)','gl'],['Single-leg bridge hold, right (s)','gr'],['Copenhagen hold, left (s)','cl'],['Copenhagen hold, right (s)','cr'],['10 m sprint (s)','s10']];
 const L2=Object.values(S.log),ts=L2.reduce((a,e)=>a+(e.sd?Object.values(e.sd).reduce((x,y)=>x+y,0):0),0);
-let h='<h3 class="st">Your Stats</h3><div class="car">'+stat(streak(),'session streak','void 0','flame')+stat(dtt()>0?dtt():'–','days to trials','void 0','trophy')+stat(L2.filter(e=>e.c).length,'sessions logged','void 0','medal')+stat(ts,'sets logged','void 0','dumbbell')+'</div>'+trophies()+runs()+wkly()+'<div class="card"><h2>Benchmarks</h2><p class="sub">Tap a cell to run the test. The result saves itself. 1.6 km trials are timed and charted above.</p><table><tr><th></th>'+C.map(c=>`<th>${c}</th>`).join('')+'</tr>'+T.map(t=>`<tr><td>${t[0]}</td>${C.map((c,i)=>`<td><button class="bmc" onclick="bt('${t[1]}',${i})">${esc((S.bm[t[1]]||[])[i])||'Test'}</button></td>`).join('')}</tr>`).join('')+'</table>'+(()=>{const o=[];[['b','b2','Balance'],['gl','gr','Bridge hold'],['cl','cr','Copenhagen hold']].forEach(([a,b,n])=>{for(let i=3;i>=0;i--){const x=parseFloat((S.bm[a]||[])[i]),y=parseFloat((S.bm[b]||[])[i]);if(x>0&&y>0){const g=Math.round(Math.abs(x-y)/Math.max(x,y)*100);if(g>12)o.push(n+': sides differ by '+g+'%. Add an extra set on the weaker side.');break}}});return o.map(t=>'<div class="note">'+t+'</div>').join('')})()+'</div>';
+let h='<h3 class="st">Your Stats</h3><div class="car">'+stat(streak(),'session streak','void 0','flame')+stat(dtt()>0?dtt():'–','days to trials','void 0','trophy')+stat(L2.filter(e=>e.c).length,'sessions logged','void 0','medal')+stat(ts,'sets logged','void 0','dumbbell')+'</div>'+trophies()+runs()+wkly()+'<div class="card"><h2>Benchmarks</h2><p class="sub">Record on the same route and surface each time.</p><table><tr><th></th>'+C.map(c=>`<th>${c}</th>`).join('')+'</tr>'+T.map(t=>`<tr><td>${t[0]}</td>${C.map((c,i)=>`<td><input value="${esc((S.bm[t[1]]||[])[i])}" oninput="(S.bm['${t[1]}']=S.bm['${t[1]}']||[])[${i}]=this.value;save()"></td>`).join('')}</tr>`).join('')+'</table>'+(()=>{const o=[];[['b','b2','Balance'],['gl','gr','Bridge hold'],['cl','cr','Copenhagen hold']].forEach(([a,b,n])=>{for(let i=3;i>=0;i--){const x=parseFloat((S.bm[a]||[])[i]),y=parseFloat((S.bm[b]||[])[i]);if(x>0&&y>0){const g=Math.round(Math.abs(x-y)/Math.max(x,y)*100);if(g>12)o.push(n+': sides differ by '+g+'%. Add an extra set on the weaker side.');break}}});return o.map(t=>'<div class="note">'+t+'</div>').join('')})()+'</div>';
 return h+'<div class="card"><h2>Ways to improve the plan</h2><ul class="tp">'+TIPS.map(t=>`<li><b>${t[0]}.</b> ${t[1]}</li>`).join('')+'</ul></div>'}
 /* Stopwatch: uses timestamps so it keeps counting if the app is backgrounded */
 const tms=()=>S.tm.a+(S.tm.t?Date.now()-S.tm.t:0);
-function ot(i,k){const T=S.tm;if(!T.a&&!T.t){Object.assign(T,{a:0,t:0,k,i,km:k=='t'?'1.6':'',n:k=='t'?'1.6 km time trial':i>=0?parse(sess(pd(sel)).i[i]).n:'Run',d:fd(new Date()),sl:sel});save()}tsh();document.body.classList.add('so')}
-function tsh(){const T=S.tm;$('#sh').innerHTML=`<div class="gr"></div><h2>${esc(T.n)}</h2><div class="tmr" id="tt">${fm(tms()/1e3)}</div><div class="row"><button class="btn ghost" onclick="tmR()">Reset</button><button class="btn" id="tgb" onclick="tmT()">${T.t?'Pause':tms()?'Resume':'Start'}</button></div>
-${T.k=='t'?'':'<label>Distance (gives you pace)</label><div class="mood">'+[['','None'],['1','1 km'],['2','2 km'],['3','3 km'],['5','5 km']].map(c=>`<button class="${(T.km||'')==c[0]?'on':''}" onclick="tmK('${c[0]}')">${c[1]}</button>`).join('')+'</div>'}<button class="btn" style="background:var(--ok)" onclick="tmS()">Save this run</button><button class="btn ghost" onclick="cl()">Hide (timer keeps running)</button>`}
-function tmK(v){S.tm.km=v;save();tsh()}
+function ot(i,k){const T=S.tm;if(!T.a&&!T.t){Object.assign(T,{a:0,t:0,cue:0,tgt:i>=0&&k!='t'?tgSec(i):0,k,i,km:k=='t'?'1.6':'',n:k=='t'?'1.6 km time trial':i>=0?parse(sess(pd(sel)).i[i]).n:'Run',d:fd(new Date()),sl:sel});save()}tsh();document.body.classList.add('so')}
+function tsh(){const T=S.tm;$('#sh').innerHTML=`<div class="gr"></div><h2>${esc(T.n)}</h2><div class="tmr" id="tt">${tmShow()}</div><div class="wsd" id="tt2">${tmSub()}</div><div class="row"><button class="btn ghost" onclick="tmR()">Reset</button><button class="btn" id="tgb" onclick="tmT()">${T.t?'Pause':tms()?'Resume':'Start'}</button></div>
+<label>Distance in km (optional, gives you pace)</label><input type="number" step="0.01" inputmode="decimal" value="${T.km||''}" oninput="S.tm.km=this.value;save()"><button class="btn" style="background:var(--ok)" onclick="tmS()">Save this run</button><button class="btn ghost" onclick="cl()">Hide (timer keeps running)</button>`}
 function tmT(){const T=S.tm;if(T.t){T.a+=Date.now()-T.t;T.t=0}else T.t=Date.now();save();const g=$('#tgb');if(g)g.textContent=T.t?'Pause':'Resume';mini()}
+function tgSec(i){const s=sess(pd(sel));if(!s||!s.i[i])return 0;const m=(parse(s.i[i]).a||'').match(/(\d+)\s*(min|s)\b/);return m?+m[1]*(m[2]=='min'?60:1):0}
+function tmShow(){const T=S.tm,e=tms()/1e3;if(!T.tgt)return fm(e);return e>=T.tgt?'+'+fm(e-T.tgt):fm(Math.ceil(T.tgt-e))}
+function tmSub(){const T=S.tm;return T.tgt?'Elapsed '+fm(tms()/1e3)+' of '+fm(T.tgt):''}
+function tmCue(){const T=S.tm;if(T.tgt&&T.t&&!T.cue&&tms()>=T.tgt*1e3){T.cue=1;HP('w');snd('w');save()}}
 function tmR(){const prev={...S.tm},had=tms();S.tm={a:0,t:0};save();cl();mini();if(had)toast('Timer reset',()=>{S.tm=prev;save();mini()})}
 function tmS(){const T=S.tm;if(T.t){T.a+=Date.now()-T.t;T.t=0}const sec=Math.round(T.a/1e3);if(sec<5){alert('Start the timer first.');return}
 const k=+T.km||(T.k=='t'?1.6:0);HP('w');S.runs.push({d:T.d,n:T.n,s:sec,k:k||0,t:T.k});
@@ -737,9 +746,9 @@ const PAU='<svg viewBox="0 0 24 24"><rect x="6" y="5" width="4" height="14" rx="
 function mini(){const T=S.tm,on=(T.a||T.t)&&!document.body.classList.contains('so');let b=$('#mt');
 if(!b){b=document.createElement('div');b.id='mt';b.setAttribute('role','button');b.innerHTML='<i class="ma"></i><span class="mi"><b></b><small></small></span><span class="mp" role="button" aria-label="Pause or resume"></span>';
 b.onclick=()=>{tsh();document.body.classList.add('so')};b.querySelector('.mp').onclick=e=>{e.stopPropagation();tmT()};document.body.appendChild(b)}
-document.body.style.setProperty('--mo',on?'68px':'0px');b.style.display=on?'flex':'none';if(!on)return;const q=b.querySelector('.mi');q.firstChild.textContent=T.n||'Run';q.lastChild.textContent=fm(tms()/1e3)+(T.t?' · running':' · paused');
+document.body.style.setProperty('--mo',on?'68px':'0px');b.style.display=on?'flex':'none';if(!on)return;const q=b.querySelector('.mi');q.firstChild.textContent=T.n||'Run';q.lastChild.textContent=tmShow()+(T.tgt?(tms()>=T.tgt*1e3?' over':' left'):'')+(T.t?' · running':' · paused');
 const k=T.t?'1':'0';if(b.dataset.s!==k){b.dataset.s=k;b.querySelector('.mp').innerHTML=T.t?PAU:PLY}}
-setInterval(()=>{rtu();ssu();wkr();wakeScr();const t=$('#tt');if(t)t.textContent=fm(tms()/1e3);if(S.tm.a||S.tm.t)mini()},500);
+setInterval(()=>{rtu();ssu();wkr();wakeScr();const t=$('#tt');if(t){t.textContent=tmShow();const u=$('#tt2');if(u)u.textContent=tmSub()}tmCue();if(S.tm.a||S.tm.t)mini()},500);
 function exs(){return`<div class="srch"><input id="q" type="search" placeholder="Search exercises…" autocomplete="off" oninput="fx(this.value)"></div><div class="card" id="el">${exl('')}</div>`}
 function exl(q){q=q.trim().toLowerCase();const r=L.map((e,i)=>[e,i]).filter(([e])=>!q||(e[0]+' '+e[2]).toLowerCase().includes(q));
 return r.length?r.map(([e,i])=>`<div class="li" onclick="op(${i})"><b>${e[0]}<div class="xt pv1">${e[2].split('|')[0]}</div></b><span>›</span></div>`).join(''):'<div class="empty">No match. Try “squat” or “stretch”.</div>'}
@@ -751,7 +760,7 @@ $('#sh').scrollTop=0;document.body.classList.add('so');mini()}
 function pl(i){const id=L[i][4],h=$('#vp');if(!h||!id)return;
 h.innerHTML=`<div class="vp"><iframe src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1&playsinline=1&rel=0&modestbranding=1&loop=1&playlist=${id}" title="Exercise demo" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div><a class="vpl" href="${yt(i)}" target="_blank" rel="noopener">Video not loading? Open in YouTube</a>`;
 setTimeout(()=>h.scrollIntoView({behavior:'smooth',block:'nearest'}),60)}
-function cl(){if(BT){clearInterval(BT.iv);BT=null}WK=null;document.querySelectorAll('#sh iframe').forEach(f=>f.src='about:blank');document.body.classList.remove('so');mini()}
+function cl(){WK=null;document.querySelectorAll('#sh iframe').forEach(f=>f.src='about:blank');document.body.classList.remove('so');mini()}
 function lg(){const e=S.log[sel]=S.log[sel]||{};if(!e.v&&!(e.c||(e.x||[]).length||Object.keys(e.sd||{}).length))e.v=2;return e}
 function rr(i){const s=sess(pd(sel)),e=lg(),was=e.c,el=document.querySelector(`.ex[data-i="${i}"]`);if(el)el.outerHTML=exRow(s.i[i],i,(e.x||[]).includes(i),(e.sd||{})[i]||0);e.c=!!s&&(e.x||[]).length==s.i.length;if(e.c&&!was){autoFin();HP('w');fin()}cs();save();head()}
 function sd1(i,n,on){const e=lg(),x=e.x=e.x||[],sd=e.sd=e.sd||{},k=x.indexOf(i);if(n!=null)sd[i]=n;if(on&&k<0)x.push(i);if(!on&&k>=0)x.splice(k,1)}
@@ -784,7 +793,7 @@ document.body.classList.toggle('rm',!!S.rm);r.classList.toggle('blk',!!S.bk);con
 const ag=applyS;applyS();document.addEventListener('visibilitychange',wakeScr);
 let PT='today';
 function cgo(){const c=$('#cg');c.classList.remove('sp');void c.offsetWidth;c.classList.add('sp');try{HP('t')}catch(e){}go(tab=='set'?(PT=='set'?'today':PT):'set')}
-function go(t,keep){const y=scrollY,same=t==tab;if(t=='set'&&!same)PT=tab;tab=t;cl();const m=$('#m');m.className='';m.dataset.t=t;m.innerHTML={today,week,plan,tips,ex:exs,set:settingsTab}[t]();
+function go(t,keep){const y=scrollY,same=t==tab;if(t=='set'&&!same)PT=tab;tab=t;cl();const m=$('#m');m.className='';m.dataset.t=t;m.innerHTML={today,week,plan,tips,ex:exs,set:settingsTab}[t]();tutShow(t,m);
 if(!keep||!same){void m.offsetWidth;m.className='in'}
 const i=TABS.findIndex(b=>b[0]==t);NB.forEach((b,j)=>b.classList.toggle('on',i==j));pp(Math.max(i,0)*cellW(),1);Z_PL.style.opacity=i<0?0:1;$('#cg').classList.toggle('on',t=='set');head();updBadge();scrollTo(0,keep&&same?y:0);document.querySelectorAll('em[data-n]').forEach(cu);const wd=document.querySelector('.wd.today');if(wd)wd.parentNode.scrollLeft=Math.max(0,wd.offsetLeft-28)}
 document.addEventListener('keydown',e=>{if(e.key=='Escape')cl()});
@@ -803,7 +812,7 @@ document.addEventListener('visibilitychange',()=>{if(!document.hidden)remCheck()
    database functions (see supabase-setup.sql). Offline, it is checked against a salted hash kept on this device. ===== */
 const APP_V='17';
 const SB_URL='https://ttdiasiwavlnavirxysi.supabase.co',SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR0ZGlhc2l3YXZsbmF2aXJ4eXNpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIwMjA2NTQsImV4cCI6MjEwNzU5NjY1NH0.JWBvqVzDLBKR5of2C4zXFQBa8ZvAoU2wNSB17RTW_4I';
-const LOC=['tm','wl','rem','remSent','hp','sn','sv'];/* stopwatch, keep-awake and reminders stay per-device */
+const LOC=['tm','ss','wl','rem','remSent','hp','sn','sv'];/* stopwatch, keep-awake and reminders stay per-device */
 const SBK='ht_sb';let SB={};try{SB=JSON.parse(localStorage.getItem(SBK)||'{}')||{}}catch(e){}
 const sbs=()=>{try{localStorage.setItem(SBK,JSON.stringify({syn:SB.syn||0}))}catch(e){}};
 let PIN='',sbm='',sbBusy=0,sbDirty=0,sbPt;
