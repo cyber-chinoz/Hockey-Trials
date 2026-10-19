@@ -560,6 +560,18 @@ function rstSess(){if(!canDo())return;const e=lg(),snap=JSON.stringify(e),ss=S.s
 STB=null;RT=0;WK=null;rtu();
 ['x','sd','sk','rd','e','n','m'].forEach(k=>delete e[k]);e.ad=false;S.ss={k:sel,a:0,t:0};save();cl();HP('t');go('today',1);
 toast('Session restarted',()=>{S.log[sel]=JSON.parse(snap);S.ss=ss;save();go('today',1)})}
+function rstDayBm(){const T=fd(new Date()),m=mon(new Date()),a=fd(m),b=fd(add(m,6));
+if(!confirm('Reset today ('+T+') and this week\u2019s benchmark? Today\u2019s session, timer and notes are cleared, and benchmark results logged Mon\u2013Sun this week are removed. Other days are not touched.'))return;
+const snap=JSON.stringify({log:S.log[T]||null,ss:S.ss||null,bw:S.bw,bsk:S.bsk,runs:S.runs,aw:S.aw});
+STB=null;RT=0;WK=null;BMS=null;BWQ=null;try{rtu()}catch(e){}
+delete S.log[T];
+S.ss={k:T,a:0,t:0};
+S.bw=(S.bw||[]).filter(r=>!(r.t>=a&&r.t<=b));
+if(S.bsk)delete S.bsk[a];
+if(bwWk(new Date()).run)S.runs=(S.runs||[]).filter(r=>!(r.t=='t'&&r.d>=a&&r.d<=b));
+S.aw=(S.aw||[]).filter(id=>{const x=ACH.find(q=>q[0]==id);return !x||x[4]()});
+save();cl();HP('t');go('set',1);
+toast('Today and this week\u2019s benchmark reset',()=>{const o=JSON.parse(snap);if(o.log)S.log[T]=o.log;else delete S.log[T];S.ss=o.ss;S.bw=o.bw;S.bsk=o.bsk;S.runs=o.runs;S.aw=o.aw;save();go('set',1)})}
 function canDo(){return sel==fd(new Date())&&!(S.log[sel]&&S.log[sel].c)}
 function autoStop(){const T=ssg();if(T.t){T.a+=Date.now()-T.t;T.t=0}STB=null;RT=0;rtu();ssu()}
 function wrapOpen(){if(!canDo())return;const s=sess(pd(sel)),e=lg();if(!s||!e.ad)return;WK=null;const sets=Object.values(e.sd||{}).reduce((a,b)=>a+b,0),mn=Math.max(1,Math.round(ssm()/6e4));
@@ -829,7 +841,7 @@ ${!navigator.standalone&&/iPhone|iPad/.test(navigator.userAgent)?`<div class="ca
 ${notifCard()}
 ${cloud()}
 <div class="card"><h2>App</h2><p class="sub">Built with canvas-confetti and Lucide icons (ISC licence).</p>${UPD=='new'?`<button class="btn" onclick="appRefresh()">Update to version ${UPN}</button>`:UPD=='latest'?'<p class="sub">You are on the latest version.</p>':'<p class="sub">Could not check for updates right now. You may be offline.</p>'}
-<button class="btn ghost" style="color:#d63030" onclick="erase()">Erase all data</button></div>`}
+<button class="btn ghost" onclick="rstDayBm()">Reset today + this week’s benchmark</button><button class="btn ghost" style="color:#d63030" onclick="erase()">Erase all data</button></div>`}
 const fm=t=>{t=Math.round(t);const h=t/3600|0,m=(t%3600)/60|0,x=t%60;return(h?h+':'+String(m).padStart(2,'0'):m)+':'+String(x).padStart(2,'0')};
 const sd0=d=>d.toLocaleDateString(undefined,{day:'numeric',month:'short'});
 let rm='r';
@@ -1046,7 +1058,7 @@ function updBadge(){try{if(!navigator.setAppBadge)return;const m=mon(new Date())
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)remCheck()});setInterval(remCheck,60000);
 /* ===== Passcode + cloud sync (Supabase). No accounts: the passcode is checked on the server by small
    database functions (see supabase-setup.sql). Offline, it is checked against a salted hash kept on this device. ===== */
-const APP_V='38',APP_D='18 Oct 2026';
+const APP_V='39',APP_D='19 Oct 2026';
 const SB_URL='https://ttdiasiwavlnavirxysi.supabase.co',SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR0ZGlhc2l3YXZsbmF2aXJ4eXNpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIwMjA2NTQsImV4cCI6MjEwNzU5NjY1NH0.JWBvqVzDLBKR5of2C4zXFQBa8ZvAoU2wNSB17RTW_4I';
 const LOC=['tm','ss','wl','rem','remSent','hp','sn','sv'];/* stopwatch, keep-awake and reminders stay per-device */
 const SBK='ht_sb';let SB={};try{SB=JSON.parse(localStorage.getItem(SBK)||'{}')||{}}catch(e){}
