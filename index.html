@@ -470,6 +470,47 @@ main[data-t=week] .wk{border-left:4px solid var(--pc,var(--line))}
 .bwc{border:1.5px solid color-mix(in srgb,#ff9f0a 55%,transparent)}
 .tr .prg{margin:8px 0 2px}
 @media(min-width:768px){main[data-t=plan]{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}main[data-t=plan]>.plc.cur{grid-column:1/-1}}
+
+/* ===== Round 5: iPad polish (fills empty space, fixes the week calendar) ===== */
+@media(min-width:768px){
+/* Week: the month calendar was being squeezed into the 7-day grid, so it only showed Mon to Thu */
+main[data-t=week]>.card.calc{display:flex;justify-content:center;align-items:center;gap:64px;padding:24px 28px}
+.calc .cal{flex:0 1 500px;min-width:0}
+.calc .cd{min-height:52px;font-size:17px}.calc .cg small{font-size:13px}
+.calc .cleg{flex-direction:column;flex-wrap:nowrap;align-items:flex-start;justify-content:center;gap:14px;margin:0;font-size:14px}
+/* Today: session on the left from the top, tiles fill their row */
+main[data-t=today]>.st:first-child{grid-row:1}main[data-t=today]>.car:nth-child(2){grid-row:2}main[data-t=today]>#sess{grid-row:3/span 12}
+main[data-t=today]>.car:nth-child(2){display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:12px;padding:2px 0 6px}
+main[data-t=today]>.car:nth-child(2) .pc{width:auto;min-width:0}
+main[data-t=today]>.car:nth-child(2) .pc.hero{grid-column:span 6}
+main[data-t=today]>.car:nth-child(2) .pc.stat{grid-column:span 3}
+main[data-t=today]>.car:nth-child(2) .pc.up{grid-column:span 4}
+main[data-t=today]>.car:nth-child(2) .pc.up:nth-child(7):nth-last-child(2),main[data-t=today]>.car:nth-child(2) .pc.up:nth-child(8):last-child{grid-column:span 6}
+/* Plan: full-width road card, current phase days in two columns, milestones in two columns */
+main[data-t=plan]>.card:first-child{grid-column:1/-1}
+main[data-t=plan] .plc.cur .plw{display:grid;grid-template-columns:1fr 1fr;column-gap:36px}
+main[data-t=plan]>.card:last-child{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:36px;align-content:start}
+main[data-t=plan]>.card:last-child .plr{flex-wrap:nowrap}main[data-t=plan]>.card:last-child .plr .pn{white-space:normal;min-width:0}
+main[data-t=plan]>.card:last-child>h2,main[data-t=plan]>.card:last-child>.sub{grid-column:1/-1}
+/* Progress: two balanced columns instead of a grid with holes; wide cards span both */
+main[data-t=tips]{display:block;columns:2;column-gap:28px}
+main[data-t=tips]>*{break-inside:avoid}
+main[data-t=tips]>.st{column-span:all}
+main[data-t=tips]>.car{column-span:all;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}main[data-t=tips]>.car .pc{width:auto;min-width:0}main[data-t=tips]>.card.slc{column-span:all}
+main[data-t=tips]>.card:has(.bwr){column-span:all;display:grid;grid-template-columns:1fr 1fr;column-gap:36px;align-content:start}
+main[data-t=tips]>.card:has(.bwr)>h2,main[data-t=tips]>.card:has(.bwr)>.note{grid-column:1/-1}
+main[data-t=tips]>.card:has(>.sub:first-child+.btn:last-child){column-span:all;display:flex;align-items:center;gap:20px}
+main[data-t=tips]>.card:has(>.sub:first-child+.btn:last-child)>.sub{flex:1;margin:0}
+main[data-t=tips]>.card:has(>.sub:first-child+.btn:last-child)>.btn{width:auto;flex:none;padding-left:26px;padding-right:26px}
+main[data-t=tips]>.card:has(>ul){column-span:all}
+main[data-t=tips]>.card>ul{columns:2;column-gap:36px}main[data-t=tips]>.card>ul>li{break-inside:avoid}
+/* Exercises: chips line up along the bottom of every card */
+.xk{align-items:flex-start}
+.xk>div:last-child{display:flex;flex-direction:column;align-self:stretch;min-width:0}
+.xk .xb{margin-top:auto;padding-top:10px}
+}
+/* Sidebar hugs its five buttons instead of running the full height */
+@media(min-width:1024px){nav{bottom:auto}}
 </style></head><body>
 <div id="pg"><header><div class="t"><h1 id="h1"></h1><p id="hp"></p></div><div class="ring"><svg viewBox="0 0 84 84" width="84" height="84"><circle cx="42" cy="42" r="36" fill="none" stroke="#ffffff33" stroke-width="7"/><circle class="p" id="rp" cx="42" cy="42" r="36" fill="none" stroke="#ff7a3d" stroke-width="7" stroke-linecap="round" stroke-dasharray="0 226" transform="rotate(-90 42 42)"/></svg><b><span id="rn"></span></b></div><button id="cg" aria-label="Settings" onclick="cgo()"><svg viewBox="0 0 24 24"><path d="M21.96 11.08 L23.89 11.41 L23.89 12.59 L21.96 12.92 L21.86 13.69 L23.63 14.50 L23.33 15.65 L21.38 15.46 L21.08 16.19 L22.59 17.43 L22.00 18.46 L20.17 17.77 L19.69 18.39 L20.82 19.99 L19.99 20.82 L18.39 19.69 L17.77 20.17 L18.46 22.00 L17.43 22.59 L16.19 21.08 L15.46 21.38 L15.65 23.33 L14.50 23.63 L13.69 21.86 L12.92 21.96 L12.59 23.89 L11.41 23.89 L11.08 21.96 L10.31 21.86 L9.50 23.63 L8.35 23.33 L8.54 21.38 L7.81 21.08 L6.57 22.59 L5.54 22.00 L6.23 20.17 L5.61 19.69 L4.01 20.82 L3.18 19.99 L4.31 18.39 L3.83 17.77 L2.00 18.46 L1.41 17.43 L2.92 16.19 L2.62 15.46 L0.67 15.65 L0.37 14.50 L2.14 13.69 L2.04 12.92 L0.11 12.59 L0.11 11.41 L2.04 11.08 L2.14 10.31 L0.37 9.50 L0.67 8.35 L2.62 8.54 L2.92 7.81 L1.41 6.57 L2.00 5.54 L3.83 6.23 L4.31 5.61 L3.18 4.01 L4.01 3.18 L5.61 4.31 L6.23 3.83 L5.54 2.00 L6.57 1.41 L7.81 2.92 L8.54 2.62 L8.35 0.67 L9.50 0.37 L10.31 2.14 L11.08 2.04 L11.41 0.11 L12.59 0.11 L12.92 2.04 L13.69 2.14 L14.50 0.37 L15.65 0.67 L15.46 2.62 L16.19 2.92 L17.43 1.41 L18.46 2.00 L17.77 3.83 L18.39 4.31 L19.99 3.18 L20.82 4.01 L19.69 5.61 L20.17 6.23 L22.00 5.54 L22.59 6.57 L21.08 7.81 L21.38 8.54 L23.33 8.35 L23.63 9.50 L21.86 10.31Z M21 12A9 9 0 1 0 3 12A9 9 0 1 0 21 12Z" fill="currentColor" fill-rule="evenodd" stroke="none"/><circle cx="12" cy="12" r="6.9" fill="none" stroke="currentColor" stroke-width="1.4"/><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 12L11.44 18.38"/><path d="M12 12L6.76 8.33"/><path d="M12 12L17.80 9.30"/></g><circle cx="12" cy="12" r="1.8" fill="currentColor" stroke="none"/></svg></button></header>
 <main id="m"></main></div>
@@ -504,7 +545,7 @@ const phOK=n=>{const q=phP(n);return fd(new Date())>P[n-1].e&&q[0]>=q[1]};
 const bwN=()=>Object.keys(BT).filter(k=>bwPts(k).length).length;
 const bwPB=()=>Object.keys(BT).some(k=>{const p=bwPts(k);if(p.length<2)return false;const l=p[p.length-1].v,pr=p.slice(0,-1).map(x=>x.v);return BT[k].hi?l>Math.max(...pr):l<Math.min(...pr)});
 const bwGoalOK=()=>Object.keys(BT).some(k=>{const g=BT[k].goal,b=bwBest(k);return g&&b!=null&&(BT[k].hi?b>=g:b<=g)});
-function bwStr(){let best=0,run=0;const now=new Date();for(let i=0;i<40;i++){const m=add(mon(START),7*i);if(m>now)break;if(bwDone(m))run++;else if(add(m,6)<now)run=0;best=Math.max(best,run)}return best}
+function bwStr(){let best=0,run=0;const now=new Date();for(let i=0;i<40;i++){const m=add(mon(START),7*i);if(m>now)break;const a=fd(m),b=fd(add(m,6));if(new Set((S.bw||[]).filter(r=>r.t>=a&&r.t<=b).map(r=>r.t)).size>=3)run++;else if(add(m,6)<now)run=0;best=Math.max(best,run)}return best}
 const slN=()=>Object.keys(S.slp).filter(k=>(S.slp[k]||[]).length).length;
 const cleanN=()=>Object.values(S.log).filter(e=>e.c&&!(e.sk&&e.sk.length)).length;
 const runK=()=>S.runs.reduce((a,r)=>a+(+r.k||0),0);
@@ -523,7 +564,7 @@ ACH.push(
 ['bm1','Baseline','Log 3 different benchmarks','timer',()=>bwN()>=3,()=>[bwN(),3]],
 ['bmpb','Personal best','Beat your best on any benchmark','medal',bwPB,()=>[bwPB()?1:0,1]],
 ['bmgoal','Goal getter','Reach the goal on any benchmark','trophy',bwGoalOK,()=>[bwGoalOK()?1:0,1]],
-['bm4w','Benchmark habit','Do the weekly benchmark 4 weeks in a row','target',()=>bwStr()>=4,()=>[bwStr(),4]],
+['bm4w','Benchmark habit','Log benchmarks on 3 or more days a week, 4 weeks in a row','target',()=>bwStr()>=4,()=>[bwStr(),4]],
 ['bmall','Full battery','Log every benchmark test at least once','timer',()=>bwN()>=Object.keys(BT).length,()=>[bwN(),Object.keys(BT).length]],
 ['sl7','Sleep log','Log 7 nights of sleep','moon',()=>slN()>=7,()=>[slN(),7]],
 ['slgood','Well rested','A 7-night average that meets your sleep target','moon',()=>{const x=slState();return !!x&&x.n>=7&&x.e7>=x.t},()=>{const x=slState();return[x?Math.min(x.e7,x.t):0,+S.slt||8]}],
@@ -567,7 +608,7 @@ STB=null;RT=0;WK=null;BMS=null;BWQ=null;try{rtu()}catch(e){}
 delete S.log[T];
 S.ss={k:T,a:0,t:0};
 S.bw=(S.bw||[]).filter(r=>!(r.t>=a&&r.t<=b));
-if(S.bsk)delete S.bsk[a];
+if(S.bsk)for(let i=0;i<7;i++){delete S.bsk['d'+fd(add(m,i))]}if(S.bsk)delete S.bsk[a];
 if(bwWk(new Date()).run)S.runs=(S.runs||[]).filter(r=>!(r.t=='t'&&r.d>=a&&r.d<=b));
 S.aw=(S.aw||[]).filter(id=>{const x=ACH.find(q=>q[0]==id);return !x||x[4]()});
 save();cl();HP('t');go('set',1);
@@ -933,15 +974,16 @@ const secs=v=>{if(typeof v=='number')return v;v=String(v==null?'':v).trim();if(!
 function bwPts(k){const a=[];if(k=='t')S.runs.filter(r=>r.t=='t'&&r.s>0).forEach(r=>a.push({t:r.d,v:r.s}));else{(S.bm[k]||[]).forEach((v,i)=>{const x=secs(v);if(x>0)a.push({t:CKD[i],v:x})});(S.bw||[]).filter(r=>r.k==k).forEach(r=>a.push({t:r.t,v:r.v}))}return a.sort((x,y)=>x.t<y.t?-1:x.t>y.t?1:0)}
 const bwBest=k=>{const v=bwPts(k).map(x=>x.v);return v.length?(BT[k].hi?Math.max(...v):Math.min(...v)):null};
 function bwFmt(k,v){if(v==null||isNaN(v))return '–';if(k=='t')return fm(Math.round(v));const B=BT[k];return B.type=='count'?v+' reps':(k=='s10'?(+v).toFixed(1):Math.round(v))+' s'}
-function bwWk(d){const w=Math.floor(Math.round((mon(d)-mon(START))/864e5)/7),av=BG.filter(g=>g.ph<=phase(d));return{w,g:av[((w%av.length)+av.length)%av.length],run:[0,5,10,14].includes(w)}}
-function bwDone(d){const m=mon(d),a=fd(m),b=fd(add(m,6));return bwWk(d).g.keys.every(k=>(S.bw||[]).some(r=>r.k==k&&r.t>=a&&r.t<=b))}
+function bwDay(d){const ph=phase(d),wd=d.getDay();let id;if(!sess(d))id='pu';else if(wd==1)id='ws';else if(wd==2)id='bal';else if(wd==3)id=ph>=3?'br':'ws';else if(wd==5)id=ph>=4?'spr':ph>=3?'cop':'bal';else id=ph>=3?'bal':'ws';return BG.find(g=>g.id==id)}
+function bwWk(d){const w=Math.floor(Math.round((mon(d)-mon(START))/864e5)/7);return{w,g:bwDay(d),run:[0,5,10,14].includes(w)}}
+function bwDone(d){const t=fd(d),g=bwWk(d).g;return !g||g.keys.every(k=>(S.bw||[]).some(r=>r.k==k&&r.t==t))}
 function bwRunDone(d){const m=mon(d),a=fd(m),b=fd(add(m,6));return S.runs.some(r=>r.t=='t'&&r.d>=a&&r.d<=b)}
-function bwDue(d){if(S.bsk&&S.bsk[fd(mon(d))])return null;const x=bwWk(d),o={g:bwDone(d)?null:x.g,run:x.run&&!bwRunDone(d)};return o.g||o.run?o:null}
+function bwDue(d){const sk=S.bsk||{},x=bwWk(d),o={g:(sk['d'+fd(d)]||bwDone(d))?null:x.g,run:x.run&&!sk[fd(mon(d))]&&!bwRunDone(d)};return o.g||o.run?o:null}
 function bwGoalTxt(g){return 'Goal: '+g.keys.map(k=>BT[k].goal?bwFmt(k,BT[k].goal)+(g.keys.length>1?(/left/.test(BT[k].n)?' left':' right'):''):'').filter(Boolean).join(' · ')}
 function bwCard(){const T=fd(new Date());if(sel!=T)return'';const due=bwDue(pd(T));if(!due)return'';const g=due.g,nm=[g&&g.n,due.run&&'1.6 km time trial'].filter(Boolean).join(' + ');
-return`<div class="card bwc"><div class="slh"><span class="xi" style="--c:#ff9f0a">${ico('target')}</span><div><h2>Benchmark of the week</h2><p class="sub">${nm}</p></div></div><p class="sub">${g?bwGoalTxt(g)+'. Takes about 3 minutes.':'Run 1.6 km as fast as you can hold. The app times it.'}</p><button class="btn" onclick="bwGo()">Start benchmark</button><button class="rst" onclick="bwSkip()">Skip this week</button></div>`}
-function bwIntro(){const due=bwDue(pd(sel));if(!due||!due.g)return;const g=due.g;$('#sh').innerHTML=`<div class="gr"></div><div class="fin"><i class="fi">${ico('target')}</i><h2>Start the week with a benchmark</h2><p class="sub">${g.n}. ${bwGoalTxt(g)}.</p><p class="sub">It takes about 3 minutes and shows you what training is doing.</p><button class="btn" onclick="bwGo(()=>wkOpen())">Start benchmark</button><button class="btn ghost" onclick="bwSkip(()=>wkOpen())">Skip this week</button></div>`;$('#sh').scrollTop=0;document.body.classList.add('so');mini()}
-function bwSkip(after){S.bsk=S.bsk||{};S.bsk[fd(mon(new Date()))]=1;save();cl();if(after)after();else go('today',1)}
+return`<div class="card bwc"><div class="slh"><span class="xi" style="--c:#ff9f0a">${ico('target')}</span><div><h2>Benchmark of the day</h2><p class="sub">${nm}</p></div></div><p class="sub">${g?bwGoalTxt(g)+'. Takes about 3 minutes.':'Run 1.6 km as fast as you can hold. The app times it.'}</p><button class="btn" onclick="bwGo()">Start benchmark</button><button class="rst" onclick="bwSkip()">Skip today</button></div>`}
+function bwIntro(){const due=bwDue(pd(sel));if(!due||!due.g)return;const g=due.g;$('#sh').innerHTML=`<div class="gr"></div><div class="fin"><i class="fi">${ico('target')}</i><h2>Start with a benchmark</h2><p class="sub">${g.n}. ${bwGoalTxt(g)}.</p><p class="sub">It takes about 3 minutes and shows you what training is doing.</p><button class="btn" onclick="bwGo(()=>wkOpen())">Start benchmark</button><button class="btn ghost" onclick="bwSkip(()=>wkOpen())">Skip today</button></div>`;$('#sh').scrollTop=0;document.body.classList.add('so');mini()}
+function bwSkip(after){S.bsk=S.bsk||{};S.bsk['d'+fd(new Date())]=1;if(bwWk(new Date()).run)S.bsk[fd(mon(new Date()))]=1;save();cl();if(after)after();else go('today',1)}
 function bwGo(after){const due=bwDue(pd(fd(new Date())));if(!due)return;BWQ={keys:due.g?due.g.keys.slice():[],i:0,run:!!due.run,after:after||null};if(BWQ.keys.length)bwTest(BWQ.keys[0]);else bwRunPrompt()}
 function bwOne(k){if(k=='t'){cl();ot(-1,'t');return}BWQ={keys:[k],i:0,run:false,after:null};bwTest(k)}
 function bwTest(k){const t=BT[k].type;if(t=='hold')bwHold(k);else if(t=='count')bwCount(k);else bwNum(k)}
@@ -966,7 +1008,7 @@ function bwRunPrompt(after){$('#sh').innerHTML=`<div class="gr"></div><div class
 const bwSpark=p=>{const v=p.map(x=>x.v);if(v.length<2)return'';const lo=Math.min(...v),hi=Math.max(...v),r=hi-lo||1;return`<svg class="spk" viewBox="0 0 80 28"><polyline fill="none" stroke="var(--ball)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="${v.map((q,i)=>(i*80/(v.length-1)).toFixed(1)+','+(26-(q-lo)/r*24).toFixed(1)).join(' ')}"/></svg>`};
 function bwRow(k){const B=BT[k],p=bwPts(k),l=p.length?p[p.length-1].v:null,b=bwBest(k),gp=B.goal&&b!=null?Math.min(100,Math.round((B.hi?b/B.goal:B.goal/b)*100)):0;
 return`<div class="bwr"><div class="bwi"><b>${B.n}</b><small>${l==null?'Not tested yet':'Latest '+bwFmt(k,l)+' · best '+bwFmt(k,b)}</small>${B.goal&&l!=null?`<div class="prg"><i style="width:${gp}%"></i></div>`:''}</div>${bwSpark(p)}<button class="xchp" onclick="bwOne('${k}')">${l==null?'Baseline':'Test'}</button></div>`}
-function bwCards(){const T=pd(fd(new Date())),due=bwDue(T);let h=`<h3 class="st">Benchmarks</h3><div class="card"><p class="sub">${due?'This week: '+[due.g&&due.g.n,due.run&&'1.6 km trial'].filter(Boolean).join(' and ')+'.':'This week’s benchmark is done. Nice work.'}</p>${due?'<button class="btn" onclick="bwGo()">Start this week’s benchmark</button>':''}</div><div class="card"><h2>All tests</h2>${Object.keys(BT).map(bwRow).join('')}`;
+function bwCards(){const T=pd(fd(new Date())),due=bwDue(T);let h=`<h3 class="st">Benchmarks</h3><div class="card"><p class="sub">${due?'Today: '+[due.g&&due.g.n,due.run&&'1.6 km trial'].filter(Boolean).join(' and ')+'.':'Today’s benchmark is done. Nice work.'}</p>${due?'<button class="btn" onclick="bwGo()">Start today’s benchmark</button>':''}</div><div class="card"><h2>All tests</h2>${Object.keys(BT).map(bwRow).join('')}`;
 const o=[];[['b','b2','Balance'],['gl','gr','Bridge hold'],['cl','cr','Copenhagen hold']].forEach(([a,c,n])=>{const x=bwPts(a),y=bwPts(c);if(x.length&&y.length){const u=x[x.length-1].v,w=y[y.length-1].v,g=Math.round(Math.abs(u-w)/Math.max(u,w)*100);if(g>12)o.push(n+': sides differ by '+g+'%. Add an extra set on the weaker side.')}});
 return h+o.map(t=>'<div class="note">'+t+'</div>').join('')+'</div>'}
 try{history.scrollRestoration='manual'}catch(e){}
@@ -1058,7 +1100,7 @@ function updBadge(){try{if(!navigator.setAppBadge)return;const m=mon(new Date())
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)remCheck()});setInterval(remCheck,60000);
 /* ===== Passcode + cloud sync (Supabase). No accounts: the passcode is checked on the server by small
    database functions (see supabase-setup.sql). Offline, it is checked against a salted hash kept on this device. ===== */
-const APP_V='39',APP_D='19 Oct 2026';
+const APP_V='41',APP_D='19 Oct 2026';
 const SB_URL='https://ttdiasiwavlnavirxysi.supabase.co',SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR0ZGlhc2l3YXZsbmF2aXJ4eXNpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIwMjA2NTQsImV4cCI6MjEwNzU5NjY1NH0.JWBvqVzDLBKR5of2C4zXFQBa8ZvAoU2wNSB17RTW_4I';
 const LOC=['tm','ss','wl','rem','remSent','hp','sn','sv'];/* stopwatch, keep-awake and reminders stay per-device */
 const SBK='ht_sb';let SB={};try{SB=JSON.parse(localStorage.getItem(SBK)||'{}')||{}}catch(e){}
